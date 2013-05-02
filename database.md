@@ -7,9 +7,9 @@
 <a name="configuration"></a>
 ## 설정
 
-Laravel은 데이터베이스 접속과 쿼리 실행을 매우 간단하게 실행합니다. 데이터베이스 설정 파일은 `app/config/database.php` 입니다. 이 파일에서 모든 데이터베이스 커넥션뿐만 아니라 기본적으로 어떤 커넥션을 사용해야 하는지 지정할 수 있습니다. 지원되는 모든 데이터베이스 시스템의 예제는 이 파일안에 제공되어 있습니다.
+Laravel은 데이터베이스 접속과 쿼리 실행을 매우 간단하게 만들어 줍니다. 데이터베이스 설정 파일은 `app/config/database.php` 입니다. 이 파일에서 모든 데이터베이스 커넥션뿐만 아니라 기본적으로 어떤 커넥션을 사용해야 하는지도 지정할 수 있습니다. 지원되는 모든 데이터베이스 시스템의 예제는 이 파일안에 제공되어 있습니다.
 
-현재 Laravel은 MySQL, Postgres, SQLite, SQL Server 4가지의 데이터베이스 시스템을 지원합니다.: 
+현재 Laravel은 MySQL, Postgres, SQLite, SQL Server 4가지의 데이터베이스 시스템을 지원합니다.
 
 <a name="running-queries"></a>
 ## 쿼리 실행
@@ -20,7 +20,7 @@ Laravel은 데이터베이스 접속과 쿼리 실행을 매우 간단하게 실
 
     $results = DB::select('select * from users where id = ?', array(1));
 
-`select` 메소드는 항상 결과물을 `array`로 반환합니다.
+`select` 메소드는 결과물을 항상 `array`로 반환합니다.
 
 **insert 쿼리문 실행**
 
@@ -40,6 +40,14 @@ Laravel은 데이터베이스 접속과 쿼리 실행을 매우 간단하게 실
 
 	DB::statement('drop table users');
 
+`DB::listen` 메소드를 사용하여 쿼리 이벤트를 주시 할 수 있습니다.:
+
+**쿼리 이벤트 주시**
+
+	DB::listen(function($sql, $bindings, $time)
+	{
+		//
+	});
 
 <a name="accessing-connections"></a>
 ## 커넥션 액세스
