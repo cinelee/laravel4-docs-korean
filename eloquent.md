@@ -2,23 +2,26 @@
 
 - [소개](#introduction)
 - [기본적인 사용법](#basic-usage)
+- [대량 할당(Mass Assignment)](#mass-assignment)
 - [삽입(Insert), 수정(Update), 삭제(Delete)](#insert-update-delete)
 - [타임스탬프(Timestamps)](#timestamps)
+- [쿼리 스코프](#query-scopes)
 - [관계성(Relationships)](#relationships)
 - [Eager 로딩](#eager-loading)
 - [관계된 모델 삽입](#inserting-related-models)
-- [피벗 테이블과 함께 작업](#working-with-pivot-tables)
+- [부모 타임스탬프 터치](#touching-parent-timestamps)
+- [피벗 테이블과 작업](#working-with-pivot-tables)
 - [컬렉션](#collections)
 - [게터 & 세터](#accessors-and-mutators)
-- [대량 할당(Mass Assignment)](#mass-assignment)
+- [모델 이벤트](#model-events)
 - [배열 / JSON 으로 변환](#converting-to-arrays-or-json)
 
 <a name="introduction"></a>
 ## 소개
 
-Laravel에 포함된 엘로퀀트 ORM은 데이터베이스 작업을 위한 아름답고 간단한 액티브레코드 구현을 제공합니다. 각 테이터베이스 테이블은 테이블과 상호작용하는데 사용되는 해당 "모델"을 가지고 있습니다.
+Laravel에 포함된 엘로퀀트 ORM은 데이터베이스 작업을 위한 아름답고 간단한 액티브레코드 구현을 제공합니다. 각 테이터베이스 테이블은 테이블과 상호작용 하는데 사용되는 해당 "모델"을 가지고 있습니다.
 
-시작하기전에, `app/config/database.php`에서 데이터베이스 커넥션을 구성했는지 확인해 주세요.
+시작하기 전에, `app/config/database.php`에서 데이터베이스 커넥션을 구성했는지 확인하십시오.
 
 <a name="basic-usage"></a>
 ## 기본적인 사용법
@@ -29,7 +32,7 @@ Laravel에 포함된 엘로퀀트 ORM은 데이터베이스 작업을 위한 아
 
     class User extends Eloquent {}
 
-`User` 엘로퀀트 모델에 어떤 테이블을 사용할지 알려주지 않았다는 것에 주목하세요. 다른 테이블명이 명백하게 지정되지 않는한 클래스의 소문자, 복수형 이름이 테이블명으로 쓰이게 됩니다. 그러므로 이 경우, 엘로퀀트는 `User` 모델이 `users` 테이블에 레코드를 저장하도록 취하고 있습니다. 모델에서 `table` 프로퍼티를 사용하여 사용자 정의 테이블명을 지정할 수 있습니다.:
+`User` 엘로퀀트 모델에 어떤 테이블을 사용할지 알려주지 않았다는 것에 주목하십시오. 다른 테이블명이 명백하게 지정되지 않는한 클래스의 소문자, 복수형 이름이 테이블명으로 쓰이게 됩니다. 그러므로 이 경우, 엘로퀀트는 `User` 모델이 `users` 테이블에 레코드를 저장하도록 취하고 있습니다. 모델에서 `table` 속성을 사용하여 사용자 정의 테이블을 지정할 수 있습니다.:
 
 	class User extends Eloquent {
 
@@ -37,21 +40,38 @@ Laravel에 포함된 엘로퀀트 ORM은 데이터베이스 작업을 위한 아
 
 	}
 
-> **메모:** 엘로퀀트는 또한 각각의 테이블이 `id`라고 지정된 컬럼을 기본키로 갖고있도록 취하고 있습니다. `primaryKey` 프로퍼티를 정의하여 이러한 방식을 치환할 수 있습니다.:
+엘로퀀트는 또한 각각의 테이블이 `id`란 이름의 기본키 컬럼을 가지고 있다고 추정합니다. `primaryKey` 속성을 사용하여 이 규칙을 치환 할 수 있습니다. 마찬가지로, `connection` 속성을 사용하여 모델을 활용 할 때 사용할 데이터베이스 접속 명을 치환 할 수 있습니다.
 
-이렇게 모델이 정의 되고 나면, 테이블에 레코드를 조회하거나 생성할 준비가 끝났습니다. 기본적으로 테이블에 `updated_at`와 `created_at` 컬럼을 추가해야 합니다. 만약 이 컬럼들이 자동으로 관리되지 않도록 하려면, 모델에 `$timestamp` 프로퍼티를 `false`로 설정하면 됩니다.
+
+
+이렇게 모델이 정의 되고 나면, 테이블에 레코드를 조회하거나 생성할 준비가 끝났습니다. 기본적으로 테이블에 `updated_at`와 `created_at` 컬럼을 추가해야 합니다. 만약 이 컬럼들이 자동으로 관리되지 않도록 하려면, 모델에 `$timestamp` 속성을 `false`로 설정하면 됩니다.
 
 **모델의 모든 레코드 조회**
 
 	$users = User::all();
 
-**기본키로 단일 레코드 조회**
+**기본키를 통해 단일 레코드 조회**
 
 	$user = User::find(1);
 
 	var_dump($user->name);
 
 > **메모:** 엘로퀀트 모델 역시 [쿼리 빌더](/docs/queries)에서 이용 가능한 모든 메소드를 사용할 수 있습니다.
+
+**기본키를 통해 단일 모델을 조회 하거나 예외 발생**
+
+때때로, 모델을 찾을 수 없을 경우 `App::error` 핸들러를 사용하여 예외를 포착하고 404 페이지를 표시 할 수 있도록 에외를 발생 시키길 원할 수도 있습니다.
+
+	$model = User::findOrFail(1);
+
+에러 핸들러를 등록하려면, `ModelNotFoundException`을 주시하면 됩니다.
+
+	use Illuminate\Database\Eloquent\ModelNotFoundException;
+
+	App::error(function(ModelNotFoundException $e)
+	{
+		return Response::make('Not Found', 404);
+	});
 
 **엘로퀀트 모델을 사용하여 질의**
 
@@ -68,6 +88,41 @@ Laravel에 포함된 엘로퀀트 ORM은 데이터베이스 작업을 위한 아
 
 	$count = User::where('votes', '>', 100)->count();
 
+<a name="mass-assignment"></a>
+## 대량 할당(Mass Assignment)
+
+새로운 모델을 생성할때, 모델의 생성자에 속성배열을 전달합니다. 그러면 이 속성은 대량 할당을 통해 모델에 할당됩니다. 이 방법은 편리하지만, 무턱대고 사용자 입력을 모델로 전달할 경우, **심각한** 보안 문제가 될 수 있습니다. 만약 사용자 입력이 모델로 무턱대고 전달 된다면, 사용자는 모델의 **어떠한** 속성이나 **모든** 속성을 수정 할 수 있습니다. 이러한 이유로, 모든 엘로쿼트 모델은 기본적으로 대량 할당으로부터 보호되어 있습니다.
+
+시작하려면, 모델에 `fillable` 또는 `guarded` 속성을 설정합니다.
+
+`fillable` 속성(property)은 어떤 속성(attributes)들이 대량 할당을 통해 할당 가능한지 명시합니다. 이 속성(property)은 클래스나 인스턴스 레벨에서 설정할 수 있습니다.
+
+**모델에 할당 가능한 속성 정의**
+
+	class User extends Eloquent {
+
+		protected $fillable = array('first_name', 'last_name', 'email');
+
+	}
+
+이 예제를 보면, 나열된 3개의 속성만 대량 할당을 통해 할당 될 수 있습니다. 
+
+`fillabel`의 반대는 `guarded` 입니다. "화이트리스트" 대신 "블랙리스트"처럼 사용됩니다.:
+
+**모델에 할당 불가능한 속성 정의**
+
+	class User extends Eloquent {
+
+		protected $guarded = array('id', 'password');
+
+	}
+
+위 예제에서, `id`와 `password` 속성은 대량 할당을 통해 할당 될 수 **없습니다**. 나머지 다른 모든 속성은 대량 할당 될수 있습니다. 또한 아래의 메소드를 사용하여 **모든** 속성을 대량 할당으로 부터 막을 수 있습니다.:
+
+** 모든 속성을 대량 할당으로부터 차단**
+
+	protected $guarded = array('*');
+
 <a name="insert-update-delete"></a>
 ## 삽입(Insert), 수정(Update), 삭제(Delete)
 
@@ -81,13 +136,23 @@ Laravel에 포함된 엘로퀀트 ORM은 데이터베이스 작업을 위한 아
 
 	$user->save();
 
-또한 새로운 모델을 저장할때 `create` 메소드를 사용하여 한줄에서 저장할 수 있습니다. 메소드에서는 삽입된 모델의 인스턴스가 반환됩니다.:
+> **메모:** 일반적으로, 당신의 엘로쿼트 모델은 자동 증가 키를 갖고 있을 겁니다. 그러나, 자신만의 키를 지정하길 원한다면, 모델의 `incrementing` 속성을 `false`로 설정합니다.
+
+또한 새로운 모델을 저장할때 `create` 메소드를 사용하여 한줄에서 저장할 수도 있습니다. 메소드에서는 삽입된 모델의 인스턴스가 반환됩니다. 그러나, 이 메소드를 사용하기 전에, 모든 엘로퀀트트 모델이 대량 할당으로 부터 보호되어 있으므로, 모델에 `fillable` 또는 `guarded` 속성을 지정해야 합니다. 
+
+**모델에 할당 불가능한 속성 정의**
+
+	class User extends Eloquent {
+
+		protected $guarded = array('id', 'account_id');
+
+	}
 
 **모델의 create 메소드 사용**
 
 	$user = User::create(array('name' => 'John'));
 
-모델을 수정하려면, 모델을 조회하고, 속성을 변경한 다음, `save` 메소드를 사용하면 됩니다.:
+모델을 수정하려면, 모델을 조회하고 속성을 변경한 다음, `save` 메소드를 사용하면 됩니다.:
 
 **조회된 모델 수정**
 
@@ -109,6 +174,12 @@ Laravel에 포함된 엘로퀀트 ORM은 데이터베이스 작업을 위한 아
 
 	$user->delete();
 
+**키를 통한 기존의 모델 삭제**
+
+	User::destroy(1);
+
+	User::destroy(1, 2, 3);
+
 물론, 다수의 모델에 삭제 쿼리를 실행할 수도 있습니다.:
 
 	$affectedRows = User::where('votes', '>', 100)->delete();
@@ -122,7 +193,7 @@ Laravel에 포함된 엘로퀀트 ORM은 데이터베이스 작업을 위한 아
 <a name="timestamps"></a>
 ## 타임스탬프
 
-기본적으로 엘로퀀트는 데이터베이스 테이블의 `created_at`과 `updated_at`컬럼을 자동으로 관리 합니다. 간단히 테이블에 이러한 `datetime` 컬럼을 추가하면, 나머지는 엘로퀀트가 알아서 처리합니다. 만약 엘로퀀트가 이러한 컬럼을 관리하지 않도록 하려면, 모델에 다음의 프로퍼티를 추가합니다.:
+기본적으로 엘로퀀트는 데이터베이스 테이블의 `created_at`과 `updated_at`컬럼을 자동으로 관리 합니다. 간단히 테이블에 이러한 `datetime` 컬럼을 추가하면, 나머지는 엘로퀀트가 알아서 처리합니다. 만약 엘로퀀트가 이러한 컬럼을 관리하지 않도록 하려면, 모델에 다음의 속성을 추가합니다.:
 
 **자동 타임스탬프를 사용하지 않도록 설정**
 
@@ -134,9 +205,9 @@ Laravel에 포함된 엘로퀀트 ORM은 데이터베이스 작업을 위한 아
 
 	}
 
-사용자 정의 포맷의 타임스탬프를 정의하려면, 모델의 `freshTimestamp` 메소드를 치환하면 됩니다.:
+타임스탬프의 포맷을 지정하길 원한다면, 모델의 `freshTimestamp` 메소드를 치환하면 됩니다.:
 
-**사용자 정의 타임스탬프 포맷 정의**
+**사용자 정의 타임스탬프 포맷 제공**
 
 	class User extends Eloquent {
 
@@ -147,10 +218,30 @@ Laravel에 포함된 엘로퀀트 ORM은 데이터베이스 작업을 위한 아
 
 	}
 
+<a name="query-scopes"></a>
+## 쿼리 스코프
+
+스코프는 모델에서 쿼리 로직을 쉽게 재사용 할수 있도록 해줍니다. 스코프를 정의 하려면, 모델의 메소드명 앞에 `scope`를 붙이면 됩니다.:
+
+**쿼리 스코프 정의**
+
+	class User extends Eloquent {
+
+		public function scopePopular($query)
+		{
+			return $query->where('votes', '>', 100);
+		}
+
+	}
+
+**쿼리 스코프 활용**
+
+	$users = User::popular()->orderBy('created_at')->get();
+
 <a name="relationships"></a>
 ## 관계성
 
-몰론, 데이터베이스 테이블은 아마도 서로 연관되어 있을 겁니다. 예를 들어, 하나의 블로그 포스트가 많은 코멘트를 갖고 있거나, 하나의 주문이 주문을 한 사용자와 연관되어 있을 수 있습니다. 엘로퀀트는 이러한 관계성을 쉽게 관리하고 작동할수 있게 해줍니다. Laravel은 4 종류의 관계성을 지원합니다. :
+몰론, 당신의 데이터베이스 테이블은 아마도 서로 연관되어 있을 겁니다. 예를 들어, 하나의 블로그 포스트가 많은 코멘트를 갖고 있거나, 하나의 주문이 주문을 한 사용자와 연관되어 있을 수 있습니다. 엘로퀀트는 이러한 관계성을 쉽게 관리하고 작동할수 있게 해줍니다. Laravel은 4가지 종류의 관계성을 지원합니다.:
 
 - [One To One](#one-to-one)
 - [One To Many](#one-to-many)
@@ -183,7 +274,7 @@ one-to-one 관계는 아주 기본적인 관계 입니다. 예를 들면, `User`
 
 	select * from phones where user_id = 1
 
-엘로퀀트는 관계된 모델명을 기반으로 외래키를 추정 한다는 것에 주목하세요. 이 경우, `Phone` 모델은 `user_id`를  외래키로 사용하도록 추정합니다. 이러한 통상적인 것을 재정의 하려면, `hasOne` 메소드의 두번째 인수에 사용자 정의 키를 전달하세요.:
+엘로퀀트는 관계된 모델명을 기반으로 외래키를 추정 한다는 것에 주목하십시오. 이 경우, `Phone` 모델은 `user_id`를 외래키로 사용하도록 추정합니다. 이러한 규칙을 치환하려면, `hasOne` 메소드의 두번째 인수에 사용자 정의 키를 전달합니다.:
 
 	return $this->hasOne('Phone', 'custom_key');
 
@@ -218,11 +309,11 @@ one-to-many 관계의 예를 보면, "많은" 코멘트를 가진 "하나"의 �
 
 	$comments = Post::find(1)->comments;
 
-더 많은 제약 조건을 추가하여 포스트를 조회하려면, `comments` 메소드를 사용 한 다음, 조건을 계속 체이닝 할 수 있습니다.:
+더 많은 제약 조건을 추가하여 코멘트를 조회하려면, `comments` 메소드를 사용 한 다음, 조건을 계속 체이닝 할 수 있습니다.:
 
 	$comments = Post::find(1)->comments()->where('title', '=', 'foo')->first();
 
-한번 더, `hasMany` 메소드에 두번째 인수를 전달함으로서 통상적인 외래키를 변경할 수 있습니다.:
+다시 말하지만, `hasMany` 메소드의 두번째 인수를 전달함으로서 규칙된 외래키를 변경할 수 있습니다.:
 
 	return $this->hasMany('Comment', 'custom_key');
 
@@ -242,7 +333,7 @@ one-to-many 관계의 예를 보면, "많은" 코멘트를 가진 "하나"의 �
 <a name="many-to-many"></a>
 ### Many To Many
 
-Many-to-many 관계는 좀 더 복잡한 관계 타입입니다. 사용자(users)는 다수의 역할(roles)을 갖고 있고 역할(roles) 또한 많은 사용자(users)에 의해 공유되는 것을 이 관계의 예제로 들 수 있습니다. 예를 들면, 다수의 사용자(users)는 "Admin" 역할(roles)을 할 수 있습니다. 이 관계에는 `users`, `roles`, `role_user` 3개의 데이터베이스 테이블이 필요합니다. `role_user` 테이블은 관련 모델 이름의 알파벳 순서에서 비롯되며, `user_id`와 `role_id` 컬럼을 포함하고 있어야 합니다.
+Many-to-many 관계는 좀 더 복잡한 관계 타입입니다. 사용자(users)는 다수의 역할(roles)을 갖고 있고 역할(roles) 또한 많은 사용자(users)에 의해 공유되는 것을 이 관계의 예제로 들 수 있습니다. 예를 들면, 다수의 사용자(users)는 "Admin" 역할(roles)을 갖고 있습니다. 이 관계에는 `users`, `roles`, `role_user` 3개의 데이터베이스 테이블이 필요합니다. `role_user` 테이블은 관련 모델 이름의 알파벳 순서에서 비롯되며, `user_id`와 `role_id` 컬럼을 포함하고 있어야 합니다.
 
 `belongsToMany` 메소드를 사용하여 many-to-many 관계를 정의할 수 있습니다.:
 
@@ -255,7 +346,7 @@ Many-to-many 관계는 좀 더 복잡한 관계 타입입니다. 사용자(users
 
 	}
 
-이제, `User` 모델을 통해 역할을 조회할 수 있습니다.:
+이제, `User` 모델을 통해 역할(roles)을 조회할 수 있습니다.:
 
 	$roles = User::find(1)->roles;
 
@@ -267,10 +358,21 @@ Many-to-many 관계는 좀 더 복잡한 관계 타입입니다. 사용자(users
 
 	return $this->belongsToMany('Role', 'user_roles', 'user_id', 'foo_id');
 
+물론, `Role` 모델에도 역관계를 정의 할 수 있습니다.:
+
+	class Role extends Eloquent {
+
+		public function users()
+		{
+			return $this->belongsToMany('User');
+		}
+
+	}
+
 <a name="polymorphic-relations"></a>
 ### 다형성 관계
 
-다형성 관계는 단일 결합에 한개의 모델이 한개 이상의 다른 모델에 속할수 있도록 해줍니다. staff 모델 또는 order 모델 두곳에 속해있는 photo 모델을 예로 들 수 있습니다. 이러한 관계를 아래와 같이 구현합니다.:
+다형성 관계는 한개의 모델이 단일 결합을 통해 한개 이상의 다른 모델에 속할수 있도록 해줍니다. staff 모델 또는 order 모델 두곳에 속해있는 photo 모델을 예로 들 수 있습니다. 이러한 관계를 아래와 같이 구현합니다.:
 
 	class Photo extends Eloquent {
 
@@ -338,7 +440,7 @@ Many-to-many 관계는 좀 더 복잡한 관계 타입입니다. 사용자(users
 		imageable_id - integer
 		imageable_type - string
 
-여기에서 중요한 필드는 `photo` 테이블의 `imageable_id`와 `imageable_type` 입니다. ID는 소유된 staff 또는 order의 ID 값을 포함하며, type은 소유 모델의 클래스명을 포함하고 있습니다. 이 부분이 `imageable` 관계를 액세스 했을 경우, ORM이 어떤 타입의 소유 모델을 반환하는지 결정할 수 있도록 해줍니다.
+여기에서 중요한 필드는 `photo` 테이블의 `imageable_id`와 `imageable_type` 입니다. 이 예제에서 ID는 소유어 있는 staff 또는 order의 ID 값을 포함하며, type은 소유 모델의 클래스명을 포함하고 있습니다. 이 부분이 `imageable` 관계를 액세스 했을 경우, ORM이 어떤 타입의 소유 모델을 반환하는지 결정할 수 있도록 해줍니다.
 
 <a name="eager-loading"></a>
 ## Eager 로딩
@@ -354,7 +456,7 @@ Eager 로딩은 N + 1 쿼리 문제를 완화하기 위해 존재합니다. `Aut
 
 	}
 
-이제 다음의 코드를 생각해보세요.:
+이제, 다음의 코드를 생각해 보십시오.:
 
 	foreach (Book::all() as $book)
 	{
@@ -363,7 +465,7 @@ Eager 로딩은 N + 1 쿼리 문제를 완화하기 위해 존재합니다. `Aut
 
 이 반복문은 한개의 쿼리를 실행하여 테이블의 모든 book을 조회하고 각 책의 author을 조회하기 위해 또 다른 쿼리를 실행합니다. 그러므로 25개의 book이 있다면 이 반복문은 26개의 쿼리를 실행할 겁니다.
 
-고맙게도 eager 로딩을 사용하여 쿼리 갯수를 대폭 줄일 수 있습니다. `with` 메소드를 통해 관계된 것들을 eager 로딩 할 수 있습니다.:
+고맙게도, eager 로딩을 사용하여 쿼리 갯수를 대폭 줄일 수 있습니다. `with` 메소드를 통해 관계된 것들을 eager 로딩 할 수 있습니다.:
 
 	foreach (Book::with('author')->get() as $book)
 	{
@@ -376,7 +478,7 @@ Eager 로딩은 N + 1 쿼리 문제를 완화하기 위해 존재합니다. `Aut
 
 	select * from authors where id in (1, 2, 3, 4, 5, ...)
 
-eager 로딩을 현명하게 사용하면 어플리케이션의 퍼포먼스를 대폭 향상 시킬 수 있습니다.
+eager 로딩의 현명한 사용은 어플리케이션의 퍼포먼스를 대폭 향상 시킬 수 있습니다.
 
 또한 다수의 관계를 한번에 eager 로딩 할 수 있습니다.:
 
@@ -390,7 +492,7 @@ eager 로딩을 현명하게 사용하면 어플리케이션의 퍼포먼스를 
 
 ### Eager 로딩 제약
 
-때때로 조건을 지정하여 eager 로딩을 할 수도 있습니다. 다음의 예제를 보세요.:
+때때로 조건을 지정하여 eager 로딩을 할 수도 있습니다. 다음의 예제를 보십시오.:
 
 	$users = User::with(array('posts' => function($query)
 	{
@@ -401,7 +503,7 @@ eager 로딩을 현명하게 사용하면 어플리케이션의 퍼포먼스를 
 
 ### Lazy Eager 로딩
 
-이미 존재 하는 모델 컬렉션에서 관련된 모델을 eager 로딩하는것 또한 가능 합니다. 캐시와 함께 조합하거나 관계된 모델을 로드 할지 않할지 다이내믹하게 결정하는데 유용합니다.
+이미 존재 하는 모델 컬렉션에서 관련된 모델을 eager 로딩하는것 또한 가능 합니다. 캐시와 함께 조합하거나 관계된 모델을 로드 할지 안할지 동적으로 결정하는데 유용합니다.
 
 	$books = Book::all();
 
@@ -410,7 +512,7 @@ eager 로딩을 현명하게 사용하면 어플리케이션의 퍼포먼스를 
 <a name="inserting-related-models"></a>
 ## 관계된 모델 삽입
 
-종종 새로운 관계된 모델을 삽입해야 할 때가 있습니다. 포스트에 새로운 코멘트를 남기는 경우를 예로 들 수 있습니다. 코멘트 모델의 `post_id`에 외래 키를 직접 설정 하는 것 대신, 코멘트의 부모 `Post` 모델에 직접 새로운 코멘트를 삽입할 수 있습니다.:
+종종 새로운 관계된 모델을 삽입해야 할 때가 있습니다. 포스트에 새로운 코멘트를 남기는 경우를 예로 들 수 있습니다. 코멘트 모델의 `post_id`에 외래 키를 직접 입력 하는 것 대신, 코멘트의 부모 `Post` 모델에 직접 새로운 코멘트를 삽입할 수 있습니다.:
 
 **관계된 모델 부여**
 
@@ -424,7 +526,7 @@ eager 로딩을 현명하게 사용하면 어플리케이션의 퍼포먼스를 
 
 ### 관계된 모델 삽입 (Many To Many)
 
-many-to-many 관계에서도 관계된 모델을 삽입 할 수 있습니다. `User`과 `Role` 모델을 계속 예제로 쓰겠습니다. `attach` 메소드를 사용하여 쉽게 새로운 role을 user에게 부여 할 수 있습니다.:
+many-to-many 관계에서도 관계된 모델을 삽입 할 수 있습니다. `User`과 `Role` 모델을 계속 예제로 보겠습니다. `attach` 메소드를 사용하여 쉽게 새로운 role을 user에게 부여 할 수 있습니다.:
 
 **Many To Many 모델 부여**
 
@@ -435,6 +537,10 @@ many-to-many 관계에서도 관계된 모델을 삽입 할 수 있습니다. `U
 또한, 피벗 테이블에 저장될 속성을 배열로 전달 할 수도 있습니다.:
 
 	$user->roles()->attach(1, array('expires' => $expires));
+
+물론, `attach`의 반대는 `detach` 입니다.:
+
+	$user->roles()->detach(1);
 
 `sync` 메소드를 사용하여 관계된 모델을 부여 할 수도 있습니다. `sync` 메소드는 피벗 테이블 삽입 할 ID의 배열을 받습니다. 이 오퍼레이션이 완료되면 배열에 있는 ID만 해당 모델의 피벗 테이블에 놓여집니다.:
 
@@ -452,10 +558,34 @@ many-to-many 관계에서도 관계된 모델을 삽입 할 수 있습니다. `U
 
 	User::find(1)->roles()->save($role, array('expires' => $expires));
 
+<a name="touching-parent-timestamps"></a>
+## 부모 타임스탬프 터치
+
+`Post`에 속해 있는 `Comment` 같이, 모델이 다른 모델에 '속해 있을(belongsTo)' 경우, 종종 자식의 모델이 업데이트 됐을 때 부모의 타임스탬프를 업데이트 하는 것이 도움이 될때가 있습니다. 예를 들어 `Comment` 모델이 업데이트 됐을 경우, 부모인 `Post`의 `updated_at` 타임스탬프를 자동으로 터치하길 원할 수도 있습니다. 엘로퀀트는 이것을 쉽게 해줍니다. 그냥 자식 모델에 관계된 모델 명을 `touches` 속성에 추가해 주면 됩니다.:
+
+	class Comment extends Eloquent {
+
+		protected $touches = array('post');
+
+		public function post()
+		{
+			return $this->belongsTo('Post');
+		}
+
+	}
+
+이제, `Comment`를 업데이트 할때마다, 부모 `Post`는 업데이트 된 `updated_at` 컬럼을 가지게 됩니다.:
+
+	$comment = Comment::find(1);
+
+	$comment->text = 'Edit to this comment!';
+
+	$comment->save();
+
 <a name="working-with-pivot-tables"></a>
 ## 피벗 테이블과 함께 작업
 
-이미 배운바와 같이 many-to-many 관계는 중간 테이블이 필요합니다. 엘로퀀트는 이 테이블과 상호작용 하는 매우 도움이 되는 방법들을 제공합니다. 예를 들어 `User` 객체가 해당 객체에 관계된 많은 `Role` 객체를 갖고있다고 합시다. 관계를 액세스 한다음 모델에서 `pivot` 테이블을 액세스 할수 있습니다.
+이미 배운바와 같이 many-to-many 관계는 중간 테이블을 필요로 합니다. 엘로퀀트는 이 테이블과 상호작용 하는 매우 도움이 되는 방법들을 제공합니다. 예를 들어 `User` 객체가 해당 객체에 관계된 많은 `Role` 객체를 갖고있다고 합시다. 관계를 액세스 한다음 모델에서 `pivot` 테이블을 액세스 할수 있습니다.
 
 	$user = User::find(1);
 
@@ -472,17 +602,17 @@ many-to-many 관계에서도 관계된 모델을 삽입 할 수 있습니다. `U
 
 이제 `foo`와 `bar` 속성이 `Role` 모델의 `pivot` 객체에서 액세스 가능합니다.
 
-피벗 테이블의 `created_at`과 `updated_at` 타임스탬프가 자동으로 관리되길 원한다면, 관계성 정의에 `withTimestamps` 메소드를 사용하세요.:
+피벗 테이블의 `created_at`과 `updated_at` 타임스탬프가 자동으로 관리되길 원한다면, 관계성 정의에 `withTimestamps` 메소드를 사용하십시오.:
 
 	return $this->belongsToMany('Role')->withTimestamps();
 
-모델의 피벗 테이블에 있는 모든 레코드를 삭제하려면 `delete` 메소드를 사용하세요.:
+모델의 피벗 테이블에 있는 모든 레코드를 삭제하려면 `delete` 메소드를 사용하십시오.:
 
 **피벗 테이블의 레코드 삭제**
 
 	User::find(1)->roles()->delete();
 
-이 작업은 `roles` 테이블의 레코드를 지우는게 아니라, 오직 피벗 테이블의 레코드만 지운다는것을 명심하세요.
+이 작업은 `roles` 테이블의 레코드를 삭제하는게 아니라, 오직 피벗 테이블의 레코드만 삭제한다는것을 명심하십시오.
 
 <a name="collections"></a>
 ## 컬렉션
@@ -524,7 +654,7 @@ many-to-many 관계에서도 관계된 모델을 삽입 할 수 있습니다. `U
 
 	});
 
-사용자 추가 메소드와 함께 사용자 정의 컬렉션 객체를 반환할 수도 있습니다. 엘로퀀트 모델의 `newCollection` 메소드를 치환하여 새로운 컬렉션을 반환합니다.:
+때때로, 사용자 추가 메소드와 함께 사용자 정의 컬렉션 객체를 반환할 수도 있습니다. 엘로퀀트 모델의 `newCollection` 메소드를 치환하여 새로운 컬렉션을 반환합니다.:
 
 **사용자 정의 컬렉션 타입 반환**
 
@@ -550,7 +680,7 @@ many-to-many 관계에서도 관계된 모델을 삽입 할 수 있습니다. `U
 <a name="accessors-and-mutators"></a>
 ## 게터 & 세터
 
-엘로퀀트는 모델 속성을 저장하거나 불러올때 모델 속성을 변형할수 있도록 하는 편리한 방법을 제공합니다. 간단히 모델에 `getFooAttribute` 메소드를 정의하여 게터를 선언할 수 있습니다. 데이터베이스의 컬럼이 스네이크 케이스일지라도 게터 메소드는 캐멀케이스를 형태를 따라야한다는 것을 명심하세요.
+엘로퀀트는 모델 속성을 저장하거나 불러올때 모델 속성을 변형할수 있도록 하는 편리한 방법을 제공합니다. 간단히 모델에 `getFooAttribute` 메소드를 정의하여 게터를 선언할 수 있습니다. 데이터베이스의 컬럼이 스네이크 케이스 일지라도 게터 메소드는 캐멀케이스를 형태를 따라야한다는 것을 명심하십시오.:
 
 **게터 정의**
 
@@ -563,7 +693,7 @@ many-to-many 관계에서도 관계된 모델을 삽입 할 수 있습니다. `U
 
 	}
 
-위의 예제에서 `first_name` 컬럼은 게터를 갖고 있습니다. 이 속성의 값이 게터로 전달 된다는 것에 주목하세요.
+위의 예제에서 `first_name` 컬럼은 게터를 갖고 있습니다. 이 속성의 값이 게터로 전달 된다는 것에 주목하십시오.
 
 세터 역시 비슷한 방법으로 선언됩니다.
 
@@ -578,40 +708,32 @@ many-to-many 관계에서도 관계된 모델을 삽입 할 수 있습니다. `U
 
 	}
 
-<a name="mass-assignment"></a>
-## 대량 할당(Mass Assignment)
+<a name="model-events"></a>
+## 모델 이벤트
 
-새로운 모델을 생성할때, 모델의 생성자에 속성배열을 전달합니다. 그러면 이 속성은 대량 할당을 통해 모델에 할당됩니다. 이 방법은 편리하지만, 무턱대고 사용자 입력을 모델로 전달할 경우, **심각한** 보안 문제가 될 수 있습니다. 만약 사용자 입력이 모델로 무턱대고 전달 된다면, 사용자는 모델의 **어떠한** 속성이나 **모든** 속성을 수정 할 수 있습니다.
+엘로퀀트 모델은 다음의 메소드를 사용하여 라이프사이클의 다양한 포인트에서 이벤트를 연결할수 있도록 해줍니다.: `creating`, `created`, `updating`, `updated`, `saving`, `saved`, `deleting`, `deleted`. 만약 `creating`, `updating`, 또는 `saving` 이벤트로부터 `false`가 반환된다면 그 액션은 취소됩니다.:
 
-속성을 할당하는 좀 더 보안적인 접근은 수동으로 할당하거나, 모델에 `fillable` 이나 `guarded` 속성(property)을 설정 하는겁니다.
+**이벤트를 통한 저장 오퍼레이션 중지**
 
-`fillable` 속성(property)은 어떤 속성(attributes)들이 대량 할당을 통해 할당 가능한지 명시합니다. 이 속성(property)은 클래스나 인스턴스 레벨에서 설정할 수 있습니다.
+	User::creating(function($user)
+	{
+		if ( ! $user->isValid()) return false;
+	});
 
-**모델에 메울수 있는 속성 정의**
+엘로퀀트는 또한 당신의 이벤트 바인딩을 동록할수 있는 편리한 위치인 static `boot` 메소드를 포함하고 있습니다.
 
-	class User extends Eloquent {
-
-		protected $fillable = array('first_name', 'last_name', 'email');
-
-	}
-
-이 예제를 보면, 나열된 3개의 속성만 대량 할당을 통해 할당 될 수 있습니다. 
-
-`fillabel`의 반대는 `guarded` 입니다. "화이트리스트: 대신 "블랙리스트"처럼 사용됩니다.:
-
-**모델에 보호된 속성 정의**
+**모델 부트 메소드 설정**
 
 	class User extends Eloquent {
 
-		protected $guarded = array('id', 'password');
+		public static function boot()
+		{
+			parent::boot();
+
+			// Setup event bindings...
+		}
 
 	}
-
-위 예제에서, `id`와 `password` 속성은 대량 할당을 통해 할당 될 수 **없습니다**. 나머지 다른 모든 속성은 대량 할당 될수 있습니다. 이 메소드를 사용하여 **모든** 속성을 대량 할당으로 부터 막을 수 있습니다.:
-
-**대량 할당으로부터 모든 속성을 차단**
-
-	protected $guarded = array('*');
 
 <a name="converting-to-arrays-or-json"></a>
 ## 배열 / JSON 으로 변환
@@ -624,7 +746,7 @@ JSON API를 구축할때, 종종 모델과 관계들을 배열이나 JSON으로 
 
 	return $user->toArray();
 
-모델의 전체 컬렉션 또한 배열s로 변환될 수 있습니다.:
+모델의 전체 컬렉션 또한 배열로 변환될 수 있습니다.:
 
 	return User::all()->toArray();
 
