@@ -459,7 +459,7 @@ Many-to-many 관계는 좀 더 복잡한 관계 타입입니다. 사용자(users
 
 **다형성 관계의 소유자 조회**
 
-	Photo::find(1);
+	$photo = Photo::find(1);
 
 	$imageable = $photo->imageable;
 
@@ -686,11 +686,11 @@ many-to-many 관계에서도 관계된 모델을 삽입 할 수 있습니다. `U
 
 	return $this->belongsToMany('Role')->withTimestamps();
 
-모델의 피벗 테이블에 있는 모든 레코드를 삭제하려면 `delete` 메소드를 사용하십시오.:
+모델의 피벗 테이블에 있는 모든 레코드를 삭제하려면 `detach` 메소드를 사용하십시오.:
 
 **피벗 테이블의 레코드 삭제**
 
-	User::find(1)->roles()->delete();
+	User::find(1)->roles()->detach();
 
 이 작업은 `roles` 테이블의 레코드를 삭제하는게 아니라, 오직 피벗 테이블의 레코드만 삭제한다는것을 명심하십시오.
 
