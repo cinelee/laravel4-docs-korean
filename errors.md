@@ -6,6 +6,7 @@
 - [404 에러 핸들링](#handling-404-errors)
 - [로그](#logging)
 
+<a name="error-detail"></a>
 ## 에러 세부정보
 
 어플리케이션의 에러 세부정보는 자동적으로 켜져있습니다. 에러가 발생했을 경우, 자세한 스택 추적과 에러 메시지를 함께 애러 페이지에 표시 해줍니다. `app/config/app.php` 파일의 `debug` 옵션을 `false` 로 설정하면 세부정보를 사용하지 않을 수 있습니다. **production 환경에서는 에러 세부정보를 사용하지 않기를 강력히 권합니다.**
@@ -34,6 +35,13 @@
 		Log::error($exception);
 
 		return 'Sorry! Something is wrong with this account!';
+	});
+
+PHP fatal 에러를 수신 하려면 `App::fatal` 메소드를 사용합니다.:
+
+	App::fatal(function($exception)
+	{
+		//
 	});
 
 <a name="http-exceptions"></a>
@@ -77,3 +85,12 @@ Laravel의 로그는 강력한 [Monolog](http://github.com/seldaek/monolog)의 �
 Monolog는 로그에 사용할 다양한 추가적인 로그 핸들러를 포함하고 있습니다. 필요한 경우, Laravel에서 사용되는 기본 Monolog 인스턴스에 액세스 할 수 있습니다.:
 
 	$monolog = Log::getMonolog();
+
+또한 로그에 전달되는 모든 메시지를 받는 이벤트를 등록할 수도 있습니다.:
+
+**로그 수신자 등록**
+
+	Log::listen(function($level, $message, $context)
+	{
+		//
+	});

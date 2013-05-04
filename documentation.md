@@ -11,7 +11,7 @@
     - [컨트롤러](/docs/controllers)
     - [에러 & 로그](/docs/errors)
 - Learning More
-    - [캐싱](/docs/cache)
+    - [캐시](/docs/cache)
     - [이벤트](/docs/events)
     - [폼 & HTML](/docs/html)
     - [IoC 컨테이너](/docs/ioc)
