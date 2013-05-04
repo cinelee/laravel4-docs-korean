@@ -654,6 +654,22 @@ many-to-many 관계에서도 관계된 모델을 삽입 할 수 있습니다. `U
 
 	});
 
+**컬렉션에서 객체에 콜백 적용**
+
+	$roles = User::find(1)->roles;
+	
+	$roles->each(function($role)
+	{
+		//	
+	});
+
+**값으로 컬렉션을 정렬**
+
+	$roles = $roles->sortBy(function($role)
+	{
+		return $role->created_at;
+	});
+	
 때때로, 사용자 추가 메소드와 함께 사용자 정의 컬렉션 객체를 반환할 수도 있습니다. 엘로퀀트 모델의 `newCollection` 메소드를 치환하여 새로운 컬렉션을 반환합니다.:
 
 **사용자 정의 컬렉션 타입 반환**
@@ -666,16 +682,6 @@ many-to-many 관계에서도 관계된 모델을 삽입 할 수 있습니다. `U
 		}
 
 	}
-
-**컬렉션에서 객체에 콜백 적용**
-
-	$roles = User::find(1)->roles;
-	
-	$roles->each(function($role)
-	{
-		//	
-	});
-	
 
 <a name="accessors-and-mutators"></a>
 ## 게터 & 세터
