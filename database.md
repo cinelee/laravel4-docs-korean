@@ -55,3 +55,7 @@ Laravel은 데이터베이스 접속과 쿼리 실행을 매우 간단하게 만
 `DB::connection` 메소드를 사용하여 다수의 커넥션을 사용할 수 있습니다.:
 
 	$users = DB::connection('foo')->select(...);
+
+때때로 주어진 데이터베이스로 재접속을 해야할 때가 있습니다.:
+
+	DB::reconnect('foo');
