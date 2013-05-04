@@ -4,6 +4,7 @@
 - [기본적인 사용법](#basic-usage)
 - [대량 할당(Mass Assignment)](#mass-assignment)
 - [삽입(Insert), 수정(Update), 삭제(Delete)](#insert-update-delete)
+- [소프트 삭제](#soft-deleting)
 - [타임스탬프(Timestamps)](#timestamps)
 - [쿼리 스코프](#query-scopes)
 - [관계성(Relationships)](#relationships)
@@ -218,6 +219,47 @@ Laravel에 포함된 엘로퀀트 ORM은 데이터베이스 작업을 위한 아
 		}
 
 	}
+
+<a name="soft-deleting"></a>
+## 소프트 삭제
+
+모델을 소프트 삭제하면, 데이터베이스에서 실제로 삭제 되진 않습니다. 대신, 레코드에 `deleted_at` 타임스탬프가 설정됩니다. 모델에 소프트 삭제를 활성시키려면, 모델의 `softDelete` 속성을 지정하면 됩니다.:
+
+	class User extends Eloquent {
+
+		protected $softDelete = true;
+
+	}
+
+이제, 모델의 `delete` 메소드가 호출되면, `deleted_at` 컬럼이 현재의 타임스탬프로 업데이트 됩니다. 소프트 삭제를 사용하는 모델을 질의 할 경우, "삭제된" 모델은 질의 결과에 포함되지 않습니다. `withTrashed` 메소드를 사용하여 소프트 삭제된 모델들을 결과에 나타나게 할 수 있습니다.:
+
+**소프트 삭제된 모델들을 결과에 포함**
+
+	$users = User::withTrashed()->where('account_id', 1)->get();
+
+**오직** 소프트 삭제된 모델들만 결과로 받으려면 `trashed` 메소드를 사용합니다.:
+
+	$users = User::trashed()->where('account_id', 1)->get();
+
+소프트 삭제된 모델을 활성화 상태로 복구 하려면, `restore` 메소드를 사용합니다.:
+
+	$user->restore();
+
+질의에 `restore` 메소드를 사용 할 수도 있습니다.:
+
+	User::withTrashed()->where('account_id', 1)->restore();
+
+관계성에서도 `restore` 메소드를 사용 할 수 있습니다.:
+
+	$user->posts()->restore();
+
+만약 모델이 진짜로 삭제되길 원한다면, `forceDelete` 메소드를 사용하여 데이터베이스에서 삭제 할 수 있습니다.:
+
+	$user->forceDelete();
+
+`forceDelete` 메소드는 관계성에서도 작동합니다.:
+
+	$user->posts()->forceDelete();
 
 <a name="query-scopes"></a>
 ## 쿼리 스코프
