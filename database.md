@@ -2,6 +2,7 @@
 
 - [설정](#configuration)
 - [쿼리 실행](#running-queries)
+- [데이터베이스 트랜잭션](#database-transactions)
 - [커넥션 액세스](#accessing-connections)
 
 <a name="configuration"></a>
@@ -47,6 +48,18 @@ Laravel은 데이터베이스 접속과 쿼리 실행을 매우 간단하게 만
 	DB::listen(function($sql, $bindings, $time)
 	{
 		//
+	});
+
+<a name="database-transactions"></a>
+## 데이터베이스 트랜잭션
+
+`transaction` 메소드를 사용하여 데이터베이스 트랜잭션에서 여러 연산을 할 수 있습니다.:
+
+	DB::transaction(function()
+	{
+		DB::table('users')->update(array('votes' => 1));
+
+		DB::table('posts')->delete();
 	});
 
 <a name="accessing-connections"></a>
