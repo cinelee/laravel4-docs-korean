@@ -2,6 +2,7 @@
 
 - [소개](#introduction)
 - [구성환경 설정](#environment-configuration)
+- [점검 모드](#maintenance-mode)
 
 <a name="introduction"></a>
 ## 소개
@@ -61,3 +62,16 @@ Laravel 프레임워크의 모든 설정 파일은 `app/config` 디렉토리에 
 **현재의 어플리케이션 구성환경 액세스**
 
 	$environment = App::environment();
+
+<a name="maintenance-mode"></a>
+## 점검 모드
+
+어플리케이션이 점검 모드일 경우, 어플리케이션의 모든 라우트에 사용자 정의 점검 뷰가 표시됩니다. 점검 모드는 어플리케이션이 업데이트 되는 동안 어플리케이션을 쉽게 "사용 중지" 상태로 만들어 줍니다. `App:down` 메소드는 이미 `app/start/global.php` 파일에 구현되어 있습니다. 어플리케이션이 점검 모드 일 때 이 메소드의 응답이 사용자에게 보내지게 됩니다.
+
+간단히 아티즌 커맨드에 `down` 메소드를 실행하여 점검모드를 활성화 할 수 있습니다.:
+
+	php artisan down
+
+점검 모드를 비활성화 하려면 `up` 커맨드를 사용합니다.:
+
+	php artisan up
