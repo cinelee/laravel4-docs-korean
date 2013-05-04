@@ -125,6 +125,15 @@ The `controller` 메소드는 두개의 인수를 받습니다. 첫번째는 컨
 
 	public function getAdminProfile() {}
 
+`controller` 메소드는 또한 일부 메소드의 라우트명을 쉽게 지정할 수 있도록 세번째 인자를 옵션으로 받습니다. :
+
+**RESTful 컨트롤러 액션에 라우트명을 부여**
+
+	Route::controller('users', 'UserController', array(
+		'showProfile'   => 'profile',
+		'showDashboard' => 'dashboard',
+	));
+
 <a name="resource-controllers"></a>
 ## 리소스 컨트롤러
 
