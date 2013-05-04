@@ -1,14 +1,15 @@
-# 캐싱
+# 캐시
 
 - [설정](#configuration)
 - [캐시 사용법](#cache-usage)
 - [증가 & 감소](#increments-and-decrements)
-- [데이터베이스 캐싱](#database-cache)
+- [캐시 섹션](#cache-sections)
+- [데이터베이스 캐시](#database-cache)
 
 <a name="configuration"></a>
 ## 설정
 
-Laravel은 다양한 캐싱 시스템에 대한 통합 된 API를 제공합니다. 캐시 설정은 `app/config/cache.php` 파일에 있습니다. 이 파일에서 어플리케이션이 어떤 캐시 드라이버를 자동으로 사용할 지 지정할 수 있습니다. Laravel은 [Memcached](http://memcached.org)나 [Redis](http://redis.io)같이 인기있는 백엔드 캐시를 즉시 사용할 수 있도록 지원합니다.
+Laravel은 다양한 캐시 시스템에 대한 통합 된 API를 제공합니다. 캐시 설정은 `app/config/cache.php` 파일에 있습니다. 이 파일에서 어플리케이션이 어떤 캐시 드라이버를 자동으로 사용할 지 지정할 수 있습니다. Laravel은 [Memcached](http://memcached.org)나 [Redis](http://redis.io)같이 인기있는 백엔드 캐시를 즉시 사용할 수 있도록 지원합니다.
 
 또한 캐시 설정 파일은 문서화 되어있는 다양한 옵션을 포함하고 있으므로 이 옵션들을 꼼꼼히 읽어보시길 바랍니다. 기본적으로, Laravel은 시리얼라이즈된 캐시 오브젝트를 파일시스템에 저장하는 `file` 캐시 드라이버를 사용 하도록 설정되어 있습니다. 규모가 큰 어플리케이션의 경우, Memcached나 APC등의 메모리 캐시를 사용 할 것을 권장합니다.
 
@@ -60,7 +61,7 @@ Laravel은 다양한 캐싱 시스템에 대한 통합 된 API를 제공합니�
 <a name="increments-and-decrements"></a>
 ## 증가 & 감소
 
-`file`과 `database`를 제외한 모든 드라이버는 `증가`와 `감소` 명령을 제공합니다.:
+`file`과 `database`를 제외한 모든 드라이버는 `증가`와 `감소` 연산을 제공합니다.:
 
 **값을 증가**
 
@@ -73,6 +74,29 @@ Laravel은 다양한 캐싱 시스템에 대한 통합 된 API를 제공합니�
 	Cache::decrement('key');
 
 	Cache::decrement('key', $amount);
+
+<a name="cache-sections"></a>
+## 캐시 섹션
+
+> **노트:** `file` 또는 `database` 캐시 드라이버에서는 캐시 세션이 제공되지 않습니다.
+
+캐시 섹션은 관련된 아이템들을 캐시에 그룹화 해주며 섹션 전체를 지울 수 있게 해줍니다. `section` 메소드를 사용하여 섹션을 액세스 할 수 있습니다.:
+
+**캐시 섹션 액세스**
+
+	Cache::section('people')->put('John', $john);
+
+	Cache::section('people')->put('Anne', $anne);
+
+섹션에 캐시된 아이템을 액세스 하는 것도 가능하며, `increment` 와 `decrement` 같은 다른 캐시 메소드 또한 사용할 수 있습니다.:
+
+** 캐시 섹션에 있는 아이템 액세스**
+
+	$anne = Cache::section('people')->get('Anne');
+
+그리고 섹션에 있는 모든 아이템 제거:
+
+	Cache::section('people')->flush();
 
 <a name="database-cache"></a>
 ## 데이터베이스 캐시
