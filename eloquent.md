@@ -7,6 +7,7 @@
 - [타임스탬프(Timestamps)](#timestamps)
 - [쿼리 스코프](#query-scopes)
 - [관계성(Relationships)](#relationships)
+- [Querying Relations](#querying-relations)
 - [Eager 로딩](#eager-loading)
 - [관계된 모델 삽입](#inserting-related-models)
 - [부모 타임스탬프 터치](#touching-parent-timestamps)
@@ -441,6 +442,19 @@ Many-to-many 관계는 좀 더 복잡한 관계 타입입니다. 사용자(users
 		imageable_type - string
 
 여기에서 중요한 필드는 `photo` 테이블의 `imageable_id`와 `imageable_type` 입니다. 이 예제에서 ID는 소유어 있는 staff 또는 order의 ID 값을 포함하며, type은 소유 모델의 클래스명을 포함하고 있습니다. 이 부분이 `imageable` 관계를 액세스 했을 경우, ORM이 어떤 타입의 소유 모델을 반환하는지 결정할 수 있도록 해줍니다.
+
+<a name="querying-relations"></a>
+## 관계 질의
+
+모델에서 레코드를 액세스 할 때, 관계된 레코드의 존재를 기반으로 결과를 제한 하고 싶을 때가 있습니다. 최소한 한개의 코멘트를 가진 모든 블로그 포스트를 액세스 할 경우를 예로 들수 있습니다. 이럴 경우 `has` 메소드를 사용하여 할 수 있습니다.:
+
+**선택할 때 관계 확인**
+
+	$posts = Post::has('comments')->get();
+
+또한, 연산자와 카운트를 명시 할 수도 있습니다.:
+
+	$posts = Post::has('comments', '>=', 3)->get();
 
 <a name="eager-loading"></a>
 ## Eager 로딩
