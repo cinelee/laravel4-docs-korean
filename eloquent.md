@@ -794,3 +794,7 @@ JSON API를 구축할때, 종종 모델과 관계들을 배열이나 JSON으로 
 		protected $hidden = array('password');
 
 	}
+
+반대로, `visible` 속성을 사용하여 화이트리스트를 정의 할 수 있습니다.:
+
+	protected $visible = array('first_name', 'last_name');
