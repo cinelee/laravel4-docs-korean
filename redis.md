@@ -46,7 +46,7 @@ The `cluster` option will tell the Laravel Redis client to perform client-side s
 
 	$values = $redis->lrange('names', 5, 10);
 
-커맨드의 인자는 단순히 매직 메소드에 전달됩니다. 물론 꼭 매직 메소드를 사용해야 하는 것은 아닙니다. `command` 메소드를 사용하여 커맨드를 서버에 전달 할 수 있습니다.:
+커맨드의 매개 변수는 단순히 매직 메소드에 전달됩니다. 물론 꼭 매직 메소드를 사용해야 하는 것은 아닙니다. `command` 메소드를 사용하여 커맨드를 서버에 전달 할 수 있습니다.:
 
 	$values = $redis->command('lrange', array(5, 10));
 

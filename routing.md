@@ -1,7 +1,7 @@
 # 라우팅
 
 - [기본 라우팅](#basic-routing)
-- [라우트 파라미터](#route-parameters)
+- [라우트 매개 변수](#route-parameters)
 - [라우트 필터](#route-filters)
 - [명칭이 붙여진 라우트](#named-routes)
 - [라우트 그룹](#route-groups)
@@ -49,21 +49,21 @@
 	$url = URL::to('foo');
 
 <a name="route-parameters"></a>
-## 라우트 파라미터
+## 라우트 매개 변수
 
 	Route::get('user/{id}', function($id)
 	{
 		return 'User '.$id;
 	});
 
-**선택적인 라우트 파라미터**
+**선택적인 라우트 매개 변수**
 
 	Route::get('user/{name?}', function($name = null)
 	{
 		return $name;
 	});
 
-**기본값이 부여된 선택적인 라우트 파라미터**
+**기본값이 부여된 선택적인 라우트 매개 변수**
 
 	Route::get('user/{name?}', function($name = 'John')
 	{
@@ -211,7 +211,7 @@
 <a name="sub-domain-routing"></a>
 ## 서브도메인 라우팅
 
-Laravel 라우트는 와일드카드 서브도메인을 처리할 수 있으며, 도메인의 와일드카드 파라미터를 넘겨 줍니다.:
+Laravel 라우트는 와일드카드 서브도메인을 처리할 수 있으며, 도메인의 와일드카드 매개 변수를 넘겨 줍니다.:
 
 **서브도메인 라우트 등록**
 

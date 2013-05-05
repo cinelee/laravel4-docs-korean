@@ -125,7 +125,7 @@ The `controller` 메소드는 두개의 인수를 받습니다. 첫번째는 컨
 
 	public function getAdminProfile() {}
 
-`controller` 메소드는 또한 일부 메소드의 라우트명을 쉽게 지정할 수 있도록 세번째 인자를 옵션으로 받습니다. :
+`controller` 메소드는 또한 일부 메소드의 라우트명을 쉽게 지정할 수 있도록 세번째 매개 변수를 옵션으로 받습니다. :
 
 **RESTful 컨트롤러 액션에 라우트명을 부여**
 
@@ -175,7 +175,7 @@ DELETE    | /resource/{id}        | destroy      | resource.destroy
 <a name="handling-missing-methods"></a>
 ## 누락된 메소드 처리
 
-주어진 컨트롤러에 해당하는 메소드가 없을 경우 호출되는 포괄적인 메소드를 정의 할 수 있습니다. 메소드 이름은 `missingMethod`이며 인수로는 인자 배열 한개만 받습니다.:
+주어진 컨트롤러에 해당하는 메소드가 없을 경우 호출되는 포괄적인 메소드를 정의 할 수 있습니다. 메소드 이름은 `missingMethod`이며 인수로는 매개 변수 배열 한개만 받습니다.:
 
 **포괄적인 메소드 정의**
 

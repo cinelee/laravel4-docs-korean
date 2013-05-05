@@ -43,11 +43,11 @@
 
 	return Redirect::route('login');
 
-**파라미터와 함께 명칭이 부여된 라우트로 리디렉트**
+**매개 변수와 함께 명칭이 부여된 라우트로 리디렉트**
 
 	return Redirect::route('profile', array(1));
 
-**명칭이 부여된 파라미터와 함께 명칭이 부여된 라우트로 리디렉트**
+**명칭이 부여된 매개 변수와 함께 명칭이 부여된 라우트로 리디렉트**
 
 	return Redirect::route('profile', array('user' => 1));
 
@@ -55,11 +55,11 @@
 
 	return Redirect::action('HomeController@index');
 
-**파라미터와 함께 컨트롤러 액션으로 리디렉팅**
+**매개 변수와 함께 컨트롤러 액션으로 리디렉팅**
 
 	return Redirect::action('UserController@profile', array(1));
 
-**명칭이 부여된 파라미터와 함께 컨트롤러 액션으로 리디렉팅**
+**명칭이 부여된 매개 변수와 함께 컨트롤러 액션으로 리디렉팅**
 
 	return Redirect::action('UserController@profile', array('user' => 1));
 
@@ -85,7 +85,7 @@
 		return View::make('greeting', array('name' => 'Taylor'));
 	});
 
-`View::make`로 전달되는 두번째 인자는 뷰에 제공하는 데이터 배열입니다.
+`View::make`로 전달되는 두번째 매개 변수는 뷰에 제공하는 데이터 배열입니다.
 
 **뷰에 데이터 전달**
 
