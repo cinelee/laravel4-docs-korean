@@ -80,6 +80,13 @@ Laravel `Schema` 클래스는 테이블 생성 하는데 관대한 방법을 제
 		$table->dropColumn('votes');
 	});
 
+**데이터베이스 테이블에서 다수의 컬럼 삭제**
+
+	Schema::table('users', function($table)
+	{
+		$table->dropColumn('votes', 'avatar', 'location');
+	});
+
 <a name="adding-indexes"></a>
 ## 인덱스 추가
 
