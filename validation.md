@@ -148,6 +148,7 @@ Laravel은 `Validation` 클래스를 통해 데이터를 검증하고 에러 메
 - [Numeric](#rule-numeric)
 - [Regular Expression](#rule-regex)
 - [Required](#rule-required)
+- [Required If](#rule-required-if)
 - [Required With](#rule-required-with)
 - [Same](#rule-same)
 - [Size](#rule-size)
@@ -293,10 +294,15 @@ Laravel은 `Validation` 클래스를 통해 데이터를 검증하고 에러 메
 
 검증에 포함된 필드는 값이 존재해야 합니다.
 
+<a name="rule-required-if"></a>
+#### required_if:_field_,_value_
+
+검증에 포함된 필드는 _field_와 _value_가 일치 할 경우 반드시 존재해야 합니다.
+
 <a name="rule-required-with"></a>
 #### required_with:_foo_,_bar_,...
 
-검증에 포함된 필드는 주어진 다른 필드에 값이 _있을때만_ 값이 있어야 합니다.
+검증에 포함된 필드는 주어진 다른 필드에 값이 _있을때 만_ 값이 있어야 합니다.
 
 <a name="rule-same"></a>
 #### same:_field_
@@ -387,6 +393,10 @@ Laravel은 도움이 되는 다양한 검증 규칙들을 제공합니다. 하�
 > **노트:** `extend` 메소드에 전달되는 규칙의 이름은 반드시 "스네이크 케이스"여야 합니다..
 
 사용자 정의 검증 클로저는 검증될 `$attribute`의 이름, 속성의 `$value`, 규칙에 전달되는 `$parameters` 배열 이렇게 3가지의 인수를 전달 받습니다.
+
+`extend` 메소드에 클로저 대신 클래스와 메소드를 전달 할수도 있습니다.:
+
+	Validator::extend('foo', 'FooValidator@validate');
 
 또한 사용자 정의 규칙에 대한 에러 메시지도 정의해야 합니다. 인라인 사용자 정의 메시지 배열을 사용하거나 규칙 언어 파일에 항목을 추가하여 에러 메시지를 정의 하면 됩니다.
 
