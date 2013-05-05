@@ -10,7 +10,7 @@
 
 HTTP 기반 어플리케이션은 비보존형이므로, 세션은 사용자 크로스 요청에 대한 정보를 저장하는 방법을 제공합니다. Laravel은 다양한 백엔드 세션을 깔끔하고, 톱합된 AIP를 통해 사용할 수 있도록해줍니다. [Memcached](http://memcached.org), [Redis](http://redis.io) 같은 유명한 백엔드와 데이터베이스가 기본적으로 포함되어 있습니다.
 
-세션 설정은  `app/config/session.php`에 저장되어 있습니다. 이 파일안에 있는 잘 정리된 옵셥들을 꼭 읽어 보시길 바랍니다. 기본적으로 laravel은 대부분의 어플리케이션에서 잘 작동하는 `cookie` 세션 드라이버를 사용하도록 설정되어 있습니다.
+세션 설정은  `app/config/session.php`에 저장되어 있습니다. 이 파일안에 있는 잘 정리된 옵셥들을 꼭 읽어 보시길 바랍니다. 기본적으로 laravel은 대부분의 어플리케이션에서 잘 작동하는 `native` 세션 드라이버를 사용하도록 설정되어 있습니다.
 
 <a name="session-usage"></a>
 ## 세션 사용법
@@ -78,5 +78,7 @@ HTTP 기반 어플리케이션은 비보존형이므로, 세션은 사용자 크
 물론 `session:table` 아티즌 커맨드를 사용하여 위의 마이그레이션을 생성할 수도 있습니다!
 
 	php artisan session:table
+
+	composer dump-autoload
 
 	php artisan migrate
