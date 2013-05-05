@@ -5,6 +5,7 @@
 - [테스트 환경](#test-environment)
 - [테스트에서 라우트 호출](#calling-routes-from-tests)
 - [Mocking Facades](#mocking-facades)
+- [프레임워크 보장(Assertions)](#framework-assertions)
 - [헬퍼 메소드](#helper-methods)
 
 <a name="introduction"></a>
@@ -104,6 +105,48 @@ Laravel은 유닛 테스팅을 염두하여 만들어졌습니다. 사실, PHPUn
 	}
 
 > **노트:** `Request` facade는 mock을 하면 안됩니다. 대신 테스트를 실행 할 때, `call` 메소드에 원하는 입력을 전달하면 됩니다.
+
+<a name="framework-assertions"></a>
+## 프레임워크 보장(Assertions)
+
+Laravel은 테스팅을 좀더 쉽게 하기위해 몇가지의 `assert` 메소드를 포함하고 있습니다.:
+
+**응답이 정상이라고 보장**
+
+	public function testMethod()
+	{
+		$this->call('GET', '/');
+
+		$this->assertResponseOk();
+	}
+
+**응답이 리디렉트라고 보장**
+
+	$this->assertRedirectedTo('foo');
+
+	$this->assertRedirectedToRoute('route.name');
+
+	$this->assertRedirectedToAction('Controller@method');
+
+**뷰가 몇몇의 데이터를 갖고 있다고 보장**
+
+	public function testMethod()
+	{
+		$this->call('GET', '/');
+
+		$this->assertViewHas('name');
+		$this->assertViewHas('age', $value);
+	}
+
+**세션이 몇몇의 데이터를 갖고 있다고 보장**
+
+	public function testMethod()
+	{
+		$this->call('GET', '/');
+
+		$this->assertSessionHas('name');
+		$this->assertSessionHas('age', $value);
+	}
 
 <a name="helper-methods"></a>
 ## 헬퍼 메소드
