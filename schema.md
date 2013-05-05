@@ -3,6 +3,7 @@
 - [소개](#introduction)
 - [테이블 생성 & 삭제](#creating-and-dropping-tables)
 - [컬럼 추가](#adding-columns)
+- [컬럼명 변경](#renaming-columns)
 - [컬럼 삭제](#dropping-columns)
 - [인덱스 추가](#adding-indexes)
 - [인덱스 삭제](#dropping-indexes)
@@ -76,6 +77,18 @@ Laravel `Schema` 클래스는 테이블 생성 하는데 관대한 방법을 제
 **MySQL에서 after 사용**
 
 	$table->string('name')->after('email');
+
+<a name="renaming-columns"></a>
+## 컬럼명 변경
+
+스키마 빌더의 `renameColumn` 메소드를 사용하여 컬럼명을 변경 할 수 있습니다.:
+
+**컬럼명 변경**
+
+	Schema::table('users', function($table)
+	{
+		$table->renameColumn('from', 'to');
+	});
 
 <a name="dropping-columns"></a>
 ## 컬럼 삭제
