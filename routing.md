@@ -7,6 +7,7 @@
 - [라우트 그룹](#route-groups)
 - [서브도메인 라우팅](#sub-domain-routing)
 - [라우트 접두사](#route-prefixing)
+- [라우트 모델 바인딩](#route-model-binding)
 - [404 에러 날리기](#throwing-404-errors)
 - [리소스 컨트롤러](#resource-controllers)
 
@@ -53,7 +54,7 @@
 
 **선택적인 라우트 파라미터**
 
-	Route::get('user/{name?}', function($name)
+	Route::get('user/{name?}', function($name = null)
 	{
 		return $name;
 	});
@@ -220,6 +221,40 @@ group 메소드의 배열 속성에 `prefix` 옵션을 사용하여 그룹화된
 			//
 		});
 
+	});
+
+<a name="route-model-binding"></a>
+## Route Model Binding
+
+모델 바인딩은 모델 인스턴스를 라우트에 삽입 시켜주는 편리한 방법을 제공합니다. 예를 들어, 사용자의 ID를 삽입하는것 대신, 주어진 ID와 일치하는 사용자 모델 인스턴스 전체를 라우트에 삽입시킬 수 있습니다. 먼저, `Route::model` 메소드를 사용하여 주어진 매개 변수에 사용될 모델을 명시 합니다.:
+
+**모델에 매개 변수를 바인딩**
+
+	Route::model('user', 'User');
+
+다음, `{user}` 매개 변수를 포함하고 있는 라우트를 정의 합니다.:
+
+	Route::get('profile/{user}', function(User $user)
+	{
+		//
+	});
+
+`{user}` 매개 변수를 'User` 모델에 바인딩 했으므로, `User` 인스턴스가 라우트에 삽입 될겁니다. 예를 들면, `profile/1`로의 요청은 ID 1을 갖고 있는 `User` 인스턴스를 삽입 할 겁니다.
+
+> **노트:** 만약 데이터베이스에 일치하는 모델 인스턴스가 없다면, 404 에러가 표시됩니다.
+
+만약 사용자 정의 "찾을수 없음"을 명시하려면, `model` 메소드의 세번째 인수에 클로저를 전달 하면 됩니다.:
+
+	Route::model('user', 'User', function()
+	{
+		throw new NotFoundException;
+	});
+
+때때로, 라우트 매개 변수에 당신만의 방법을 사용하길 원할수도 있습니다. 그럴댄, `Route::bind` 메소드를 사용하면 됩니다.:
+
+	Route::bind('user', function($value, $route)
+	{
+		return User::where('name', $value)->first();
 	});
 
 <a name="throwing-404-errors"></a>
