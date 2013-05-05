@@ -6,6 +6,7 @@
 - [명칭이 붙여진 라우트](#named-routes)
 - [라우트 그룹](#route-groups)
 - [서브도메인 라우팅](#sub-domain-routing)
+- [라우트 접두사](#route-prefixing)
 - [404 에러 날리기](#throwing-404-errors)
 - [리소스 컨트롤러](#resource-controllers)
 
@@ -198,6 +199,23 @@ Laravel 라우트는 와일드카드 서브도메인을 처리할 수 있으며,
 	{
 
 		Route::get('user/{id}', function($account, $id)
+		{
+			//
+		});
+
+	});
+
+<a name="route-prefixing"></a>
+## 라우트 접두사
+
+group 메소드의 배열 속성에 `prefix` 옵션을 사용하여 그룹화된 라우트들에 접두사를 추가 할 수 있습니다.:
+
+**그룹화된 라우트들dp 접두사 부여**
+
+	Route::group(array('prefix' => 'admin'), function()
+	{
+
+		Route::get('user', function()
 		{
 			//
 		});
