@@ -136,7 +136,7 @@ Laravel `Event` 클래스는 어플리케이션에서 이벤트들을 등록하�
 		 * @param  Illuminate\Events\Dispatcher  $events
 		 * @return array
 		 */
-		public static function subscribe($events)
+		public function subscribe($events)
 		{
 			$events->listen('user.login', 'UserEventHandler@onUserLogin');
 
