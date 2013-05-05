@@ -76,6 +76,8 @@ Laravel은 seed 클래스를 사용하여 데이터베이스에 테스트 데이
 		public function run()
 		{
 			$this->call('UserTableSeeder');
+
+			$this->command->info('User table seeded!');
 		}
 
 	}
