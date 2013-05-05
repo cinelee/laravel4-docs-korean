@@ -6,6 +6,7 @@
 - [컬럼 삭제](#dropping-columns)
 - [인덱스 추가](#adding-indexes)
 - [인덱스 삭제](#dropping-indexes)
+- [스토리지 엔진](#storage-engines)
 
 <a name="introduction"></a>
 ## 소개
@@ -121,3 +122,15 @@ Laravel `Schema` 클래스는 테이블 생성 하는데 관대한 방법을 제
 `$table->dropPrimary('users_id_primary');`  |  "users" 테이블의 primary key 삭제
 `$table->dropUnique('users_email_unique');`  |  "users" 테이블의 unique index 삭제
 `$table->dropIndex('geo_state_index');`  |  "geo" 테이블의 basic index 삭제
+
+<a name="storage-engines"></a>
+## 스토리지 엔진
+
+테이블의 스토리지 엔진을 설정 하려면, 스키마 빌더의 `engine` 속성을 설정하면 됩니다.:
+
+    Schema::create('users', function($table)
+    {
+        $table->engine = 'InnoDB';
+
+        $table->string('email');
+    });
