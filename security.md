@@ -40,27 +40,27 @@ Laravel `Hash` 클래스는 Bcrypt 해쉬 보안을 제공합니다.:
 
 	if (Auth::attempt(array('email' => $email, 'password' => $password)))
 	{
-		// 유효한 사용자 자격 증명
+		return Redirect::intended('dashboard');
 	}
 
-`email`은 단지 예를 들어 사용했을 뿐, 필수 옵션은 아닙니다. 데이터베이스의 "사용자아이디"에 해당하는 어떠한 컬럼명을 사용해도 좋습니다.
+`email`은 단지 예를 들어 사용했을 뿐, 필수 옵션은 아닙니다. 데이터베이스의 "사용자아이디"에 해당하는 어떠한 컬럼명을 사용해도 좋습니다. `Redirect::intended` 함수는 인증 필터에 의해 포착되기 전의 URL로 사용자를 리디렉트 시켜줍니다. 의도된 URL을 사용 할 수 없을 경우, 대체 URI로 이동하게 됩니다.
 
-어플리케이션에 "로그인 유지" 기능을 제공하려면, `attempt` 메소드의 두번째 인수에 사용자 인증을 무기한으로 유지하는(또는 수동으로 로그아웃 할 때까지) `true`를 전달하면 됩니다.:
+어플리케이션에 "기억하기" 기능을 제공하려면, `attempt` 메소드의 두번째 인수에 사용자 인증을 무기한으로 유지하는(또는 수동으로 로그아웃 할 때까지) `true`를 전달하면 됩니다.:
 
-**사용자를 인증하고 "계속 유지"**
+**사용자를 인증하고 "계속 기억"**
 
 	if (Auth::attempt(array('email' => $email, 'password' => $password), true))
 	{
 		// 사용자 로그인 유지
 	}
 
-**메모:** `attempt` 메소드가 `true`를 반환한다면 그 사용자는 로그인 된걸로 간주됩니다.
+**노트:** `attempt` 메소드가 `true`를 반환한다면 그 사용자는 로그인 된걸로 간주됩니다.
+
+또한, 인증 쿼리에 추가 조건을 더할 수도 있습니다.:
 
 **추가 조건과 함께 사용자 인증**
 
-추가 조건을 사용하여 사용자가 (예를 들어) '유효한지' 또는 '정지되지 않았는지'를 확인할 수 있습니다.:
-
-    if (Auth::attempt(array('email' => $email, 'password' => $password, 'active' => 1, 'suspended' => 0)))
+    if (Auth::attempt(array('email' => $email, 'password' => $password, 'active' => 1)))
     {
         // 사용자는 존재하고, 유효하며 정지되지 않음.
     }
@@ -113,7 +113,7 @@ Laravel `Hash` 클래스는 Bcrypt 해쉬 보안을 제공합니다.:
 
 Laravel은 크로스사이트 요청들로 부터 어플리케이션을 보호할 수 있는 간단한 메소드를 제공합니다.
 
-`csrf_token()` 또는 `Session::getToken()`를 사용하여 **폼에 CSRF 토큰 입력**
+**폼에 CSRf 토큰 삽입**
 
     <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
 
