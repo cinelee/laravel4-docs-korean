@@ -26,23 +26,15 @@
 <a name="creating-a-package"></a>
 ## 패키지 생성
 
-Laravel 패키지를 생성하는 가장 쉬운 방법은 `workbench` Artisan 커맨드입니다.
+Laravel 패키지를 생성하는 가장 쉬운 방법은 `workbench` Artisan 커맨드입니다. 먼저, `app/config/workbench.php` 파일에 몇가지 옵션을 설정해야 합니다. 이 파일에서, `name`과 `email` 옵션을 볼 수 있을 겁니다. 이 값들은 새로운 패키지의 `composer.json` 파일을 생성하는데 사용됩니다. 이 값들이 제공되고 나면 이제 워크벤치 패키지를 만들 준비가 끝났습니다!
 
 **워크벤치 Artisan 커맨드 실행**
 
-    php artisan workbench
+	php artisan workbench vendor/package --resources
 
-이 커맨드는 패키지의 이름과 벤더의 이름뿐만 아니라 개발자의 이름과 이메일 주소같은 몇개의 정보를 물어보는 메시지가 나타납니다. 이런 정보들은 패키지의 네임스페이스와 `composer.json` 파일을 생성하는데 쓰이게 됩니다.
+벤더 이름은 다른 개발자가 만든 같은 이름의 패키지로부터 자신의 패키지를 구별할 수 있는 방법입니다. 예를들어 만약 제가(Taylor Otwell) "Zapper"라는 이름의 새로운 패키지를 생성했다면, 패키지 이름은 `Zapper`인 반면 벤더 이름은 `Taylor`이 될 수 있습니다. 기본적으로, 워크벤치는 프레임워크 종류에 구애받지않는 패키지를 생성합니다. 그러나, `resources` 커맨드를 사용하면 워크벤치가 Laravel에서 쓰일 수 있는 `migrations`, `views`, `config` 등과 같은 디렉토리들도 만들도록 해줍니다.
 
-벤더 이름은 다른 개발자가 만든 같은 이름의 패키지로부터 자신의 패키지를 구별할 수 있는 방법입니다. 예를들어 만약 제가(Taylor Otwell) "Zapper"라는 이름의 새로운 패키지를 생성했다면, 패키지 이름은 `Zapper`인 반면 벤더 이름은 `Taylor`이 될 수 있습니다.
-
-`workbench` 커맨드가 실행되고 나면 패키지는 Laravel의 `workbench` 디렉토리에 생성됩니다. 그다음 **워크벤치 패키지의 루트 디렉토리 안에서** 패키지에 쓰일 오토로드 파일 생성과 의존된 모든 패키지들을 설치할 `composer install` 커맨드를 실행합니다. `workbench` 커맨드를 사용하여 패키지를 만들때 `--composer` 명령을 사용하여 이와같이 자동으로 한번에 할 수도 있습니다.:
-
-**워크벤치 패키지 생성과 컴포저 실행**
-
-	php artisan workbench --composer
-
-그다음 패키지에 생성된 `ServiceProvider`를 등록해야 합니다. `app/config/app.php` 파일의 `providers` 배열에 추가하여 서비스 제공자를 등록할 수 있습니다. 이렇게 하면 어플리케이션이 시작할때 Laravel에게 패키지를 로드하도록 지시합니다. 서비스 제공자는 `[Package]ServiceProvider`과 같은 네이밍 규칙을 사용합니다. 그러므로 위의 예제를 사용해보면 `providers` 배열에 `Taylor\Zapper\ZapperServiceProvider`를 추가해야 합니다.
+`workbench` 커맨드가 실행되고 나면 패키지는 Laravel의 `workbench` 디렉토리에 생성됩니다. 그다음 패키지에 생성된 `ServiceProvider`를 등록해야 합니다. `app/config/app.php` 파일의 `providers` 배열에 추가하여 서비스 제공자를 등록할 수 있습니다. 이렇게 하면 어플리케이션이 시작할때 Laravel에게 패키지를 로드하도록 지시합니다. 서비스 제공자는 `[Package]ServiceProvider`과 같은 네이밍 규칙을 사용합니다. 그러므로 위의 예제를 사용해보면 `providers` 배열에 `Taylor\Zapper\ZapperServiceProvider`를 추가해야 합니다.
 
 서비스 제공자가 등록되면 이제 패키지를 개발할 준비가 끝났습니다! 하지만, 개발을 시작하기 전, 아래의 섹션을 참조하여 패키지 구조나 개발 워크플로우에 좀 더 익숙해지길 바랍니다.
 
@@ -106,15 +98,15 @@ Laravel 패키지를 생성하는 가장 쉬운 방법은 `workbench` Artisan �
 <a name="package-routing"></a>
 ## 패키지 라우팅
 
-이전 버전의 Laravel에서는 `handles` 절이 어떤 URI를 패키지가 응답할 수 있는지 지정하는데 사용되었습니다. 하지만 Laravel 4 에서 패키지는 어떠한 URI에도 응답할 수 있습니다. 패키지에 라우트 파일을 로드하려면 간단하게 서비스 제공자의 `register` 메소드에 라우트 파일을 `include`하면 됩니다.
+이전 버전의 Laravel에서는 `handles` 절이 어떤 URI를 패키지가 응답할 수 있는지 지정하는데 사용되었습니다. 하지만 Laravel 4 에서 패키지는 어떠한 URI에도 응답할 수 있습니다. 패키지에 라우트 파일을 로드하려면 간단하게 서비스 제공자의 `boot` 메소드에 라우트 파일을 `include`하면 됩니다.
 
 **서비스 제공자에 라우트 파일 포함**
 
-	public function register()
+	public function boot()
 	{
 		$this->package('vendor/package');
 
-		include __DIR__.'/routes.php';
+		include __DIR__.'/../../routes.php';
 	}
 
 <a name="package-configuration"></a>
@@ -169,6 +161,8 @@ Laravel 패키지를 생성하는 가장 쉬운 방법은 `workbench` Artisan �
 몇몇의 패키지는 JavaScript, CSS, images 같은 에셋을 갖고 있습니다. 하지만 `vendor`나 `workbench` 디렉토리로 연결할 수 없기 때문에, 이러한 에셋들을 어플리케이션의 `public`  디렉토리로 옮길 필요가 있습니다. `asset:publish` 커맨드가 이러한 문제를 해결해줍니다.:
 
 **패키지 에셋을 Public으로 이동**
+
+	php artisan asset:publish
 
 	php artisan asset:publish vendor/package
 
