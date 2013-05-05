@@ -69,6 +69,10 @@ Laravel은 유닛 테스팅을 염두하여 만들어졌습니다. 사실, PHPUn
 
 	$this->assertEquals('John', $view['name']);
 
+`callSecure` 메소드를 사용하여 HTTPS 라우트를 호출 할 수 있습니다.:
+
+	$response = $this->callSecure('GET', 'foo/bar');
+
 ### 돔 크롤러
 
 또한 라우트를 요청하여 컨텐츠를 검사할 수 있는 돔 크롤러 인스턴스를 받을 수도 있습니다.:
