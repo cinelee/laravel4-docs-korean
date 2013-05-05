@@ -256,3 +256,11 @@ Laravel은 mcrypt PHP extension을 통해 강력한 AES-256 암호화 기능을 
 **값 복호화**
 
 	$decrypted = Crypt::decrypt($encryptedValue);
+
+또한 암호화 할때 사용되는 암호와 모드를 설정 할 수도 있습니다.:
+
+**암호와 모드 설정**
+
+	Crypt::setMode('crt');
+
+	Crypt::setCipher($cipher);
