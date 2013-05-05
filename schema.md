@@ -70,6 +70,12 @@ Laravel `Schema` 클래스는 테이블 생성 하는데 관대한 방법을 제
 `->default($value)`  |  컬럼의 기본값 선언
 `->unsigned()`  |  UNSIGNED INTEGER 설정
 
+만약 MySQL 데이터베이스를 사용하고 있다면, `after` 메소드를 사용하여 컬럼 순서를 지정 할 수 있습니다.:
+
+**MySQL에서 after 사용**
+
+	$table->string('name')->after('email');
+
 <a name="dropping-columns"></a>
 ## 컬럼 삭제
 
