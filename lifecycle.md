@@ -21,7 +21,7 @@ Laravel 요청 사이클은 아주 간단합니다. 어플리케이션에 요청
 <a name="application-events"></a>
 ## 어플리케이션 이벤트
 
-또한, `before` 와 `after` 어플리케이션 이벤트를 등록하여 전후 요청처리를 할수있습니다.:
+또한, `before`, `after`, `close`, `finish`, 그리고 `shutdown` 어플리케이션 이벤트를 등록하여 전후 요청처리를 할수있습니다.:
 
 **어플리케이션 이벤트 등록**
 
@@ -30,9 +30,9 @@ Laravel 요청 사이클은 아주 간단합니다. 어플리케이션에 요청
 		//
 	});
 
-	App::after(function()
+	App::after(function($request, $response)
 	{
 		//
 	});
 
-이 이벤트들은 각 요청의 전과 후에 실행됩니다.
+이 이벤트의 리스너들은 각 요청의 `전`과 `후`에 실행됩니다.
