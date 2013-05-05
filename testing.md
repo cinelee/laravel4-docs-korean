@@ -4,6 +4,7 @@
 - [테스트 정의 & 실행](#defining-and-running-tests)
 - [테스트 환경](#test-environment)
 - [테스트에서 라우트 호출](#calling-routes-from-tests)
+- [Mocking Facades](#mocking-facades)
 - [헬퍼 메소드](#helper-methods)
 
 <a name="introduction"></a>
@@ -78,6 +79,31 @@ Laravel은 유닛 테스팅을 염두하여 만들어졌습니다. 사실, PHPUn
 	$this->assertCount(1, $crawler->filter('h1:contains("Hello World!")'));
 
 크롤러 사용법은 [공식 매뉴얼](http://symfony.com/doc/master/components/dom_crawler.html)를 참조하세요.
+
+<a name="mocking-facades"></a>
+## Mocking Facades
+
+테스팅을 할때 종종 Laravel의 static facade의 호출을 흉내(mock)내고 싶을 경우가 있습니다. 예를 들어, 다음의 컨트롤러 액션을 잘 보십시오.:
+
+	public function getIndex()
+	{
+		Event::fire('foo', array('name' => 'Dayle'));
+
+		return 'All done!';
+	}
+
+여기서 [Mockery](https://github.com/padraic/mockery) mock 인스턴스를 반환하는 facade의 `shouldReceive` 메소드를 사용하여 `Event` 클래스로의 호출을 흉내낼(mock) 수 있습니다.
+
+**Mocking A Facade**
+
+	public function testGetIndex()
+	{
+		Event::shouldReceive('fire')->once()->with(array('name' => 'Dayle'));
+
+		$this->call('GET', '/');
+	}
+
+> **노트:** `Request` facade는 mock을 하면 안됩니다. 대신 테스트를 실행 할 때, `call` 메소드에 원하는 입력을 전달하면 됩니다.
 
 <a name="helper-methods"></a>
 ## 헬퍼 메소드
