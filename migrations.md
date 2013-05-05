@@ -45,7 +45,7 @@
 
 	php artisan migrate --package=vendor/package
 
-> **메모:** 마이그레이션을 실행하는 동안 "class not found" 에러가 발생한다면, `composer update` 커맨드를 실행한 후, 재시도 해보세요
+> **노트:** 마이그레이션을 실행하는 동안 "class not found" 에러가 발생한다면, `composer update` 커맨드를 실행한 후, 재시도 해보세요
 
 <a name="rolling-back-migrations"></a>
 ## 마이그레이션 롤백

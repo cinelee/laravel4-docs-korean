@@ -35,7 +35,7 @@ Laravel은 데이터베이스 접속과 쿼리 실행을 매우 간단하게 만
 
 	DB::delete('delete from users');
 
-> **메모:** `update`와 `delete` 문은 작업에 영향을 받은 행의 수를 반환합니다.
+> **노트:** `update`와 `delete` 문은 작업에 영향을 받은 행의 수를 반환합니다.
 
 **일반문 실행**
 

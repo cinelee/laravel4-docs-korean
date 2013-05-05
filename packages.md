@@ -84,7 +84,7 @@ Laravel 패키지를 생성하는 가장 쉬운 방법은 `workbench` Artisan �
 
 	return Config::get('package::group.option');
 
-> **메모:** 만약 패키지가 마이그레이션을 포함하고 있다면, 다른 패키지의 클래스명과 충돌을 피하기 위해 마이그레이션 이름 앞에 패키지 이름으로 접두어를 붙이는 것이 좋습니다.
+> **노트:** 만약 패키지가 마이그레이션을 포함하고 있다면, 다른 패키지의 클래스명과 충돌을 피하기 위해 마이그레이션 이름 앞에 패키지 이름으로 접두어를 붙이는 것이 좋습니다.
 
 <a name="development-workflow"></a>
 ## 개발 워크플로우
@@ -134,7 +134,7 @@ Laravel 패키지를 생성하는 가장 쉬운 방법은 `workbench` Artisan �
 
 이 커맨드가 실행되면, 패키지의 설정 파일들이 개발자가 안전하게 수정할 수 있는 `app/config/packages/vendor/package` 디렉토리로 복사 됩니다!
 
-> **메모:** 또한 개발자는 특정 환경에 따른 패키지의 설정 파일들을 `app/config/packages/vendor/package/environment`에 지정할 수 있습니다..
+> **노트:** 또한 개발자는 특정 환경에 따른 패키지의 설정 파일들을 `app/config/packages/vendor/package/environment`에 지정할 수 있습니다..
 
 <a name="package-migrations"></a>
 ## 패키지 마이그레이션

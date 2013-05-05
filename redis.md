@@ -58,7 +58,7 @@ The `cluster` option will tell the Laravel Redis client to perform client-side s
 
 	$values = Redis::lrange('names', 5, 10);
 
-> **메모:** 레디스 [캐시](/docs/cache)와 [세션](/docs/session) 드라이버는 Laravel에 이미 포함되어 있습니다.
+> **노트:** 레디스 [캐시](/docs/cache)와 [세션](/docs/session) 드라이버는 Laravel에 이미 포함되어 있습니다.
 
 <a name="pipelining"></a>
 ## 파이프라인 기법
