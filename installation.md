@@ -48,13 +48,14 @@ Laravel은 app/storage에 안에 있는 폴더에 쓰기 퍼미션을 요구합�
 
 Laravel 프레임워크는 index.php가 없는 URL 사용을 가능하게 해주는 `public/.htaccess` 파일을 포함하고 있습니다. 아파치를 사용한다면 반드시 `mod_rewrite` 모듈을 사용하도록 설정하길 바랍니다.
 
-만약 포함되어 있는 `.htaccess` 파일이 작동하지 않는다면 아래걸로 시도해 보시길 바랍니다.
+만약 포함되어 있는 `.htaccess` 파일이 작동하지 않는다면 아래걸로 시도해 보시길 바랍니다.:
 
 	Options +FollowSymLinks
-	RewriteEngine on
+	RewriteEngine On
+
+	RewriteCond %{REQUEST_FILENAME} !-d
+	RewriteRule ^(.+)/$ http://%{HTTP_HOST}/$1 [R=301,L]
 
 	RewriteCond %{REQUEST_FILENAME} !-f
-	RewriteCond %{REQUEST_FILENAME} !-d
-
-	RewriteRule . index.php [L]
-  
+	RewriteRule ^ index.php [L]
+ 
