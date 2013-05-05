@@ -407,9 +407,9 @@ Laravel은 도움이 되는 다양한 검증 규칙들을 제공합니다. 하�
 
 **사용자 정의 검증기 리졸버 등록**
 
-	Validator::resolver(function()
+	Validator::resolver(function($translator, $data, $rules, $messages)
 	{
-		return new CustomValidator;
+		return new CustomValidator($translator, $data, $rules, $messages);
 	});
 
 사용자 정의 검증 규칙을 만들 때, 에러 메시지에 쓸 사용자 정의 플레이스홀더를 정의해야 할때도 있습니다. 위에서 설명한 사용자 정의 검증기 클래스에 `relaceXXX` 메소드를 추가하여 플레이스홀더를 정의할 수 있습니다.
