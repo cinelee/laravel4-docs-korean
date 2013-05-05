@@ -144,6 +144,7 @@ Laravel은 `Validation` 클래스를 통해 데이터를 검증하고 에러 메
 - [Max](#rule-max)
 - [MIME Types](#rule-mimes)
 - [Min](#rule-min)
+- [Not In](#rule-not-in)
 - [Numeric](#rule-numeric)
 - [Regular Expression](#rule-regex)
 - [Required](#rule-required)
@@ -269,6 +270,11 @@ Laravel은 `Validation` 클래스를 통해 데이터를 검증하고 에러 메
 #### min:_value_
 
 검증에 포함된 필드는 최소 _value(값)_을 갖고있어야 합니다. 문자, 숫자, 파일은 `size` 규칙처럼 평가 됩니다.
+
+<a name="rule-not-in"></a>
+#### not_in:_foo_,_bar_,...
+
+검증에 포함된 필드는 주어진 값들에 포함되어 있지 않아야 합니다.
 
 <a name="rule-numeric"></a>
 #### numeric
