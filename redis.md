@@ -3,6 +3,7 @@
 - [소개](#introduction)
 - [설정](#configuration)
 - [사용법](#usage)
+- [파이프라인 기법](#pipelining)
 
 <a name="introduction"></a>
 ## 소개
@@ -15,12 +16,16 @@
 어플리케이션의 레디스 설정은 **app/config/database.php** 파일에 있습니다. 이 파일에서 어플리케이션에서 사용하는 레디스 서버를 포함하고 있는 **redis** 배열을 볼 수 있습니다.:
 
     'redis' => array(
+
+		'cluster' => true,
   
   		'default' => array('host' => '127.0.0.1', 'port' => 6379),
   
   	),
 
-기본 서버 설정은 로컬개발 환경에 충분합니다. 개발 환경에 따라 이 배열을 수정할 수 있습니다. 간단히 레디스 서버의 이름을 지정하고 호스트와 포트를 명시하면 됩니다.
+기본으로 설정되어 있는 서버로 개발을 하기에 충분 합니다. 그러나, 개발 환경에 따라 이 배열을 수정 할 수 있습니다. 간단히 레디스 서버의 이름을 지정하고 호스트와 포트를 명시하면 됩니다.
+
+The `cluster` option will tell the Laravel Redis client to perform client-side sharding across your Redis nodes, allowing you to pool nodes and create a large amount of available RAM. However, note that client-side sharding does not handle failover; therefore, is primarily suited for cached data that is available from another primary data store.
 
 <a name="usage"></a>
 ## 사용법
@@ -54,3 +59,18 @@
 	$values = Redis::lrange('names', 5, 10);
 
 > **메모:** 레디스 [캐시](/docs/cache)와 [세션](/docs/session) 드라이버는 Laravel에 이미 포함되어 있습니다.
+
+<a name="pipelining"></a>
+## 파이프라인 기법
+
+파이프라인 기법은 한번의 연산에 많은 커맨드들을 서버로 보낼 때 사용됩니다. 그렇게 하려면, `pipeline` 커맨드를 사용합니다.:
+
+**서버에 많은 커맨드들을 파이핑**
+
+	Redis::pipeline(function($pipe)
+	{
+		for ($i = 0; $i < 1000; $i++)
+		{
+			$pipe->set("key:$i", $i);
+		}
+	});
