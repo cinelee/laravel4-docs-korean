@@ -3,6 +3,7 @@
 - [설정](#configuration)
 - [기본적인 사용법](#basic-usage)
 - [인라인 첨부 사용](#embedding-inline-attachments)
+- [메일 대기(큐)](#queueing-mail)
 
 <a name="configuration"></a>
 ## 설정
@@ -70,3 +71,29 @@ Laravel은 유명한 [SwiftMailer](http://swiftmailer.org) 라이브러리를 �
 	</body>
 
 `$message` 변수는  `Mail` 클래스에 의해 항상 이베일 뷰에 전달 된다는 것을 주의 하십시오.
+
+<a name="queueing-mail"></a>
+## 메일 대기(큐)
+
+e-mail 메시지를 보내는 일은 어플리케이션의 응답 속도를 대폭 길게 만드므로, 많은 개발자들이 e-mail을 백그라운드에서 보낼 수 있도록 대기 시키는 방법을 선택합니다. Laravel은 내장된 [통합 큐 API](/docs/queue)를 사용해 이를 쉽게 할 수 있도록 해줍니다. 간단하게 `Mail` 클래스의 `queue` 메소드를 사용하여 메일을 대기 시킬 수 있습니다.:
+
+**메일 대기시키기**
+
+	Mail::queue('emails.welcome', $data, function($m)
+	{
+		$m->to('foo@example.com', 'John Smith')->subject('Welcome!');
+	});
+
+또한 `later` 메소드를 사용하여 메일을 몇 초 뒤에 보낼 지 명시 할수도 있습니다.:
+
+	Mail::later(5, 'emails.welcome', $data, function($m)
+	{
+		$m->to('foo@example.com', 'John Smith')->subject('Welcome!');
+	});
+
+어떤 큐나, "튜브"에 메일 메시지를 푸쉬 할 것인지 지정하려면, `queueOn`과 `laterOn` 메소드를 사용하여 그렇게 할 수 있습니다.:
+
+	Mail::queueOn('queue-name', 'emails.welcome', $data, function($m)
+	{
+		$m->to('foo@example.com', 'John Smith')->subject('Welcome!');
+	});
