@@ -5,6 +5,7 @@
 - [컬럼 추가](#adding-columns)
 - [컬럼명 변경](#renaming-columns)
 - [컬럼 삭제](#dropping-columns)
+- [존재 여부 확인](#checking-existence)
 - [인덱스 추가](#adding-indexes)
 - [인덱스 삭제](#dropping-indexes)
 - [스토리지 엔진](#storage-engines)
@@ -106,6 +107,25 @@ Laravel `Schema` 클래스는 테이블 생성 하는데 관대한 방법을 제
 	{
 		$table->dropColumn('votes', 'avatar', 'location');
 	});
+
+<a name="checking-existence"></a>
+## 존재 여부 확인
+
+`hasTable`와 `hasColumn` 메소드를 사용하여 테이블이나 컬럼이 존재하는지 쉽게 확인 할 수 있습니다.:
+
+**테이블의 존재 여부 확인**
+
+	if (Schema::hasTable('users'))
+	{
+		//
+	}
+
+**컬럼의 존재 여부 확인**
+
+	if (Schema::hasColumn('users', 'email'))
+	{
+		//
+	}
 
 <a name="adding-indexes"></a>
 ## 인덱스 추가
