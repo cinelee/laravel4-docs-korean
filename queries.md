@@ -39,6 +39,14 @@
 
 	$name = DB::table('users')->where('name', 'John')->pluck('name');
 
+**컬럼 값 리스트 조회**
+
+	$roles = DB::table('roles')->lists('title');
+
+이 메소드는 배열키가 role ID 로 되어 있고 값으로 role title을 갖고 있는 배열을 반환합니다. 사용자 정의 컬럼 키를 배열키로 지정 할 수도 있습니다.:
+
+	$roles = DB::table('roles')->lists('title', 'name');
+
 **조회절(select) 지정**
 
 	$users = DB::table('users')->select('name', 'email')->get();
@@ -46,6 +54,12 @@
 	$users = DB::table('users')->distinct()->get();
 
 	$users = DB::table('users')->select('name as user_name')->get();
+
+**이미 만든 쿼리에 select 절 추가**
+
+	$query = DB::table('users')->select('name');
+
+	$users = $query->addSelect('age')->get();
 
 **where 사용**
 
@@ -132,7 +146,7 @@
 **Exists절**
 
 	DB::table('users')
-	            ->whereExist(function($query)
+	            ->whereExists(function($query)
 	            {
 	            	$query->select(DB::raw(1))
 	            	      ->from('orders')
@@ -189,7 +203,7 @@
 **테이블에 레코드 삽입**
 
 	DB::table('users')->insert(
-		array('email' => 'john@example.com', 'votes' => 0),
+		array('email' => 'john@example.com', 'votes' => 0)
 	);
 
 만약 테이블에 auto-incrementing id가 있다면, `insertGetId` 메소드를 사용하여 레코드를 삽입하고 id를 조회할 수 있습니다.:
@@ -197,17 +211,17 @@
 **Auto-Increamenting ID와 함께 테이블에 레코드 삽입**
 
 	$id = DB::table('users')->insertGetId(
-		array('email' => 'john@example.com', 'votes' => 0),
+		array('email' => 'john@example.com', 'votes' => 0)
 	);
 
 > **메모:** PostgreSQL를 사용할 경우, insertGetId 메소드는 auto-increamting 항목 이름이 "id"로 명명되길 요구합니다.
 
 **테이블에 여러개의 레코드 삽입**
 
-	DB::table('users')->insert(
+	DB::table('users')->insert(array(
 		array('email' => 'taylor@example.com', 'votes' => 0),
 		array('email' => 'dayle@example.com', 'votes' => 0),
-	);
+	));
 
 <a name="updates"></a>
 ## 수정(Updates)
