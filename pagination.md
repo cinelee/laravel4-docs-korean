@@ -2,6 +2,7 @@
 
 - [설정](#configuration)
 - [사용법](#usage)
+- [페이지네이션 링크에 추가](#appending-to-pagination-links)
 
 <a name="configuration"></a>
 ## 설정
@@ -37,8 +38,26 @@
 
 페이지네이션 시스템을 만드는 필요한게 이것 뿐입니다! 프레임워크에게 현재 페이지를 알려줄 필요가 없었다는 것을 기억하세요. Laravel이 자동으로 알아낼겁니다.
 
+또한 다음의 메소드를 사용해 페이지네이션의 추가 정보를 액세스 할 수 있습니다.:
+
+- `getCurrentPage`
+- `getLastPage`
+- `getPerPage`
+- `getTotal`
+
 가끔 수동으로 아이템 배열을 첫번째 인수로 전달하여 페이지네이션을 생성하고 싶을때도 있을겁니다. 이럴땐 `Paginator::make` 메소드를 사용합니다.:
 
 **수동으로 페이지네이션 생성**
 
 	$paginator = Paginator::make($items, $totalItems, $perPage);
+
+<a name="appending-to-pagination-links"></a>
+## 페이지네이션 링크에 추가
+
+페이지네이터의 `appends` 메소드를 사용하여 페이지네이션 링크에 쿼리 스트링을 추가 할 수 있습니다.:
+
+	<?php echo $users->appends(array('sort' => 'votes'))->links(); ?>
+
+이는 아래와 같은 URL을 생성합니다.:
+
+	http://example.com/something?page=2&sort=vote
