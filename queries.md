@@ -9,6 +9,7 @@
 - [삽입(Inserts)](#inserts)
 - [수정(Updates)](#updates)
 - [삭제(Deletes)](#deletes)
+- [조합(Unions)](#unions)
 
 <a name="introduction"></a>
 ## 소개
@@ -246,3 +247,16 @@
 **truncate을 사용하여 모든 레코드 삭제**
 
 	DB::table('users')->truncate();
+
+<a name="unions"></a>
+## 조합(Unions)
+
+쿼리 빌더는 두 쿼리를 함께 "조합" 해주는 빠른 방법을 제공합니다.:
+
+**쿼리 조합 수행**
+
+	$first = DB::table('users')->whereNull('first_name');
+
+	$users = DB::table('users')->whereNull('last_name')->union($first)->get();
+
+`unionAll` 메소드 역시 제공되며, `union` 과 같은 특징을 갖고 있습니다.
