@@ -36,11 +36,7 @@
 
 	$input = Input::except('credit_card');
 
-Backbone 같은 몇몇의 자바스크립트 라이브러리는 JSON 형태로 어플리케이션에 입력을 보낼지도 모릅니다.
-
-**JSON 형태로 입력 값 조회**
-
-	$input = Input::json();
+Backbone 같은 몇몇의 자바스크립트 라이브러리는 JSON 형태로 어플리케이션에 입력을 보낼지도 모릅니다. 이 데이터들은 평소처럼 `Input::get`을 통해 액세스 할 수 있습니다.
 
 <a name="cookies"></a>
 ## 쿠키
@@ -141,6 +137,10 @@ Laravel 프레임워크에 의해 생성된 쿠키들은 암호화 되고 인증
 **요청 URL 조회**
 
 	$url = Request::url();
+
+**요청 URI의 일부분 조회**
+
+	$segment = Request::segment(1);
 
 **요청 헤더 조회**
 
