@@ -37,12 +37,16 @@
 		return 'Hello World';
 	});
 
-**라우트가 강제로 HTTPS에서 사용되도록 등록**
+**라우트가 HTTPS에서 사용되도록 등록**
 
 	Route::get('foo', array('https', function()
 	{
 		return 'Must be over HTTPS';
 	}));
+
+종종, 라우트로 향하는 URL을 생성 해야 할 때도 있습니다. 이럴땐, `URL::to` 메소드를 사용합니다.:
+
+	$url = URL::to('foo');
 
 <a name="route-parameters"></a>
 ## 라우트 파라미터
@@ -59,7 +63,7 @@
 		return $name;
 	});
 
-**선택적인 라우트 파라미터와 기본값**
+**기본값이 부여된 선택적인 라우트 파라미터**
 
 	Route::get('user/{name?}', function($name = 'John')
 	{
@@ -83,7 +87,7 @@
 <a name="route-filters"></a>
 ## 라우트 필터
 
-라우트 필터는 주어진 라우트에 대해 액세스를 제한하는 편리한 방법을 제공하며, 이는 인증이 필요한 사이트의 영역을 만드는데 유용합니다. Laravel 은 `auth` 필터, `guest` 필터, 그리고 `csrf` 필터를 포함하고 있습니다. 이 필터들은 `app/filters.php` 파일 안에 있습니다.
+라우트 필터는 주어진 라우트에 대해 액세스를 제한하는 편리한 방법을 제공하며, 이는 인증이 필요한 사이트의 영역을 만드는데 유용합니다. Laravel 은 `auth` 필터, `auth.basec` 필터, `guest` 필터, 그리고 `csrf` 필터를 포함하고 있습니다. 이 필터들은 `app/filters.php` 파일 안에 있습니다.
 
 **라우트 필터 정의**
 
@@ -95,7 +99,7 @@
 		}
 	});
 
-만약 응답이 필터에서 리턴되는 경우, 해당 응답은 요청에 의한 응답으로 간주되며 실제 라우트는 실행되지 않습니다.
+만약 필터에서 응답이 리턴되는 경우, 해당 응답은 요청에 의한 응답으로 간주되며 실제 라우트는 실행되지 않고, 그 라우트의 `다음(나머지)` 필터들 또한 취소 됩니다. 
 
 **라우트에 필터를 부여**
 
@@ -111,9 +115,9 @@
 		return 'You are authenticated and over 200 years old!';
 	}));
 
-**필터 파라미터 지정**
+**필터 매개 변수 지정**
 
-	Route::filter('age', function($value)
+	Route::filter('age', function($value, $request, $value)
 	{
 		//
 	});
@@ -122,6 +126,13 @@
 	{
 		return 'Hello World';
 	}));
+
+이후의 필터들은 필터의 세번째 인수를 `$response`로 전달 받습니다.:
+
+	Route::filter('log', function($route, $request, $response, $value)
+	{
+		//
+	});
 
 **패턴 베이스 필터**
 
@@ -138,7 +149,7 @@
 
 **필터 클래스**
 
-클로저 대신 클래스를 사용하여 좀더 나은 필터링을 할수있습니다. 필터 클래스가 어플리케이션의 [IoC 컨테이너](/docs/ioc) 밖에서 해결 되므로 높은 테스트성을 위해 이 필터에서 디펜던시 인젝션을 사용할 수 있습니다.
+클로저 대신 클래스를 사용하여 좀더 나은 필터링을 할수있습니다. 필터 클래스가 어플리케이션의 [IoC 컨테이너](/docs/ioc) 밖에서 해결되므로 높은 테스트성을 위해 이 필터에서 의존성 주입을 사용할 수 있습니다.
 
 **필터 클래스 정의**
 
@@ -158,18 +169,26 @@
 <a name="named-routes"></a>
 ## 명칭이 붙여진 라우트
 
-명칭이 붙여진 라우트는 리디렉트나 URL을 생성할때 좀더 편리하게 참조할 수 있습니다. 이처럼 라우트에 대한 명칭을 지정할 수 있습니다.:
+명칭이 붙여진 라우트는 리디렉트나 URL을 생성할때 좀더 편리하게 참조 될 수 있습니다. 이처럼 라우트에 대한 명칭을 지정할 수 있습니다.:
 
 	Route::get('user/profile', array('as' => 'profile', function()
 	{
 		//
 	}));
 
-그리고 나서, 라우트의 명칭을 사용하여 URL이나 리디렉트를 생성할 수 있습니다.:
+또한 컨트롤러 액션에 라우트 명을 지정할 수도 있습니다.:
+
+	Route::get('user/profile', array('as' => 'profile', 'uses' => 'UserController@showProfile'));
+
+이제, 라우트의 명칭을 사용하여 URL이나 리디렉트를 생성할 수 있습니다.:
 
 	$url = URL::route('profile');
 
 	$redirect = Redirect::route('profile');
+
+`currentRouteName` 메소드를 통해 현재 실행 중인 라우트의 이름을 액세스 할 수 있습니다.:
+
+	$name = Route::currentRouteName();
 
 <a name="route-groups"></a>
 ## 라우트 그룹
