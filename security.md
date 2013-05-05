@@ -4,6 +4,7 @@
 - [비밀번호 저장](#storing-passwords)
 - [사용자 인증](#authenticating-users)
 - [라우트 보호](#protecting-routes)
+- [HTTP 기본 인증](#http-basic-authentication)
 - [비밀번호 리마인더 & 리셋](#password-reminders-and-reset)
 - [암호화](#encryption)
 
@@ -122,6 +123,27 @@ Laravel은 크로스사이트 요청들로 부터 어플리케이션을 보호�
     {
         return 'You gave a valid CSRF token!';
     }));
+
+<a name="http-basic-authentication"></a>
+## HTTP 기본 인증
+
+HTTP 기본 인증은 "로그인" 전용 페이지 없이 유저를 어플리케이션에 인증 해주는 빠른 방법을 제공 합니다. 시작하려면, `auth.basic` 필터를 라우트에 추가하면 됩니다.:
+
+**HTTP 기본 인증으로 라우트 보호**
+
+	Route::get('profile', array('before' => 'auth.basic', function()
+	{
+		// Only authenticated users may enter...
+	}));
+
+세션에 사용자의 식별 쿠키 설정없이 HTTP 기본 인증을 사용 할 수도 있으며 이는 API 인증을 할때 특히 유용합니다. 이렇게 하려면, `onceBasic` 메소드를 반환하는 필터를 정의하면 됩니다.:
+
+**저장하지 않는 HTTP 기본 필터 설정**
+
+	Route::filter('basic.once', function()
+	{
+		return Auth::onceBasic();
+	});
 
 <a name="password-reminders-and-reset"></a>
 ## 비밀번호 리마인더 & 리셋
