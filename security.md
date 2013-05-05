@@ -70,6 +70,10 @@ Laravel `Hash` 클래스는 Bcrypt 해쉬 보안을 제공합니다.:
 
 	$email = Auth::user()->email;
 
+`loginUsingId` 메소드를 사용하여 사용자의 ID 만으로 간편하게 어플리케이션에 로그인 시킬 수 있습니다.:
+
+	Auth::loginUsingId(1);
+
 `validate` 메소드는 실제로 어플리케이션에 로그인 시키지 않고 사용자의 자격 증명을 검증할 수 있게 해줍니다.:
 
 **로그인 없이 사용자의 자격 증명 검증**
@@ -79,11 +83,11 @@ Laravel `Hash` 클래스는 Bcrypt 해쉬 보안을 제공합니다.:
 		//
 	}
 
-또한 단일 요청을 위해 `stateless` 메소드를 사용하여 사용자를 어플리케이션에 로그인 시킬 수 있습니다. 이 경우 세션이나 쿠키는 사용되지 않습니다.
+또한 단일 요청을 위해 `once` 메소드를 사용하여 사용자를 어플리케이션에 로그인 시킬 수 있습니다. 이 경우 세션이나 쿠키는 사용되지 않습니다.
 
 **단일 요청을 위해 사용자를 로그인**
 
-	if (Auth::stateless($credentials))
+	if (Auth::once($credentials))
 	{
 		//
 	}
@@ -110,7 +114,7 @@ Laravel은 크로스사이트 요청들로 부터 어플리케이션을 보호�
 
 `csrf_token()` 또는 `Session::getToken()`를 사용하여 **폼에 CSRF 토큰 입력**
 
-    <input type="hidden" name="csrf_token" value="<?php echo csrf_token(); ?>">
+    <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
 
 **제출된 CSRF 토큰을 검증**
 
@@ -198,13 +202,13 @@ Laravel은 크로스사이트 요청들로 부터 어플리케이션을 보호�
 
 다시 말하지만, 우리는 비밀번호를 리셋하는 도중 프레임워크에 의해 검출되는 오류를 표시하기 위해 `Session`을 사용하고 있습니다. 다음으로, 비밀번호를 리셋 처리를 위해 `POST` 라우트를 정의할 수 있습니다:
 
-	Route::post('password/reset', function()
+	Route::post('password/reset/{token}', function()
 	{
 		$credentials = array('email' => Input::get('email'));
 
 		return Password::reset($credentials, function($user, $password)
 		{
-			$user->password = $password;
+			$user->password = Hash::make($password);
 
 			$user->save();
 
