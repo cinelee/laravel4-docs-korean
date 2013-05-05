@@ -233,6 +233,10 @@ Laravel은 `Validation` 클래스를 통해 데이터를 검증하고 에러 메
 
 	'state' => 'exists:states,abbreviation'
 
+또한 쿼리의 "where" 절로 추가되는 조건을 더 명시 할 수도 있습니다.:
+
+	'email' => 'exists:staff,email,account_id,1'
+
 <a name="rule-image"></a>
 #### image
 
