@@ -14,7 +14,7 @@ Laravel은 의존성을 관리하기 위해 [Composer](http://getcomposer.org)�
 <a name="install-laravel"></a>
 ## Laravel 설치
 
-Composer가 설치되면 최신버전의 Laravel 프레임워크를 다운 받아 서버 디렉토리에 압축을 풉니다. 다음으로, 프레임 워크에 의존된 것을 설치하기 위해 Laravel 프레임워크의 루트에서 `php composer.phar install` 커맨드를 실행합니다. 이 과정이 성공적으로 완료되려면 서버에 Git이 설치되어 있어야 합니다.
+Composer가 설치되면 최신버전의 Laravel 프레임워크를 다운 받아 서버 디렉토리에 압축을 풉니다. 다음으로, 프레임워크에 의존된 것을 설치하기 위해 Laravel 프레임워크의 루트에서 `php composer.phar install` 커맨드를 실행합니다. 이 과정이 성공적으로 완료되려면 서버에 Git이 설치되어 있어야 합니다.
 
 <a name="server-requirements"></a>
 ## 서버 요구사항
@@ -33,7 +33,15 @@ Laravel은 설정이 거의 필요하지 않으므로 바로 개발을 시작해
 
 <a name="permissions"></a>
 ### 퍼미션
+
 Laravel은 app/storage에 안에 있는 폴더에 쓰기 퍼미션을 요구합니다.
+
+<a name="paths"></a>
+### Paths
+
+몇 개의 프레임워크 디렉토리 경로는 설정이 가능합니다. 이러한 디렉토리들의 위치를 변경하려면, `bootstrap/paths.php` 파일을 확인하기 바랍니다.
+
+> **노트:** Laravel은 공개가 필요한 파일들만 public 폴더에 위치시킴으로서 어플리케이션 코드와 로컬 스토리지를 보호합니다. public 폴더를 사이트의 documentRoot (웹 루트) 로 설정하거나, public 폴더의 내용을 사이트의 documentRoot 디렉토리에 위치시키고, Laravel의 나머지 모든 파일들은 웹 루트 밖으로 위치시키는 걸 권장합니다.
 
 <a name="pretty-urls"></a>
 ## Pretty URLs
