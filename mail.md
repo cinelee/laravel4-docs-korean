@@ -22,7 +22,7 @@ Laravel은 유명한 [SwiftMailer](http://swiftmailer.org) 라이브러리를 �
 
 `send` 메소드에 전달되는 첫번째 인수는 이메일의 바디로 사용될 뷰 파일의 이름입니다. 두번째 인수는 뷰에 전달 될 `$data` 이며, 세번째는 이메일 메시지에 다양한 옵션을 지정하게 해주는 클로저입니다.
 
-> **노트:** `$message` 변수는 항상 이베일 뷰에 전달되며, 인라인 첨부를 사용할 수 있게 해줍니다. 그러므로 뷰 페이로드에 `message` 이름의 변수 전달은 피하는게 좋습니다.
+> **노트:** `$message` 변수는 항상 이메일 뷰에 전달되며, 인라인 첨부를 사용할 수 있게 해줍니다. 그러므로 뷰 페이로드에 `message` 이름의 변수 전달은 피하는게 좋습니다.
 
 또한 HTML 뷰를 추가로 사용할 수 있는 플레인 텍스트 뷰를 지정할 수도 있습니다.:
 
@@ -70,7 +70,7 @@ Laravel은 유명한 [SwiftMailer](http://swiftmailer.org) 라이브러리를 �
 		<img src="<?php echo $message->embedData($data, $name); ?>">
 	</body>
 
-`$message` 변수는  `Mail` 클래스에 의해 항상 이베일 뷰에 전달 된다는 것을 주의 하십시오.
+`$message` 변수는  `Mail` 클래스에 의해 항상 이메일 뷰에 전달 된다는 것을 주의 하십시오.
 
 <a name="queueing-mail"></a>
 ## 메일 대기(큐)
