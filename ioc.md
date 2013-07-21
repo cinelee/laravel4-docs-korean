@@ -1,59 +1,63 @@
 # IoC Container
 
-- [Introduction](#introduction)
-- [Basic Usage](#basic-usage)
-- [Automatic Resolution](#automatic-resolution)
-- [Practical Usage](#practical-usage)
-- [Service Providers](#service-providers)
+- [소개](#introduction)
+- [기본 사용법](#basic-usage)
+- [자동 레졸루션](#automatic-resolution)
+- [실용적인 사용법](#practical-usage)
+- [서비스 프로바이더](#service-providers)
 
 <a name="introduction"></a>
-## Introduction
+## 소개
 
-The Laravel inversion of control container is a powerful tool for managing class dependencies. Dependency injection is a method of removing hard-coded class dependencies. Instead, the dependencies are injected at run-time, allowing for greater flexibility as dependency implementations may be swapped easily.
+Laravel의 Ioc 컨테이너(inversion of control container: 제어 컨테이너의 도치[순서바꿈])는 클래스 의존성을 관리하는 강력한 도구 입니다. 의존성 삽입(Dependency injection)은 하드코딩된 클래스간 의존성을 제거하는 하나의 방법입니다. 대신에 클래스의 의존성은 런타임시에 삽입되어 강력한 유연성을 제공하게 되고, 이로 인해 의존성 구현이 쉽게 변경될 수 있게 됨을 이야기 합니다. 
 
-Understanding the Laravel IoC container is essential to building a powerful, large application, as well as for contributing to the Laravel core itself.
+Laravel 코어 시스템이 그러하듯, IoC 컨테이너를 이해하는 것은 강력하고 더 큰 규모의 Laravel 어플리케이션을 만드는데 핵심입니다. 
 
 <a name="basic-usage"></a>
-## Basic Usage
+## 기본적인 사용 
 
-There are two ways the IoC container can resolve dependencies: via Closure callbacks or automatic resolution. First, we'll explore Closure callbacks. First, a "type" may be bound into the container:
+IoC 컨테이너를 사용하여 의존성을 해결하는데는 두가지 방법이 있습니다. 
+하나는 클로저 콜백을 사용하는 방법이고, 다른 하나는 자동 레졸루션을 사용하는 방법입니다. 
+그중 먼저 클로저 콜백을 살펴보겠습니다. 다음은 클로저 콜백으로 컨테이너에 바인딩 하는 방법 입니다. 
 
-**Binding A Type Into The Container**
+
+**클로저 콜백 컨테이너 바인딩 **
 
 	App::bind('foo', function()
 	{
 		return new FooBar;
 	});
 
-**Resolving A Type From The Container**
+**사용하는 부분**
 
 	$value = App::make('foo');
 
-When the `App::make` method is called, the Closure callback is executed and the result is returned.
+`App::make` 메소드가 실행될 때, 클로저 콜백에 의해서 실행된 결과가 리턴됩니다. 
 
-Sometimes, you may wish to bind something into the container that should only be resolved once, and the same instance should be returned on subsequent calls into the container:
 
-**Binding A "Shared" Type Into The Container**
+위의 예제는 매번 새로운 FooBar 인스턴스를 리턴하는데, 이와는 달리 때로는 컨테이너에 바인딩 된후 서브 시퀀스가 호출 할 때 동일한 인스턴스가 리턴되는 것을 원할 수도 있습니다. 
+
+**컨테이너에 공유된 형태로 바인딩**
 
 	App::singleton('foo', function()
 	{
 		return new FooBar;
 	});
 
-You may also bind an existing object instance into the container using the `instance` method:
+또는 이미 존재하는 객체의 인스턴스를 `instance` 메소드를 사용하여 컨테이너에 바인딩 할 수도 있습니다. 
 
-**Binding An Existing Instance Into The Container**
+**이미 존재하는 인스턴스를 컨테이너에 바인딩 **
 
 	$foo = new Foo;
 
 	App::instance('foo', $foo);
 
 <a name="automatic-resolution"></a>
-## Automatic Resolution
+## 자동 레졸루션 
 
-The IoC container is powerful enough to resolve classes without any configuration at all in many scenarios. For example:
+IoC 컨테이너는 특별한 설정없이 클래스 의존성을 알아서 해결 해 줍니다. 예를 들면 :
 
-**Resolving A Class**
+**클래스의 의존성 해결**
 
 	class FooBar {
 
@@ -66,17 +70,17 @@ The IoC container is powerful enough to resolve classes without any configuratio
 
 	$fooBar = App::make('FooBar');
 
-Note that even though we did not register the FooBar class in the container, the container will still be able to resolve the class, even injecting the `Baz` dependency automatically!
+`FooBar` 클래스를 컨테이너에 등록 하지 않더라도, 자동으로 알아서 의존성을 해줍니다. 심지어 내부의 `Baz` 클래스까지도 자동으로 삽입해주기 때문에 컨테이너는 여전히 클래스 의존성을 고려하지 않아도 됩니다. 
 
-When a type is not bound in the container, it will use PHP's Reflection facilities to inspect the class and read the constructor's type-hints. Using this information, the container can automatically build an instance of the class.
+이러한 동작은 컨테이너에 바인딩 되어 있지 않더라도, PHP 고유의 리플렉션 기능을 사용하여 클래스를 점검하고 생성자의 타입을 읽어들입니다. 이 정보를 통해서 컨테이너는 자동으로 클래스의 인스턴스를 빌드할 수 있습니다.  
 
-However, in some cases, a class may depend on an interface implementation, not a "concrete type". When this is the case, the `App::bind` method must be used to inform the container which interface implementation to inject:
+때때로 클래스는 인터페이스의 형태로 실제적이지 않을 수도 있습니다. 이경우 `App::bind` 메소드는 어떠한 인터페이스 구현이 삽입되는지 알려줍니다. 다음의 예를 보면 
 
-**Binding An Interface To An Implementation**
+**인터페이스에 실제 구현된 클래스를 바인딩**
 
 	App::bind('UserRepositoryInterface', 'DbUserRepository');
 
-Now consider the following controller:
+컨트롤러에서 사용된 형태:
 
 	class UserController extends BaseController {
 
@@ -86,15 +90,14 @@ Now consider the following controller:
 		}
 
 	}
-
-Since we have bound the `UserRepositoryInterface` to a concrete type, the `DbUserRepository` will automatically be injected into this controller when it is created.
+`UserRepositoryInterface`가 `DbUserRepository` 의 형태로 바인딩 되었기 때문에 `UserController`가 생성될때 자동으로 `DbUserRepository`가 삽입됩니다. 
 
 <a name="practical-usage"></a>
-## Practical Usage
+## 실제 사용 
 
-Laravel provides several opportunities to use the IoC container to increase the flexibility and testability of your application. One primary example is when resolving controllers. All controllers are resolved through the IoC container, meaning you can type-hint dependencies in a controller constructor, and they will automatically be injected.
+Laravel은 IoC 컨테이너를 사용하여 어플리케이션을 유연해지고 또한 테스트가 용이하도록 만듭니다. 하나의 주요한 예는 컨트롤로들의 경우 입니다. 모든 컨트롤러들는 IoC 컨테이너를 통해서 의존성을 해결하는데, 이것은 컨트롤러 생성자 안에서 의존성 유형을 알아 내고 이러한 의존성이 자동으로 삽입됨을 의미합니다. 
 
-**Type-Hinting Controller Dependencies**
+**의존성 유형을 알아내는 컨트롤러 **
 
 	class OrderController extends BaseController {
 
@@ -112,11 +115,15 @@ Laravel provides several opportunities to use the IoC container to increase the 
 
 	}
 
-In this example, the `OrderRepository` class will automatically be injected into the controller. This means that when [unit testing](/docs/testing) a "mock" `OrderRepository` may be bound into the container and injected into the controller, allowing for painless stubbing of database layer interaction.
+이 예제에서 `OrderRepository` 클래스는 자동으로 컨트롤러 안에서 삽입됩니다. 이것은 [유닛 테스트](/docs/testing)가 수행될때 모의 `OrderRepository`가 컨테이너에 바인딩될 수 있고, 컨트롤러에 삽입되어 어렵지 않게 데이타베이스 레이어 상호 작용의 스터빙을 가능하게 합니다.  
 
-[Filters](/docs/routing#route-filters), [composers](/docs/responses#view-composers), and [event handlers](/docs/events#using-classes-as-listeners) may also be resolved out of the IoC container. When registering them, simply give the name of the class that should be used:
+(번역주 : 스터빙 - 하위 모듈의 상세한 구조에도 불구하고 그 입출력 조건을 모의하기 위한 모듈로, 톱 다운으로 행하는 설계나 테스트에 있어서 어느 추상화 레벨에서의 기술(記述)을 위해 불필요한 하위 모듈 내부의 기술을 없애기 위해 사용하는 것)
 
-**Other Examples Of IoC Usage**
+
+[필터](/docs/routing#route-filters), [컴포저](/docs/responses#view-composers), 그리고 [이벤트 핸들러](/docs/events#using-classes-as-listeners) 또한 IoC 컨트롤에 의해서 의존성 해결을 할 수 있습니다. 그것들을 등록할 때. 쉽게 사용되어져야 하는 클래스의 이름을 알려 줄 수 있습니다.
+
+
+**Ioc 를 사용하는 다른 방법들**
 
 	Route::filter('foo', 'FooFilter');
 
@@ -125,13 +132,15 @@ In this example, the `OrderRepository` class will automatically be injected into
 	Event::listen('foo', 'FooHandler');
 
 <a name="service-providers"></a>
-## Service Providers
+## 서비스 프로바이더 
 
-Service providers are a great way to group related IoC registrations in a single location. In fact, most of the core Laravel components include service providers. All of the registered service providers for your application are listed in the `providers` array of the `app/config/app.php` configuration file.
+서비스 프로바이더는 관계된 IoC 등록을 한곳에서 모을 수 있는 방법입니다. 
+실제로 대부분은 Laravel 코어 컴포넌트는 서비스 프로바이더를 포함하고 있습니다. 
+어플리케이션에 등록된 서비스 프로바이더들은 `app/config/app.php` 설정 파일의 'Providers' 배열에서 확인할 수 있습니다. 
 
-To create a service provider, simply extend the `Illuminate\Support\ServiceProvider` class and define a `register` method:
+간단한 서비스 프로바이더를 새롭게 생성하기 위해서는 `Illuminate\Support\ServiceProvider` 클래스를 상속하고 'register' 메소드를 정의 하면 됩니다. 
 
-**Defining A Service Provider**
+**서비스 프로바이더 정의 하기 **
 
 	use Illuminate\Support\ServiceProvider;
 
@@ -147,4 +156,7 @@ To create a service provider, simply extend the `Illuminate\Support\ServiceProvi
 
 	}
 
-Note that in the `register` method, the application IoC container is available to you via the `$this->app` property. Once you have created a provider and are ready to register it with your application, simply add it to the `providers` array in your `app` configuration file.
+
+
+`register` 메소드 안에서 어플리케이션 IoC 컨테이너는 `$this->app`을 통해서 사용이 가능합니다. 일단 당신이 프로바이더를 생성하고 응용 프로그램에 등록 할 준비가 되었다면 간단하게 `app` 설정 파일의 '프로바이더' 배열에 추가하면 됩니다. 
+
