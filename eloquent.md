@@ -632,6 +632,12 @@ many-to-many 관계에서도 관계된 모델을 삽입 할 수 있습니다. `U
 
 	$user->roles()->sync(array(1, 2, 3));
 
+또한 주어진 ID들의 다른 피벗 테이블 값들을 설정 할 수 있습니다.
+
+**Sync할때 피벗 데이터 추가**
+
+	$user->roles()->sync(array(1 => array('expires' => true)));
+
 새로운 관계된 모델을 생성하고 단일 커맨드를 통해 부여하려면 `save` 메소드를 사용하면 됩니다.:
 
 	$role = new Role(array('name' => 'Editor'));
