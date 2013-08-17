@@ -14,7 +14,7 @@
 - [부모 타임스탬프 터치](#touching-parent-timestamps)
 - [피벗 테이블과 작업](#working-with-pivot-tables)
 - [컬렉션](#collections)
-- [게터 & 세터](#accessors-and-mutators)
+- [접근자 & 변경자](#accessors-and-mutators)
 - [모델 이벤트](#model-events)
 - [모델 옵저버](#model-observers)
 - [배열 / JSON 으로 변환](#converting-to-arrays-or-json)
@@ -775,11 +775,11 @@ many-to-many 관계에서도 관계된 모델을 삽입 할 수 있습니다. `U
 	}
 
 <a name="accessors-and-mutators"></a>
-## 게터 & 세터
+## 접근자 & 변경자
 
-엘로퀀트는 모델 속성을 저장하거나 불러올때 모델 속성을 변형할수 있도록 하는 편리한 방법을 제공합니다. 간단히 모델에 `getFooAttribute` 메소드를 정의하여 게터를 선언할 수 있습니다. 데이터베이스의 컬럼이 스네이크 케이스 일지라도 게터 메소드는 캐멀케이스를 형태를 따라야한다는 것을 명심하십시오.:
+엘로퀀트는 모델 속성을 저장하거나 불러올때 모델 속성을 변형할수 있도록 해주는 편리한 방법을 제공합니다. 간단히 모델에 `getFooAttribute` 메소드를 정의하여 접근자를 선언할 수 있습니다. 데이터베이스의 컬럼이 스네이크 케이스 일지라도 접근자 메소드는 캐멀케이스를 형태를 따라야한다는 것을 명심하십시오.:
 
-**게터 정의**
+**접근자 정의**
 
 	class User extends Eloquent {
 
@@ -790,11 +790,11 @@ many-to-many 관계에서도 관계된 모델을 삽입 할 수 있습니다. `U
 
 	}
 
-위의 예제에서 `first_name` 컬럼은 게터를 갖고 있습니다. 이 속성의 값이 게터로 전달 된다는 것에 주목하십시오.
+위의 예제에서 `first_name` 컬럼은 접근자를 갖고 있습니다. 이 속성의 값이 접근자로 전달 된다는 것에 주목하십시오.
 
-세터 역시 비슷한 방법으로 선언됩니다.
+변경자 역시 비슷한 방법으로 선언됩니다.
 
-**세터 정의**
+**변경자 정의**
 
 	class User extends Eloquent {
 
