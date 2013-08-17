@@ -23,7 +23,7 @@
 
 기본적으로, 생성된 커맨드는 `app/commands` 디렉토리에 저장됩니다. 하지만 사용자 정의 경로나 네임스페이스를 지정 할 수도 있습니다.:
 
-	php artisan command:make FooCommand --path="app/classes" --namespace="Classes"
+	php artisan command:make FooCommand --path=app/classes --namespace=Classes
 
 ### 커맨드 작성
 
