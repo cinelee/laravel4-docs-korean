@@ -1,5 +1,6 @@
 - Preface
     - [소개](/docs/introduction)
+    - [빠른시](/docs/quick)
     - [기여](/docs/contributing)
 - Getting Started
     - [설치](/docs/installation)
@@ -13,7 +14,9 @@
 - Learning More
     - [캐시](/docs/cache)
     - [이벤트](/docs/events)
+    - [파사](/docs/facades)
     - [폼 & HTML](/docs/html)
+    - [헬퍼](/docs/helpers)
     - [IoC 컨테이너](/docs/ioc)
     - [지역화](/docs/localization)
     - [메일](/docs/mail)
