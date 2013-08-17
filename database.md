@@ -69,6 +69,10 @@ Laravel은 데이터베이스 접속과 쿼리 실행을 매우 간단하게 만
 
 	$users = DB::connection('foo')->select(...);
 
+또한 PDO 인스턴스의 를 액세스 할수도 있습니다.
+
+	$pdo = DB::connection()->getPdo();
+
 때때로 주어진 데이터베이스로 재접속을 해야할 때가 있습니다.:
 
 	DB::reconnect('foo');
