@@ -237,9 +237,9 @@ Laravel에 포함된 엘로퀀트 ORM은 데이터베이스 작업을 위한 아
 
 	$users = User::withTrashed()->where('account_id', 1)->get();
 
-**오직** 소프트 삭제된 모델들만 결과로 받으려면 `trashed` 메소드를 사용합니다.:
+**오직** 소프트 삭제된 모델들만 결과로 받으려면 `onlyTrashed` 메소드를 사용합니다.:
 
-	$users = User::trashed()->where('account_id', 1)->get();
+	$users = User::onlyTrashed()->where('account_id', 1)->get();
 
 소프트 삭제된 모델을 활성화 상태로 복구 하려면, `restore` 메소드를 사용합니다.:
 
