@@ -4,6 +4,7 @@
 - [쿼리 실행](#running-queries)
 - [데이터베이스 트랜잭션](#database-transactions)
 - [커넥션 액세스](#accessing-connections)
+- [쿼리 로깅](#query-logging)
 
 <a name="configuration"></a>
 ## 설정
@@ -69,10 +70,17 @@ Laravel은 데이터베이스 접속과 쿼리 실행을 매우 간단하게 만
 
 	$users = DB::connection('foo')->select(...);
 
-또한 PDO 인스턴스의 를 액세스 할수도 있습니다.
+또한 가공되지 않은 PDO 인스턴스를 액세스 할수도 있습니다.
 
 	$pdo = DB::connection()->getPdo();
 
 때때로 주어진 데이터베이스로 재접속을 해야할 때가 있습니다.:
 
 	DB::reconnect('foo');
+
+<a name="query-logging"></a>
+## 쿼리 로깅
+
+기본적으로 라라벨은 현재 요청에서 실행되는 모든 쿼리 로그를 메모리에 유지 합니다. 그러나, 수많은 행을 삽입할 때와 같은, 이러한 경우는 과도한 메모리 사용의 원인이 될수 있습니다. 이럴땐 `disableQueryLog` 메소드를 사용하여 로그를 사용하지 않을 수 있습니다:
+
+	DB::connection()->disableQueryLog();
