@@ -7,7 +7,7 @@
 <a name="introduction"></a>
 ## 소개
 
-Laravel은 누구나 개발과 진행에 기여할 수 있는 무료?자유? 오픈소스 소프트웨어 입니다. Laravel 소스는 현재 프로젝트 포킹과 기여를 병합할 수 있도록 쉬운 메소드를 제공하는 [Github](http://github.com)에 호스팅되어 있습니다.
+Laravel은 누구나 개발과 진행에 기여할 수 있는 무료?자유? 오픈소스 소프트웨어 입니다. Laravel 소스는 현재 프로젝트 포킹과 기여를 병합할 수 있도록 쉬운 메소드를 제공하는 [Github](http://github.com/laravel)에 호스팅되어 있습니다.
 
 <a name="pull-requests"></a>
 ## 풀 리퀘스트
