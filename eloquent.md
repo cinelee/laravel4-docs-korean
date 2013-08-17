@@ -16,6 +16,7 @@
 - [컬렉션](#collections)
 - [게터 & 세터](#accessors-and-mutators)
 - [모델 이벤트](#model-events)
+- [모델 옵저버](#model-observers)
 - [배열 / JSON 으로 변환](#converting-to-arrays-or-json)
 
 <a name="introduction"></a>
@@ -830,6 +831,31 @@ many-to-many 관계에서도 관계된 모델을 삽입 할 수 있습니다. `U
 		}
 
 	}
+
+<a name="model-observers"></a>
+## 모델 옵저버
+
+모델 옵저버를 등록하여, 모델 이벤트 처리를 강화 할 수 있습니다. 옵저버 클래스에는 모델 이벤트에 해당하는 다양한 메소드들이 포함될 수 있습니다. 예를 들면, `creating`, `updating`, `saving` 메소드들과 기타 모델 이벤트명이 옵저버가 될 수 있습니다.
+
+그 예로, 모델 옵저버는 다음과 같이 생길 수 있습니다.:
+
+	class UserObserver {
+
+		public function saving($model)
+		{
+			//
+		}
+
+		public function saved($model)
+		{
+			//
+		}
+
+	}
+
+`observe` 메소드를 사용하여, 옵저버 인스턴스를 등록 할 수 있습니다.:
+
+	User::observe(new UserObserver);
 
 <a name="converting-to-arrays-or-json"></a>
 ## 배열 / JSON 으로 변환
