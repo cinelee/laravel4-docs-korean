@@ -15,11 +15,17 @@ Laravel 프레임워크의 모든 설정 파일은 `app/config` 디렉토리에 
 
 	Config::get('app.timezone');
 
+또한 설정 옵션이 존재 하지 않을 경우 리턴 할 기본 값을 지정 할 수도 있습니다.
+
+	$timezone = Config::get('app.timezone', 'UTC');
+
 "점" 스타일의 구문은 여러파일 중에서 값을 액세스 할 때 사용됩니다. 또한, 런타임에서 설정 값을 설정 할 수도 있습니다.:
 
 **설정 값 설정**
 
 	Config::set('database.default', 'sqlite');
+
+런타임에 셋팅되는 설정 값들은 오직 현재 요청에만 설정이 적용되며, 다음 요청까지 이월되지는 않습니다.
 
 <a name="environment-configuration"></a>
 ## 구성환경 설정
@@ -75,3 +81,10 @@ Laravel 프레임워크의 모든 설정 파일은 `app/config` 디렉토리에 
 점검 모드를 비활성화 하려면 `up` 커맨드를 사용합니다.:
 
 	php artisan up
+
+어플리케이션의 `app/start/global.php` 파일에 다음과 같은 구문을 추가해 어플리케이션이 점검 모드일때 사용자 정의 뷰를 디스플레이 할 수 있습니다.:
+
+	App::down(function()
+	{
+		return Response::view('maintenance', array(), 503);
+	});
