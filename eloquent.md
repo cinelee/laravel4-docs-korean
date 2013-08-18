@@ -623,6 +623,16 @@ eager 로딩의 현명한 사용은 어플리케이션의 퍼포먼스를 대폭
 
 이 예제에서 삽입된 코멘트 `post_id` 필드는 자동으로 설정 됩니다.
 
+### 연관 모델 (Belongs To)
+
+`belongsTo` 관계를 업데이트 할때, `associate` 메소드를 사용할 수 있습니다. 이 메소드는 자식 모델의 외래키를 설정해줍니다.:
+
+	$account = Account::find(10);
+
+	$user->account()->associate($account);
+
+	$user->save();
+
 ### 관계된 모델 삽입 (Many To Many)
 
 many-to-many 관계에서도 관계된 모델을 삽입 할 수 있습니다. `User`과 `Role` 모델을 계속 예제로 보겠습니다. `attach` 메소드를 사용하여 쉽게 새로운 role을 user에게 부여 할 수 있습니다.:
