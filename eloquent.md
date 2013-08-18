@@ -194,34 +194,6 @@ Laravel에 포함된 엘로퀀트 ORM은 데이터베이스 작업을 위한 아
 
 	$user->touch();
 
-<a name="timestamps"></a>
-## 타임스탬프
-
-기본적으로 엘로퀀트는 데이터베이스 테이블의 `created_at`과 `updated_at`컬럼을 자동으로 관리 합니다. 간단히 테이블에 이러한 `datetime` 컬럼을 추가하면, 나머지는 엘로퀀트가 알아서 처리합니다. 만약 엘로퀀트가 이러한 컬럼을 관리하지 않도록 하려면, 모델에 다음의 속성을 추가합니다.:
-
-**자동 타임스탬프를 사용하지 않도록 설정**
-
-	class User extends Eloquent {
-
-		protected $table = 'users';
-
-		public $timestamps = false;
-
-	}
-
-타임스탬프의 포맷을 지정하길 원한다면, 모델의 `freshTimestamp` 메소드를 치환하면 됩니다.:
-
-**사용자 정의 타임스탬프 포맷 제공**
-
-	class User extends Eloquent {
-
-		public function freshTimestamp()
-		{
-			return time();
-		}
-
-	}
-
 <a name="soft-deleting"></a>
 ## 소프트 삭제
 
@@ -266,6 +238,41 @@ Laravel에 포함된 엘로퀀트 ORM은 데이터베이스 작업을 위한 아
 `forceDelete` 메소드는 관계성에서도 작동합니다.:
 
 	$user->posts()->forceDelete();
+
+주어진 모델 인스턴스가 소프트 삭제가 되었는지 확인 하려면, `trashed` 메소드를 사용합니다.:
+
+	if ($user->trashed())
+	{
+		//
+	}
+
+<a name="timestamps"></a>
+## 타임스탬프
+
+기본적으로 엘로퀀트는 데이터베이스 테이블의 `created_at`과 `updated_at`컬럼을 자동으로 관리 합니다. 간단히 테이블에 이러한 `datetime` 컬럼을 추가하면, 나머지는 엘로퀀트가 알아서 처리합니다. 만약 엘로퀀트가 이러한 컬럼을 관리하지 않도록 하려면, 모델에 다음의 속성을 추가합니다.:
+
+**자동 타임스탬프를 사용하지 않도록 설정**
+
+	class User extends Eloquent {
+
+		protected $table = 'users';
+
+		public $timestamps = false;
+
+	}
+
+타임스탬프의 포맷을 지정하길 원한다면, 모델의 `freshTimestamp` 메소드를 치환하면 됩니다.:
+
+**사용자 정의 타임스탬프 포맷 제공**
+
+	class User extends Eloquent {
+
+		public function freshTimestamp()
+		{
+			return time();
+		}
+
+	}
 
 <a name="query-scopes"></a>
 ## 쿼리 스코프
