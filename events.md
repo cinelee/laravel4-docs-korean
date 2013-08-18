@@ -16,7 +16,7 @@ Laravel `Event` 클래스는 어플리케이션에서 이벤트들을 등록하�
     Event::listen('user.login', function($user)
   	{
   		$user->last_login = new DateTime;
-  
+
   		$user->save();
   	});
 
@@ -55,7 +55,7 @@ Laravel `Event` 클래스는 어플리케이션에서 이벤트들을 등록하�
 		// 이벤트 처리...
 	});
 
-이 리스너는 "foo."로 시작하는 모든 이벤트를 처리합니다. 이벤트 전체 이름이 핸들러의 마지막 인수로 전달되는 것을 참고 하십시오.
+이 리스너는 `foo.`로 시작하는 모든 이벤트를 처리합니다. 이벤트 전체 이름이 핸들러의 마지막 인수로 전달되는 것을 참고 하십시오.
 
 <a name="using-classes-as-listeners"></a>
 ## 클래스를 리스너로 사용
@@ -76,7 +76,7 @@ Laravel `Event` 클래스는 어플리케이션에서 이벤트들을 등록하�
 		{
 			//
 		}
- 
+
 	}
 
 기본 `handle` 메소드가 아닌 다른 메소드를 지정 할 수도 있습니다.:
