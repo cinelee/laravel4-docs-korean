@@ -359,6 +359,18 @@ one-to-one 관계는 아주 기본적인 관계 입니다. 예를 들면, `User`
 
 	}
 
+위의 예제에서, 엘로퀀트는 `phone` 테이블에서 `user_id` 컬럼을 검색 합니다. 만약 다른 이름의 외래키 컬럼을 정의하고 싶다면, `belongsTo`의 2번째 인수에 전달 하면 됩니다.:
+
+	class Phone extends Eloquent {
+
+		public function user()
+		{
+			return $this->belongsTo('User', 'custom_key');
+		}
+
+	}
+
+
 <a name="one-to-many"></a>
 ### One To Many
 
