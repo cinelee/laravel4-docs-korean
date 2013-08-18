@@ -94,6 +94,10 @@ Laravel에 포함된 엘로퀀트 ORM은 데이터베이스 작업을 위한 아
 
 	$count = User::where('votes', '>', 100)->count();
 
+유연한 인터페이스를 통해 원하는 쿼리를 생성할수 없을 경우, 'whereRaw' 메소드를 사용하면 됩니다.:
+
+	$users = User::whereRaw('age > ? and votes = 100', array(25))->get();
+
 <a name="mass-assignment"></a>
 ## 대량 할당(Mass Assignment)
 
