@@ -15,6 +15,7 @@
 - [피벗 테이블과 작업](#working-with-pivot-tables)
 - [컬렉션](#collections)
 - [접근자 & 변경자](#accessors-and-mutators)
+- [날짜 변경자](#date-mutators)
 - [모델 이벤트](#model-events)
 - [모델 옵저버](#model-observers)
 - [배열 / JSON 으로 변환](#converting-to-arrays-or-json)
@@ -803,6 +804,27 @@ many-to-many 관계에서도 관계된 모델을 삽입 할 수 있습니다. `U
 			$this->attributes['first_name'] = strtolower($value);
 		}
 
+	}
+
+<a name="date-mutators"></a>
+## 날짜 변경자
+
+기본적으로, 엘로퀀트는 `created_at`, `updated_at`, `deleted_at` 컬럼을 각종 도움이 되는 메소드를 제공하고, 네이티브 PHP의 `DateTime` 클래스를 확장한 [Carbon](https://github.com/briannesbitt/Carbon)의 인스턴스로 변환합니다.
+
+모델의 `getDates` 메소드를 오버라이딩하여, 어떤 필드들이 자동으로 변경될지, 또한 지금의 변경자를 사용하지 않을 지까지 마음대로 정할 수 있습니다.:
+
+	public function getDates()
+	{
+		return array('created_at');
+	}
+
+컬럼이 날짜(date)로 간주 될때는, 그 값을 UNIX 타임스탬프나, 날짜(date) 문자열 (`Y-m-d`), 날짜-시간(date-time) 문자열, 또는 `DateTime` / `Carbon` 인스턴스 중 하나로 설정 해야 합니다.
+
+날짜 변경자를 완전히 사용하지 않으려면, 간단하게 `getDates` 메소드에서 빈 배열을 반환하면 됩니다.:
+
+	public function getDates()
+	{
+		return array();
 	}
 
 <a name="model-events"></a>
