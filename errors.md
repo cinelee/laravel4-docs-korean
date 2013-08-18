@@ -82,6 +82,10 @@ Laravel의 로그는 강력한 [Monolog](http://github.com/seldaek/monolog)의 �
 
 로그는 [RFC 5424](http://tools.ietf.org/html/rfc5424)에 정의된 7가지의 로깅 레벨을 제공합니다.: **debug**, **info**, **notice**, **warning**, **error**, **critical**, 그리고 **alert**.
 
+문맥에 맞는 데이터 배열 또한 로그 메소드에 전달 될 수 있습니다.:
+
+	Log::info('Log message', array('context' => '다른 도움이 되는 정보'));
+
 Monolog는 로그에 사용할 다양한 추가적인 로그 핸들러를 포함하고 있습니다. 필요한 경우, Laravel에서 사용되는 기본 Monolog 인스턴스에 액세스 할 수 있습니다.:
 
 	$monolog = Log::getMonolog();
