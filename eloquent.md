@@ -273,15 +273,15 @@ Laravel에 포함된 엘로퀀트 ORM은 데이터베이스 작업을 위한 아
 
 	}
 
-타임스탬프의 포맷을 지정하길 원한다면, 모델의 `freshTimestamp` 메소드를 치환하면 됩니다.:
+타임스탬프의 형식을 지정하길 원한다면, 모델의 `getDateFormat` 메소드를 치환하면 됩니다.:
 
-**사용자 정의 타임스탬프 포맷 제공**
+**사용자 정의 타임스탬프 형식 제공**
 
 	class User extends Eloquent {
 
-		public function freshTimestamp()
+		protected function getDateFormat()
 		{
-			return time();
+			return 'U';
 		}
 
 	}
