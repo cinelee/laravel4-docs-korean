@@ -98,6 +98,12 @@ Laravel에 포함된 엘로퀀트 ORM은 데이터베이스 작업을 위한 아
 
 	$users = User::whereRaw('age > ? and votes = 100', array(25))->get();
 
+**쿼리 커넥션 지정**
+
+엘로퀀트 쿼리를 실행 할때, 어떤 데이터베이스 커넥션이 사용될지 지정 할 수도 있습니다. 간단히 `on` 메소드를 사용하면 됩니다.:
+
+	$user = User::on('connection-name')->find(1);
+
 <a name="mass-assignment"></a>
 ## 대량 할당(Mass Assignment)
 
