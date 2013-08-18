@@ -68,6 +68,8 @@ Laravel에 포함된 엘로퀀트 ORM은 데이터베이스 작업을 위한 아
 
 	$model = User::findOrFail(1);
 
+	$model = User::where('votes', '>', 100)->firstOrFail();
+
 에러 핸들러를 등록하려면, `ModelNotFoundException`을 주시하면 됩니다.
 
 	use Illuminate\Database\Eloquent\ModelNotFoundException;
