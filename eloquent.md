@@ -990,3 +990,17 @@ JSON API를 구축할때, 종종 모델과 관계들을 배열이나 JSON으로 
 반대로, `visible` 속성을 사용하여 화이트리스트를 정의 할 수 있습니다.:
 
 	protected $visible = array('first_name', 'last_name');
+
+<a name="array-appends"></a>
+가끔 데이터베이스에 해당되지 않는 배열 속성이 필요할 때도 있습니다. 그러려면, 그 값을 위한 접근자를 지정하면 됩니다.:
+
+	public function getIsAdminAttribute()
+	{
+		return $this->attributes['admin'] == 'yes';
+	}
+
+접근자를 만들고 나면, 모델의 `appends` 속성에 값을 추가 하면 됩니다.:
+
+	protected $appends = array('is_admin');
+
+그 속성이 `appends` 리스트에 추가되고 나면, 모델의 배열과 JSON 형식 모두에 포함될겁니다.
