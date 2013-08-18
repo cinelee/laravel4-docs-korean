@@ -888,7 +888,11 @@ many-to-many 관계에서도 관계된 모델을 삽입 할 수 있습니다. `U
 <a name="model-events"></a>
 ## 모델 이벤트
 
-엘로퀀트 모델은 다음의 메소드를 사용하여 라이프사이클의 다양한 포인트에서 이벤트를 연결할수 있도록 해줍니다.: `creating`, `created`, `updating`, `updated`, `saving`, `saved`, `deleting`, `deleted`. 만약 `creating`, `updating`, 또는 `saving` 이벤트로부터 `false`가 반환된다면 그 액션은 취소됩니다.:
+엘로퀀트 모델은 다음의 메소드들을 사용하여 라이프사이클의 다양한 포인트에서 이벤트를 연결할 수 있도록 해줍니다.: `creating`, `created`, `updating`, `updated`, `saving`, `saved`, `deleting`, `deleted`.
+
+새로운 아이템이 처음으로 저장될 때마다, `creating`과 `created` 이벤트가 발생 합니다. 만약 새로운 아이템이 아닐경우 `save` 메소드가 호출 되었다면, `updating` / `updated` 이벤트가 발생 합니다. 또 두 경우 모두, `saving` / `saved` 이벤트가 발생 합니다
+
+만약 `creating`, `updating`, `saving` 또는 `deleteing` 이벤트로부터 `false`가 반환된다면 그 액션은 취소됩니다.:
 
 **이벤트를 통한 저장 오퍼레이션 중지**
 
