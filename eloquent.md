@@ -306,6 +306,23 @@ Laravel에 포함된 엘로퀀트 ORM은 데이터베이스 작업을 위한 아
 
 	$users = User::popular()->orderBy('created_at')->get();
 
+**동적 스코프**
+
+때때로 매개 변수를 받는 스코프를 정의 해야 할때가 있습니다. 그렇게 하려면 간단히 스코프 메소드에 매개 변수를 추가 하면 됩니다.:
+
+	class User extends Eloquent {
+
+		public function scopeOfType($query, $type)
+		{
+			return $query->whereType($type);
+		}
+
+	}
+
+다음, 스코프 호출에 매개 변수를 전달 합니다.:
+
+	$users = User::ofType('member')->get();
+
 <a name="relationships"></a>
 ## 관계성
 
