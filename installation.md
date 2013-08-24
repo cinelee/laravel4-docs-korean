@@ -9,7 +9,7 @@
 <a name="install-composer"></a>
 ## Composer 설치
 
-Laravel은 의존성을 관리하기 위해 [Composer](http://getcomposer.org)을 사용합니다. 먼저, `composer.phar`를 다운받습니다. 그후, 로컬 프로젝트 디렉토리에 저장하거나 `usr/local/bin` 으로 옮겨 시스템에서 전역적으로 사용할 수 있습니다. Windows에서는 Composer [Windows installer](https://getcomposer.org/Composer-Setup.exe)를 사용할 수 있습니다.
+Laravel은 의존성을 관리하기 위해 [Composer](http://getcomposer.org)을 사용합니다. 먼저, `composer.phar`를 다운받습니다. PHAR 아카이브를 갖고 있다면, 로컬 프로젝트의 디렉토리에 저장하거나 `usr/local/bin` 으로 옮겨 시스템에서 전역적으로 사용할 수 있습니다. Windows에서는 Composer [Windows installer](https://getcomposer.org/Composer-Setup.exe)를 사용할 수 있습니다.
 
 <a name="install-laravel"></a>
 ## Laravel 설치
