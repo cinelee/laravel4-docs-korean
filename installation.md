@@ -14,6 +14,14 @@ Laravel은 의존성을 관리하기 위해 [Composer](http://getcomposer.org)�
 <a name="install-laravel"></a>
 ## Laravel 설치
 
+### 컴포저의 Create-Project를 통해 설치
+
+터미널에서 컴포저의 `create-project` 커맨드를 사용하여 Laravel을 설치 할 수 있습니다.:
+
+	composer create-project laravel/laravel --prefer-dist
+
+### 다운로드를 통해 설치
+
 Composer가 설치되면 최신버전의 Laravel 프레임워크를 다운 받아 서버 디렉토리에 압축을 풉니다. 다음으로, 프레임워크에 의존된 것을 설치하기 위해 Laravel 프레임워크의 루트에서 `php composer.phar install` (또는 `composer install`) 커맨드를 실행합니다. 이 과정이 성공적으로 완료되려면 서버에 Git이 설치되어 있어야 합니다.
 
 <a name="server-requirements"></a>
