@@ -32,6 +32,12 @@
 
 	echo Form::open(array('action' => 'Controller@method'))
 
+매개변수 또한 라우트에 전달 할 수 있습니다.:
+
+	echo Form::open(array('route' => array('route.name', $user->id)))
+
+	echo Form::open(array('action' => array('Controller@method', $user->id)))
+
 만약 폼이 파일 업로드를 허가 한다면 배열에 `files` 옵션을 추가합니다.:
 
 	echo Form::open(array('url' => 'foo/bar', 'files' => true))
