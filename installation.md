@@ -64,8 +64,5 @@ Laravel 프레임워크는 index.php가 없는 URL 사용을 가능하게 해주
 	RewriteEngine On
 
 	RewriteCond %{REQUEST_FILENAME} !-d
-	RewriteRule ^(.+)/$ http://%{HTTP_HOST}/$1 [R=301,L]
-
 	RewriteCond %{REQUEST_FILENAME} !-f
 	RewriteRule ^ index.php [L]
- 
