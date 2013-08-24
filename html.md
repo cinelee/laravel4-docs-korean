@@ -101,6 +101,11 @@ Laravel은 크로스 사이트 요청 위조로부터 어플리케이션을 보�
 
 	echo Form::password('password');
 
+**다른 종류의 입력 생성**
+
+	echo Form::email($name, $value = null, $attributes = array());
+	echo Form::file($name, $attributes = array());
+
 <a name="checkboxes-and-radio-buttons"></a>
 ## Checkbox와 Radio 버튼
 
