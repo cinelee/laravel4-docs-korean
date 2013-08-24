@@ -22,7 +22,9 @@ Laravel은 의존성을 관리하기 위해 [Composer](http://getcomposer.org)�
 
 ### 다운로드를 통해 설치
 
-Composer가 설치되면 최신버전의 Laravel 프레임워크를 다운 받아 서버 디렉토리에 압축을 풉니다. 다음으로, 프레임워크에 의존된 것을 설치하기 위해 Laravel 프레임워크의 루트에서 `php composer.phar install` (또는 `composer install`) 커맨드를 실행합니다. 이 과정이 성공적으로 완료되려면 서버에 Git이 설치되어 있어야 합니다.
+Composer가 설치되면 [최신버전](https://github.com/laravel/laravel/archive/master.zip)의 Laravel 프레임워크를 다운 받아 서버 디렉토리에 압축을 풉니다. 다음으로, 프레임워크가 의존하는 코드들의 설치를 위해 Laravel 프레임워크의 루트에서 `php composer.phar install` (또는 `composer install`) 커맨드를 실행합니다. 이 과정이 성공적으로 완료되려면 서버에 Git이 설치되어 있어야 합니다.
+
+`php composer.phar update` 커맨드를 사용하여, Laravel 프레임워크를 업데이트를 할 수 있습니다.
 
 <a name="server-requirements"></a>
 ## 서버 요구사항
