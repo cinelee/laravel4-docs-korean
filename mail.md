@@ -8,7 +8,7 @@
 <a name="configuration"></a>
 ## 설정
 
-Laravel은 유명한 [SwiftMailer](http://swiftmailer.org) 라이브러리를 바탕으로 깨끗하고 간단한 API를 제공 합니다. 메일 설정 파일은 `app/config/mail.php` 이며, SMTP 호스트, 포트, 자격증명 뿐만 아니라 라이브러리에 의해 전송되는 모든 메시지에 사용되는 글로벌 `from` 주소를 변경할 수 있도록 해주는 옵션들을 포함하고 있습니다. 당신이 원하는 어떤 SMTP 서버를 사용해도 좋습니다. PHP `mail` 함수를 사용하여 메일을 보내려면, 설정 파일의 `driver`를 `mail`로 변경하시기 바랍니다.
+Laravel은 유명한 [SwiftMailer](http://swiftmailer.org) 라이브러리를 바탕으로 깨끗하고 간단한 API를 제공 합니다. 메일 설정 파일은 `app/config/mail.php` 이며, SMTP 호스트, 포트, 자격증명 뿐만 아니라 라이브러리에 의해 전송되는 모든 메시지에 사용되는 글로벌 `from` 주소를 변경할 수 있도록 해주는 옵션들을 포함하고 있습니다. 당신이 원하는 어떤 SMTP 서버를 사용해도 좋습니다. PHP `mail` 함수를 사용하여 메일을 보내려면, 설정 파일의 `driver`를 `mail`로 변경하시기 바랍니다. `sendmail` 드라이버 또한 사용 가능합니다.
 
 <a name="basic-usage"></a>
 ## 기본적인 사용법
