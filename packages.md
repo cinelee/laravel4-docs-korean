@@ -134,6 +134,18 @@ Laravel 패키지를 생성하는 가장 쉬운 방법은 `workbench` Artisan �
 
 	Config::get('package::option');
 
+가끔, 일반적인 `$this->package` 메소드의 외부에 있는 뷰같은 패키지 리소스들을 등록하길 원할 때도 있습니다. 일반적으로 이는 리소스가 형식적인 위치에 있지 않을 경우에만 해당 됩니다. 리소스를 수동으로 등록하려면, `View`, `Lang`, 그리고  `Config` 클래스의 `addNamespace` 메소드를 사용합니다.:
+
+**수동으로 리소스 네임스페이스 등록**
+
+	View::addNamespace('package', __DIR__.'/path/to/views');
+
+네임스페이스가 등록되고 나면, 네임스페이스명과 "더블 콜론" 신택스를 사용하여 해당 리소스를 액세스 할수 있습니다.:
+
+	return View::make('packge::view.name');
+
+`addNamespace` 메소드의 사용법은 `View`, `Lang`, 그리고 `Config` 클래스 모두 동일합니다.
+
 ### 설정 파일 캐스케이딩
 
 만약 다른 개발자가 당신의 패키지를 설치하였을 경우, 몇몇의 설정 옵션을 변경하고 싶을 지도 모릅니다. 하지만 만약 패키지의 소스코드에서 옵션 값을 변경하였을 경우, 다음 번에 컴포저가 패키지를 업데이트 할때, 옵션 값들은 덮어씌여 질 겁니다. 그럴경우를 방지하기 위해 `config:publish` artisan 커맨드를 사용해야 합니다.:
