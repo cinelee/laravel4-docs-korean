@@ -95,6 +95,12 @@ Laravel 패키지를 생성하는 가장 쉬운 방법은 `workbench` Artisan �
 
 개발중인 패키지가 `workbench` 디렉토리에 있기 때문에 어떻게 컴포저가 패키지의 파일들을 오토로드 하는지 궁금해 할 수 있습니다. `workbench` 디렉토리가 존재한다면, Laravel이 재치있게 패키지를 스캔하여 어플리케이션이 시작할때 패키지의 컴포저 오토로드 파일들을 로딩합니다!
 
+만약 패키지의 오토로드 파일들을 재생성 해야한다면, `php artisan dump-autoload` 커맨드를 사용합니다. 이 커맨드는 루트 프로젝트와 더불어 생성한 모든 워크벤치의 오토로드 파일들까지 재생성 합니다.
+
+**아티즌 오토로드 커맨드 실행**
+
+	php artisan dump-autoload
+
 <a name="package-routing"></a>
 ## 패키지 라우팅
 
