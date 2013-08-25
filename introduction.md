@@ -2,6 +2,7 @@
 
 - [Laravel 철학](#laravel-philosophy)
 - [Laravel 배우기](#learning-laravel)
+- [개발 팀](#development-team)
 
 <a name="laravel-philosophy"></a>
 ## Laravel 철학
@@ -15,4 +16,9 @@ Laravel은 개발과정이 어플리케이션의 희생없이 개발자에게 �
 
 Laravel을 배우는 가장 좋은 방법은 매뉴얼 전체를 꼼꼼히 읽어보는 것 입니다. 이 가이드는 프레임워크의 모든 면과 어떻게 어플리케이션에 적용하는지 상세히 나와 있습니다.
 
-이 가이드  외에도 [책 페이지](http://wiki.laravel.io/Books)에 있는 몇몇의 Laravel 책들을 확인해 볼 수도 있습니다. 이 책들은 프레임워크를 배우는데 훌륭한 부가적인 리소스를 제공합니다.
+이 가이드  외에도 [책 페이지](http://wiki.laravel.io/Books)에 있는 몇몇의 Laravel 책들을 확인해 볼 수도 있습니다. 이 책들은 프레임워크를 배우는데 훌륭한 부가적인 리소스를 제공합니다.Otwell
+
+<a name="development-team"></a>
+## 개발 팀
+
+Laravel은 프레임워크 개발을 주도하고 있는 [Taylor Otwell](https://github.com/taylorotwell)과 다음의 저명한 커뮤니티 회원들에 의해 만들어 졌습니다. [Dayle Rees](https://github.com/daylerees), [Shawn McCool](https://github.com/ShawnMcCool), [Jeffrey Way](https://github.com/JeffreyWay), [Jason Lewis](https://github.com/jasonlewis), [Ben Corlett](https://github.com/bencorlett), [Franz Liedke](https://github.com/franzliedke), [Dries Vints](https://github.com/driesvints), [Mior Muhammad Zaki](https://github.com/crynobone), 그리고 [Phil Sturgeon](https://github.com/philsturgeon).
