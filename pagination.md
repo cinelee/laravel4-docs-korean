@@ -44,12 +44,24 @@
 - `getLastPage`
 - `getPerPage`
 - `getTotal`
+- `getFrom`
+- `getTo`
 
 가끔 수동으로 아이템 배열을 첫번째 인수로 전달하여 페이지네이션을 생성하고 싶을때도 있을겁니다. 이럴땐 `Paginator::make` 메소드를 사용합니다.:
 
 **수동으로 페이지네이션 생성**
 
 	$paginator = Paginator::make($items, $totalItems, $perPage);
+
+**페이지네이터 URI 커스터 마이징**
+
+`setBaseUrl` 메소드를 사용하여 페이지네이터에서 사용되는 URI를 커스터 마이징 할수도 있습니다.:
+
+	$users = User::paginate();
+
+	$user->setBaseUrl('custom/url');
+
+이 예제는 다음과 같은 URL을 생성합니다.: http://example.com/custom/url?page=2
 
 <a name="appending-to-pagination-links"></a>
 ## 페이지네이션 링크에 추가
