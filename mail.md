@@ -3,7 +3,8 @@
 - [설정](#configuration)
 - [기본적인 사용법](#basic-usage)
 - [인라인 첨부 사용](#embedding-inline-attachments)
-- [메일 대기(큐)](#queueing-mail)
+- [메일 대기(큐)](#queueing-mail))
+- [메일 & 로컬 개발](#mail-and-local-development)
 
 <a name="configuration"></a>
 ## 설정
@@ -97,3 +98,12 @@ e-mail 메시지를 보내는 일은 어플리케이션의 응답 속도를 대�
 	{
 		$message->to('foo@example.com', 'John Smith')->subject('Welcome!');
 	});
+
+<a name="mail-and-local-development"></a>
+## 메일 & 로컬 개발
+
+이메일을 보내는 어플리케이션을 개발할 경우, 로컬이나 개발 환경에서 메시지 보내는 기능을 비활성화 시키는 것이 때로는 바람직 할 때가 있습니다. 그렇게 하려면, `Mail::pretend` 메소드를 호출하거나, `app/config/mail.php` 설정 파일의 `pretend` 옵션을 `true`로 설정 하면 됩니다. 메일러가 `pretend` 모드일 경우, 메시지를 수신자에게 보내는 것 대신, 어플리케이션의 로그 파일에 기록합니다.
+
+**Pretend 메일 모드 활성화**
+
+	Mail::pretend();
