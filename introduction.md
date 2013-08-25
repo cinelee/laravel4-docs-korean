@@ -3,6 +3,7 @@
 - [Laravel 철학](#laravel-philosophy)
 - [Laravel 배우기](#learning-laravel)
 - [개발 팀](#development-team)
+- [프레임워크 스폰](#framework-sponsors)
 
 <a name="laravel-philosophy"></a>
 ## Laravel 철학
@@ -28,3 +29,15 @@ Laravel을 배우는 가장 좋은 방법은 매뉴얼 전체를 꼼꼼히 읽�
 ## 개발 팀
 
 Laravel은 프레임워크 개발을 주도하고 있는 [Taylor Otwell](https://github.com/taylorotwell)과 다음의 저명한 커뮤니티 회원들에 의해 만들어 졌습니다. [Dayle Rees](https://github.com/daylerees), [Shawn McCool](https://github.com/ShawnMcCool), [Jeffrey Way](https://github.com/JeffreyWay), [Jason Lewis](https://github.com/jasonlewis), [Ben Corlett](https://github.com/bencorlett), [Franz Liedke](https://github.com/franzliedke), [Dries Vints](https://github.com/driesvints), [Mior Muhammad Zaki](https://github.com/crynobone), 그리고 [Phil Sturgeon](https://github.com/philsturgeon).
+
+<a name="framework-sponsors"></a>
+## 프레임워크 스폰서
+
+다음의 기관들은 Laravel 프레임워크를 개발하는데 재정적 기여를 하였습니다.:
+
+- [UserScape](http://userscape.com)
+- [Cartalyst](http://cartalyst.com)
+- [Elli Davis - Toronto Realtor](http://ellidavis.com)
+- [Jay Banks - Vancouver Lofts & Condos](http://jaybanks.ca/vancouver-lofts-condos)
+- [Julie Kinnear - Toronto MLS](http://juliekinnear.com/toronto-mls-listings)
+- [Jamie Sarner - Toronto Real Estate](http://jamiesarner.com)
