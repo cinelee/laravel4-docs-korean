@@ -20,6 +20,10 @@ Laravel을 배우는 가장 좋은 방법은 매뉴얼 전체를 꼼꼼히 읽�
 
 이 가이드 외에도 몇몇의 [Laravel 책](http://wiki.laravel.io/Books)들을 둘러 보시기 바랍니다. 이 책들은 프레임워크를 배우는데 좋은 자료들을 제공합니다.
 
+- [Code Bright](https://leanpub.com/codebright) by Dayle Rees
+- [Laravel Testing Decoded](https://leanpub.com/laravel-testing-decoded) by Jeffrey Way
+- [Laravel: From Apprentice To Artisan](https://leanpub.com/laravel) by Taylor Otwell
+
 <a name="development-team"></a>
 ## 개발 팀
 
