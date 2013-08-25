@@ -15,9 +15,9 @@ Laravel은 유명한 [SwiftMailer](http://swiftmailer.org) 라이브러리를 �
 
 `Mail::send` 메소드를 사용하여 이메일을 메시지를 보낼수 있습니다.:
 
-    Mail::send('emails.welcome', $data, function($m)
+    Mail::send('emails.welcome', $data, function($message)
   	{
-  		$m->to('foo@example.com', 'John Smith')->subject('Welcome!');
+  		$message->to('foo@example.com', 'John Smith')->subject('Welcome!');
   	});
 
 `send` 메소드에 전달되는 첫번째 인수는 이메일의 바디로 사용될 뷰 파일의 이름입니다. 두번째 인수는 뷰에 전달 될 `$data` 이며, 세번째는 이메일 메시지에 다양한 옵션을 지정하게 해주는 클로저입니다.
@@ -34,18 +34,18 @@ Laravel은 유명한 [SwiftMailer](http://swiftmailer.org) 라이브러리를 �
 
 참조나 첨부파일 같은 다른 옵션 또한 이메일 메시지에 지정할 수 있습니다.:
 
-	Mail::send('emails.welcome', $data, function($m)
+	Mail::send('emails.welcome', $data, function($message)
 	{
-		$m->from('us@example.com', 'Laravel');
+		$message->from('us@example.com', 'Laravel');
 
-		$m->to('foo@example.com')->cc('bar@example.com');
+		$message->to('foo@example.com')->cc('bar@example.com');
 
-		$m->attach($pathToFile);
+		$message->attach($pathToFile);
 	});
 
 메시지에 파일을 첨부할 때는 파일의 MIME 타입이나 표시명을 지정할 수 있습니다.:
 
-	$m->attach($pathToFile, array('as' => $display, 'mime' => $mime));
+	$message->attach($pathToFile, array('as' => $display, 'mime' => $mime));
 
 > **노트:** `Mail::send` 클로저에 전달되는 메시지 인스턴스는 SwiftMailer의 메시지 클래스를 확장하므로 클래스의 모든 메소드를 호출하여 메시지를 작성할 수 있도록 해줍니다.
 
@@ -79,21 +79,21 @@ e-mail 메시지를 보내는 일은 어플리케이션의 응답 속도를 대�
 
 **메일 대기시키기**
 
-	Mail::queue('emails.welcome', $data, function($m)
+	Mail::queue('emails.welcome', $data, function($message)
 	{
-		$m->to('foo@example.com', 'John Smith')->subject('Welcome!');
+		$message->to('foo@example.com', 'John Smith')->subject('Welcome!');
 	});
 
 또한 `later` 메소드를 사용하여 메일을 몇 초 뒤에 보낼 지 명시 할수도 있습니다.:
 
-	Mail::later(5, 'emails.welcome', $data, function($m)
+	Mail::later(5, 'emails.welcome', $data, function($message)
 	{
-		$m->to('foo@example.com', 'John Smith')->subject('Welcome!');
+		$message->to('foo@example.com', 'John Smith')->subject('Welcome!');
 	});
 
 어떤 큐나, "튜브"에 메일 메시지를 푸쉬 할 것인지 지정하려면, `queueOn`과 `laterOn` 메소드를 사용하여 그렇게 할 수 있습니다.:
 
-	Mail::queueOn('queue-name', 'emails.welcome', $data, function($m)
+	Mail::queueOn('queue-name', 'emails.welcome', $data, function($message)
 	{
-		$m->to('foo@example.com', 'John Smith')->subject('Welcome!');
+		$message->to('foo@example.com', 'John Smith')->subject('Welcome!');
 	});
