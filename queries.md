@@ -44,7 +44,7 @@
 
 	$roles = DB::table('roles')->lists('title');
 
-이 메소드는 배열키가 role ID 로 되어 있고 값으로 role title을 갖고 있는 배열을 반환합니다. 사용자 정의 컬럼 키를 배열키로 지정 할 수도 있습니다.:
+이 메소드는 role title을 배열로 반환합니다. 또한 사용자 정의 컬럼 키를 배열키로 지정 할 수도 있습니다.:
 
 	$roles = DB::table('roles')->lists('title', 'name');
 
