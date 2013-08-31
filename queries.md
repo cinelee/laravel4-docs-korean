@@ -197,7 +197,15 @@
 
 	DB::table('users')->increment('votes');
 
+	DB::table('users')->increment('votes', 5);
+
 	DB::table('users')->decrement('votes');
+
+	DB::table('users')->decrement('votes', 5);
+
+또한, 추가적으로 업데이트 할 컬럼들 또한 명시 할 수 있습니다.:
+
+	DB::table('users')->increment('votes', 1, array('name' => 'John'));
 
 <a name="inserts"></a>
 ## 삽입(Inserts)
