@@ -10,6 +10,7 @@
 - [수정(Updates)](#updates)
 - [삭제(Deletes)](#deletes)
 - [조합(Unions)](#unions)
+- [쿼리 캐시](#caching-queries)
 
 <a name="introduction"></a>
 ## 소개
@@ -259,4 +260,15 @@
 
 	$users = DB::table('users')->whereNull('last_name')->union($first)->get();
 
-`unionAll` 메소드 역시 제공되며, `union` 과 같은 특징을 갖고 있습니다.
+`unionAll` 메소드 역시 제공되며, `union` 과 같은 특징을 갖고 있습니다.`.
+
+<a name="caching-queries"></a>
+## 쿼리 캐시
+
+`remember` 메소드를 사용하여 쿼리 결과를 쉽게 캐싱 할 수 있습니다.:
+
+**쿼리 결과 캐싱**
+
+	$users = DB::table('users')->remember(10)->get();
+
+이 예제에서, 쿼리 결과는 10분 동안 캐시됩니다. 결과가 캐시됐을 경우, 데이터베이스에 쿼리를 수행하지 않으며, 결과는 어플리케이션에 명시된 기본 캐시 드라이버에서 불러집니다.
