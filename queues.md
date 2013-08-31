@@ -134,7 +134,7 @@ Laravel은 새로운 작업이 큐에 추가되는 순간 작동하게 하는 Ar
 
 이제, Iron 대쉬보드에 로그인 하면 구독자 URL과 새로운 푸쉬 큐를 볼 수 있을 겁니다. 주어진 큐에 원하는 만큼의 URL을 구독할 수 있습니다. 다음, `queue/receive` 엔드포인트 라우트를 생성하고, `Queue::marchal` 메소드를 응답으로 반환하면 됩니다.
 
-	Route::get('queue/receive', function()
+	Route::post('queue/receive', function()
 	{
 		return Queue::marshal();
 	});
