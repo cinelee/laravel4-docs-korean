@@ -93,11 +93,13 @@
 
 **뷰에 데이터 전달**
 
-	$view = View::make('greeting', $data);
-
 	$view = View::make('greeting')->with('name', 'Steve');
 
 위 예제에서 `$name` 변수는 뷰에서 액세스 할수있고 `Steve` 라는 값을 갖고 있습니다.
+
+원한다면, `make` 메소드의 2번째 매개 변수에 데이터 배열을 전달 할 수도 있습니다.:
+
+	$view = View::make('greetings', $data);
 
 **뷰에 하위 뷰(sub-view) 전달**
 
