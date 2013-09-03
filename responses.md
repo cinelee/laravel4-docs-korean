@@ -22,7 +22,7 @@
 
 	$response = Response::make($contents, $statusCode);
 
-	$response->headers->set('Content-Type', $value);
+	$response->header('Content-Type', $value);
 
 	return $response;
 
