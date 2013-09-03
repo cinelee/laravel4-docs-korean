@@ -39,6 +39,10 @@
 
 	return Redirect::to('user/login');
 
+**플래쉬 데이터와 함께 리디렉트**
+
+	return Redirect::to('user/login')->with('message', 'Login Failed');
+
 **명칭이 부여된 라우트로 리디렉트**
 
 	return Redirect::route('login');
