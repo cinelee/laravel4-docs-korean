@@ -101,6 +101,10 @@
 
 	$view = View::make('greetings', $data);
 
+또한 모든 뷰에 데이터를 쉐어할 수도 있습니다.:
+
+	View::share('name', 'Steve');
+
 **뷰에 하위 뷰(sub-view) 전달**
 
 가끔 뷰 안에 또 다른 뷰를 전달 할때도 있을 겁니다. 예를 들어 `app/views/child/view.php` 에 저장되어 있는 하위 뷰(sub-view)를 아래처럼 전달 할수 있습니다.:
