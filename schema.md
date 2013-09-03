@@ -66,6 +66,7 @@ Laravel `Schema` 클래스는 테이블 생성 하는데 관대한 방법을 제
 `$table->time('sunrise');`  |  테이블의 TIME과 동일
 `$table->timestamp('added_on');`  |  테이블의 TIMESTAMP와 동일
 `$table->timestamps();`  |  **created\_at** 과 **updated\_at** 컬럼 추가
+`$table->softDeletes();`  |  소프트 삭제에 쓰이는 **deleted\_at** 컬럼 추가
 `$table->text('description');`  |  테이블의 TEXT와 동일
 `$table->binary('data');`  |  테이블의 BLOB과 동일
 `$table->enum('choices', array('foo', 'bar'));` | 테이블의 ENUM과 동일
