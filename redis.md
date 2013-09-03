@@ -29,6 +29,8 @@
 
 The `cluster` option will tell the Laravel Redis client to perform client-side sharding across your Redis nodes, allowing you to pool nodes and create a large amount of available RAM. However, note that client-side sharding does not handle failover; therefore, is primarily suited for cached data that is available from another primary data store.
 
+만약 레디스 서버에 인증이 필요하다면, 레디스 서버 설정 배열에 `password` 키 / 값 쌍을 추가하여 제공할 수 있습니다.
+
 <a name="usage"></a>
 ## 사용법
 
