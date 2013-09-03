@@ -91,6 +91,8 @@ Laravel `Schema` 클래스는 테이블 생성 하는데 관대한 방법을 제
 		$table->renameColumn('from', 'to');
 	});
 
+> **노트:** `enum` 타입의 컬럼명 변경은 제공되지 않습니다.
+
 <a name="dropping-columns"></a>
 ## 컬럼 삭제
 
