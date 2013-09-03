@@ -9,7 +9,7 @@
 - [라우트 접두사](#route-prefixing)
 - [라우트 모델 바인딩](#route-model-binding)
 - [404 에러 날리기](#throwing-404-errors)
-- [리소스 컨트롤러](#resource-controllers)
+- [컨트롤러로 라우](#routing-to-controllers)
 
 <a name="basic-routing"></a>
 ## 기본 라우팅
@@ -287,9 +287,9 @@ group 메소드의 배열 속성에 `prefix` 옵션을 사용하여 그룹화된
 
 404 예외를 처리하고 이러한 오류에 대해 사용자 정의 응답을 사용하는 방법에 대한 자세한 내용은 매뉴얼의 [에러](/docs/errors#handling-404-errors) 섹션에서 찾을 수 있습니다.
 
-<a name="resource-controllers"></a>
-## 리소스 컨트롤러
+<a name="routing-to-controllers"></a>
+## 컨트롤러로 라우팅
 
-리소스 컨트롤러는 리소스에 맞춰 쉽게 RESTful 컨트롤러를 구축하게 해줍니다.
+라라벨은 클로저로의 라우팅 뿐만 아니라 컨트롤러 클래스와 [리소스 컨트롤러](/docs/controllers#resource-controllers)를 생성 하는 라우팅도 허용합니다.
 
-[컨트롤러](/docs/controllers#resource-controllers) 에서 더 많은 정보를 보세요.
+[컨트롤러](/docs/controllers) 에서 더 많은 정보를 보세요.
