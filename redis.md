@@ -10,6 +10,8 @@
 
 [레디스](http://redis.io)는 오픈소스이며 고급 key-value 저장소 입니다. 레디스는 키가 [문자열](http://redis.io/topics/data-types#strings), [해쉬](http://redis.io/topics/data-types#hashes), [리스트](http://redis.io/topics/data-types#lists), [세트](http://redis.io/topics/data-types#sets), [정렬 세트](http://redis.io/topics/data-types#sorted-sets)를 포함할수 있기 때문에 종종 데이터베이스 구조 서버로 지칭됩니다.
 
+> **노트:** 만약 PECL을 통해 설치된 레디스 PHP 익스텐션이 있다면, `app/config/app.php` 파일의 alias명을 수정해야 합니다.
+
 <a name="configuration"></a>
 ## 설정
 
