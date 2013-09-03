@@ -165,4 +165,4 @@
 
 	return Response::download($pathToFile);
 
-	return Response::download($pathToFile, $status, $headers);
+	return Response::download($pathToFile, $name, $headers);
