@@ -110,6 +110,10 @@ Laravel 프레임워크에 의해 생성된 쿠키들은 암호화 되고 인증
 
 	$path = Input::file('photo')->getRealPath();
 
+**업로드된 파일의 실제 이름 조회**
+
+	$name = Input::file('photo')->getClientOriginalName();
+
 **업로드된 파일의 사이즈 조회**
 
 	$size = Input::file('photo')->getSize();
