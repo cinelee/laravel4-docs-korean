@@ -84,6 +84,14 @@
 	})
 	->where('id', '[0-9]+');
 
+물론, 필요하다면 여러개의 제약을 배열로 전달 할 수도 있습니다:
+
+	Route::get('user/{id}/{name}', function($id, $name)
+	{
+		//
+	})
+	->where(array('id' => '[0-9]+', 'name' => '[a-z]+'))
+
 <a name="route-filters"></a>
 ## 라우트 필터
 
