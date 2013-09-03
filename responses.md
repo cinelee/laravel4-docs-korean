@@ -133,7 +133,7 @@
         $event->view->with('count', User::count());
     });
 
-어플리케이션 [IoC container](/docs/ioc)를 통해 해결되는 혜택을 제공하는 클래스 기반의 컴포저를 사용하기 원한다면, 아래와 같이 해야 하며:
+어플리케이션 [IoC Container](/docs/ioc)를 통해 해결되는 혜택을 제공하는 클래스 기반의 컴포저를 사용하기 원한다면, 아래와 같이 해야 하며:
 
 	View::composer('profile', 'ProfileComposer');
 
