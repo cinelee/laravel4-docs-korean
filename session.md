@@ -20,6 +20,10 @@ HTTP 기반 어플리케이션은 비보존형이므로, 세션은 사용자 크
 
     Session::put('key', 'value');
 
+**배열 세션에 값 푸쉬**
+
+	Session::push('user.teams', 'developers');
+
 **세션에서 아이템 조회**
 
     $value = Session::get('key');
