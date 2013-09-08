@@ -198,6 +198,8 @@ Laravel에 포함된 엘로퀀트 ORM은 데이터베이스 작업을 위한 아
 
 	User::destroy(1);
 
+	User::destroy(array(1, 2, 3));
+
 	User::destroy(1, 2, 3);
 
 물론, 다수의 모델에 삭제 쿼리를 실행할 수도 있습니다.:
