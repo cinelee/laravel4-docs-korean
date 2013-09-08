@@ -7,6 +7,7 @@
 - [컬럼 삭제](#dropping-columns)
 - [존재 여부 확인](#checking-existence)
 - [인덱스 추가](#adding-indexes)
+- [왜래키](#foreign-keys)
 - [인덱스 삭제](#dropping-indexes)
 - [스토리지 엔진](#storage-engines)
 
@@ -151,6 +152,29 @@ Laravel `Schema` 클래스는 테이블 생성 하는데 관대한 방법을 제
 `$table->primary(array('first', 'last'));`  |  composite keys 추가
 `$table->unique('email');`  |  unique index 추가
 `$table->index('state');`  |  basic index 추가
+
+<a name="foreign-keys"></a>
+## 외래키
+
+라라벨은 테이블에 외래키 제약조건 추가를 제공합니다:
+
+**테이블에 외래키 추가**
+
+	$table->foreign('user_id')->references('id')->on('users');
+
+이 예제는, `user_id` 컬럼이 `users` 테이블의 `id` 컬럼을 참조한다고 명시합니다.
+
+또한, "on delete"와 "on update" 제약 조건을 옵션으로 명시 할 수도 있습니다.:
+
+	$table->foreign('user_id')
+          ->references('id')->on('users')
+          ->onDelete('cascade');
+
+외래키를 삭제하려면, `dropForeign` 메소드를 사용합니다. 다른 인덱스들에 사용된것과 비슷한 명명규칙이 외래키에 사용됩니다.:
+
+	$table->dropForeign('posts_user_id_foreign');
+
+> **노트:** incrementing integer를 참조하는 외래키를 만들때, 외래키 컬럼은 항상 `unsigned`여야 합니다.
 
 <a name="dropping-indexes"></a>
 ## 인덱스 삭제
