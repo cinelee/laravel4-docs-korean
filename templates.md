@@ -11,22 +11,22 @@ Laravel에서 팀플릿을 사용하는 방법중 하나는 컨트롤러 레이�
 
 **컨트롤러에 레이아웃 정의**
 
-    class UserController extends BaseController {
-  
-  		/**
-  		 * The layout that should be used for responses.
-  		 */
-  		protected $layout = 'layouts.master';
-  
-  		/**
-  		 * Show the user profile.
-  		 */
-  		public function showProfile()
-  		{
-  			$this->layout->content = View::make('user.profile');
-  		}
-  
-  	}
+	class UserController extends BaseController {
+
+		/**
+		 * The layout that should be used for responses.
+		 */
+		protected $layout = 'layouts.master';
+
+		/**
+		 * Show the user profile.
+		 */
+		public function showProfile()
+		{
+			$this->layout->content = View::make('user.profile');
+		}
+
+	}
 
 <a name="blade-templating"></a>
 ## 블레이드 템플릿
@@ -74,7 +74,7 @@ Laravel에서 팀플릿을 사용하는 방법중 하나는 컨트롤러 레이�
 
 	The current UNIX timestamp is {{ time() }}.
 
-중괄호 3개로 이루어진 구문를 사용하여 이스케이프한 데이터를 출력할 수 있습니다.:
+물론, 모든 사용자 제공 데이터는 이스케이프 또는 정죄 될 수 있습니다. 중괄호 3개로 이루어진 구문를 사용하여 이스케이프한 데이터를 출력할 수 있습니다.:
 
 	Hello, {{{ $name }}}.
 
