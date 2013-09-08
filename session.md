@@ -4,6 +4,7 @@
 - [세션 사용법](#session-usage)
 - [플래시 데이터](#flash-data)
 - [데이터베이스 세션](#database-sessions)
+- [세션 드라이버](#session-drivers)
 
 <a name="configuration"></a>
 ## 설정
@@ -82,3 +83,16 @@ HTTP 기반 어플리케이션은 비보존형이므로, 세션은 사용자 크
 	composer dump-autoload
 
 	php artisan migrate
+
+<a name="session-drivers"></a>
+## 세션 드라이버
+
+세션 "드라이버"는 각각의 요청에 대한 세션 데이터가 어디에 저장될지 정의합니다. 라라벨은 기본적으로 여러개의 드라이버를 포함하고 있습니다.:
+
+- `native` - 세션이 PHP의 내장 세션 기능에 의해 처리됩니다.
+- `cookie` - 세션이 안전하고, 암호화된 쿠키에 저장됩니다.
+- `database` - 세션이 어플리케이션에서 사용하는 데이터베이스에 저장됩니다.
+- `memcached` / `redis` - 세션이 빠르고, 캐싱을 기본으로 저장하는 이 중 하나에 저장됩니다.
+- `array` - 세션이 간단한 PHP 배열에 저장되며, 이는 요청간에 지속되지 않습니다.
+
+> **노트:** 배열 드라이버는 [유닛 테스팅](/docs/testing)을 할때 주로 사용되므로, 세션 데이터가 지속되지 않습니다.
