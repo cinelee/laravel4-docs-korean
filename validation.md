@@ -41,6 +41,10 @@ Laravel은 `Validation` 클래스를 통해 데이터를 검증하고 에러 메
 
 	$messages = $validator->messages();
 
+또한 `failed` 메소드를 사용하여 메시지없이 실패한 검증 규칙 배열을 액세스 할 수도 있습니다.
+
+	$failed = $validator->failed();
+
 **파일 검증**
 
 `Validator` 클래스는 `size`나 `mimes`같은 파일 검증에 필요한 몇가지 규칙들을 제공합니다. 파일을 검증할때는 간단하게 다른 데이터와 함께 검증기로 파일을 전달하면 됩니다.
