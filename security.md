@@ -208,9 +208,9 @@ HTTP 기본 인증은 "로그인" 전용 페이지 없이 유저를 어플리케
 
 `remind` 메소드의 두번째 인수에 클로저를 전달하여 사용자에게 보내지는 메시지 인스턴스를 수정할 수 있습니다.:
 
-	return Password::remind($credentials, function($m)
+	return Password::remind($credentials, function($message, $user)
 	{
-		$m->subject('Your Password Reminder');
+		$message->subject('Your Password Reminder');
 	});
 
 라우트에서 바로 `remind` 메소드의 결과를 반환한다는 것을 알고 있을 겁니다. 기본적으로 `remind` 메소드는 현재 URI로의 `Redirect`를 반환합니다. 비밀번호 재설정을 진행하는 동안 오류가 발생한다면, `error` 변수가 세션에 플래시되며 `reminders` 언어파일에서 라인을 추출하는 `reason` 변수 또한 세션에 플래시 됩니다. 오류가 발생하지 않았다면, `success` 변수가 세션에 플래시됩니다. 그러므로 비밀번호 재설정 폼의 뷰는 다음과 같을 수 있습니다.:
