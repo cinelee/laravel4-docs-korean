@@ -276,7 +276,7 @@ HTTP 기본 인증은 "로그인" 전용 페이지 없이 유저를 어플리케
 
 비밀번호 재설정이 성공이라면, 실제로 저장을 할수 있도록 `User` 인스턴스와 비밀번호가 클로저에 전달 됩니다. 그런 다음, `Redirect`를 반환하거나, `reset` 메소드에 의해 반환 될 어떤 다른 종류의 응답을 반환할 수도 있습니다. `reset` 메소드가 자동으로 요청된 `token`의 유효성과 자격 증명의 유효성, 그리고 비밀번호 일치를 확인한다는 것을 알고 계십시오.
 
-또한 `remind` 메소드와 비슷하게 비밀번호를 재설정하는 동안 오류가 발생하면 `reset` 메소드는 `error`, `reason` 변수와 함께 현재 URI로의 `Redirect`를 반환합니다. 
+또한 `remind` 메소드와 비슷하게 비밀번호를 재설정하는 동안 오류가 발생하면 `reset` 메소드는 `error`, `reason` 변수와 함께 현재 URI로의 `Redirect`를 반환합니다.
 
 <a name="encryption"></a>
 ## 암호화
@@ -297,6 +297,6 @@ Laravel은 mcrypt PHP extension을 통해 강력한 AES-256 암호화 기능을 
 
 **암호와 모드 설정**
 
-	Crypt::setMode('crt');
+	Crypt::setMode('ctr');
 
 	Crypt::setCipher($cipher);
