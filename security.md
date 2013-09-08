@@ -5,7 +5,7 @@
 - [사용자 인증](#authenticating-users)
 - [라우트 보호](#protecting-routes)
 - [HTTP 기본 인증](#http-basic-authentication)
-- [비밀번호 리마인더 & 리셋](#password-reminders-and-reset)
+- [비밀번호 리마인더 & 재설정](#password-reminders-and-reset)
 - [암호화](#encryption)
 
 <a name="configuration"></a>
@@ -162,11 +162,11 @@ HTTP 기본 인증은 "로그인" 전용 페이지 없이 유저를 어플리케
 	});
 
 <a name="password-reminders-and-reset"></a>
-## 비밀번호 리마인더 & 리셋
+## 비밀번호 리마인더 & 재설정
 
 ### 비밀번호 리마인더 보내기
 
-대부분의 웹 어플리케이션은 사용자가 잃어버린 비밀번호를 리셋하는 방법을 제공 합니다. 개발자가 각각의 어플리케이션에 이 기능을 매번 만들게 하는것 대신에, Laravel은 비밀번호 리마인더를 메일로 보내고 비밀번호를 리셋할 수 있는 편리한 방법을 제공합니다. 이 기능을 사용하려면 `User` 모델이 `Illuminate\Auth\RemindableInterface` 인터페이스를 구현하는지 확인해야 합니다. 물론 프레임워크에 포함된 모델은 이미 이 인터페이스를 구현하고 있습니다.
+대부분의 웹 어플리케이션은 사용자가 잃어버린 비밀번호를 재설정하는 방법을 제공 합니다. 개발자가 각각의 어플리케이션에 이 기능을 매번 만들게 하는것 대신에, Laravel은 비밀번호 리마인더를 메일로 보내고 비밀번호를 재설정할 수 있는 편리한 방법을 제공합니다. 이 기능을 사용하려면 `User` 모델이 `Illuminate\Auth\RemindableInterface` 인터페이스를 구현하는지 확인해야 합니다. 물론 프레임워크에 포함된 모델은 이미 이 인터페이스를 구현하고 있습니다.
 
 **RemindableInterface 인터페이스 구현**
 
@@ -179,7 +179,7 @@ HTTP 기본 인증은 "로그인" 전용 페이지 없이 유저를 어플리케
 
 	}
 
-그 다음, 비밀번호 리셋 토큰을 저장할 테이블을 만들어야 합니다. 이 테이블의 마이그레이션을 만들려면, 간단하게 `auth:reminders` 아티즌 커맨드를 실행하면 됩니다:
+그 다음, 비밀번호 재설정 토큰을 저장할 테이블을 만들어야 합니다. 이 테이블의 마이그레이션을 만들려면, 간단하게 `auth:reminders` 아티즌 커맨드를 실행하면 됩니다:
 
 **리마인더 테이블 마이그레이션 생성**
 
@@ -198,7 +198,7 @@ HTTP 기본 인증은 "로그인" 전용 페이지 없이 유저를 어플리케
 		return Password::remind($credentials);
 	});
 
-`remind` 메소드에 전달된 인수들은 `Auth::attempt` 메소드에 전달되는 인수들과 비슷하다는 것에 주목하세요. 이 메소드는 `User`를 조회하고 이메일로 비밀번호 리셋 링크를 보냅니다. 비밀번호 리셋 폼의 링크를 만드는데 사용되는 `token` 변수가 이메일 뷰에 전달 됩니다. `user` 객체 또한 뷰에 전달 됩니다.
+`remind` 메소드에 전달된 인수들은 `Auth::attempt` 메소드에 전달되는 인수들과 비슷하다는 것에 주목하세요. 이 메소드는 `User`를 조회하고 이메일로 비밀번호 재설정 링크를 보냅니다. 비밀번호 재설정 폼의 링크를 만드는데 사용되는 `token` 변수가 이메일 뷰에 전달 됩니다. `user` 객체 또한 뷰에 전달 됩니다.
 
 > **노트:**  `auth.reminder.email` 설정 옵션을 변경하여 어떤 뷰가 이메일 메시지로 사용될 지 지정할 수 있습니다. 물론 디폴트 뷰가 이미 제공되어 있습니다.
 
@@ -209,25 +209,27 @@ HTTP 기본 인증은 "로그인" 전용 페이지 없이 유저를 어플리케
 		$m->subject('Your Password Reminder');
 	});
 
-라우트에서 바로 `remind` 메소드의 결과를 반환한다는 것을 알고 있을 겁니다. 디폴트로 `remind` 메소드는 현재 URI로의 `Redirect`를 반환합니다. 비밀번호를 리셋을 진행하는 동안 오류가 발생한다면, `error` 변수가 세션에 플래시되며 `reminders` 언어파일에서 라인을 추출하는 `reason` 변수 또한 세션에 플래시 됩니다. 그러므로 비밀번호 리셋 폼은 다음과 같을 수 있습니다.:
+라우트에서 바로 `remind` 메소드의 결과를 반환한다는 것을 알고 있을 겁니다. 기본적으로 `remind` 메소드는 현재 URI로의 `Redirect`를 반환합니다. 비밀번호 재설정을 진행하는 동안 오류가 발생한다면, `error` 변수가 세션에 플래시되며 `reminders` 언어파일에서 라인을 추출하는 `reason` 변수 또한 세션에 플래시 됩니다. 오류가 발생하지 않았다면, `success` 변수가 세션에 플래시됩니다. 그러므로 비밀번호 재설정 폼의 뷰는 다음과 같을 수 있습니다.:
 
 	@if (Session::has('error'))
 		{{ trans(Session::get('reason')) }}
+	@elseif (Session::has('success'))
+		비밀번호 재설정 이메일이 발송됐습니다.
 	@endif
 
 	<input type="text" name="email">
 	<input type="submit" value="Send Reminder">
 
-### 비밀번호 리셋
+### 비밀번호 재설정
 
-사용자가 리마인더 이메일에서 리셋 링크를 클릭하면, 숨겨진 `token` 필드와 `password`, `password_confirmation` 필드를 포함하고 있는 폼으로 이동 됩니다. 아래는 비밀번호 리셋 폼에 대한 라우트 예제 입니다.:
+사용자가 리마인더 이메일에서 재설정 링크를 클릭하면, 숨겨진 `token` 필드와 `password`, `password_confirmation` 필드를 포함하고 있는 폼으로 이동 됩니다. 아래는 비밀번호 재설정 폼에 대한 라우트 예제 입니다.:
 
 	Route::get('password/reset/{token}', function($token)
 	{
 		return View::make('auth.reset')->with('token', $token);
 	});
 
-그리고 비밀번호 리셋 폼은 다음과 같을 수 있습니다.:
+그리고 비밀번호 재설정 폼은 다음과 같을 수 있습니다.:
 
 	@if (Session::has('error'))
 		{{ trans(Session::get('reason')) }}
@@ -238,7 +240,7 @@ HTTP 기본 인증은 "로그인" 전용 페이지 없이 유저를 어플리케
 	<input type="password" name="password">
 	<input type="password" name="password_confirmation">
 
-다시 말하지만, 우리는 비밀번호를 리셋하는 도중 프레임워크에 의해 검출되는 오류를 표시하기 위해 `Session`을 사용하고 있습니다. 다음으로, 비밀번호를 리셋 처리를 위해 `POST` 라우트를 정의할 수 있습니다:
+다시 말하지만, 우리는 비밀번호를 재설정하는 도중 프레임워크에 의해 검출되는 오류를 표시하기 위해 `Session`을 사용하고 있습니다. 다음으로, 비밀번호를 재설정 처리를 위해 `POST` 라우트를 정의할 수 있습니다:
 
 	Route::post('password/reset/{token}', function()
 	{
@@ -254,9 +256,9 @@ HTTP 기본 인증은 "로그인" 전용 페이지 없이 유저를 어플리케
 		});
 	});
 
-비밀번호 리셋이 성공이라면, 실제로 저장을 할수 있도록 `User` 인스턴스와 비밀번호가 클로저에 전달 됩니다. 그런 다음, `Redirect`를 반환하거나, `reset` 메소드에 의해 반환 될 어떤 다른 종류의 응답을 반환할 수도 있습니다. `reset` 메소드가 자동으로 요청된 `token`의 유효성과 자격 증명의 유효성, 그리고 비밀번호 일치를 확인한다는 것을 알고 계십시오.
+비밀번호 재설정이 성공이라면, 실제로 저장을 할수 있도록 `User` 인스턴스와 비밀번호가 클로저에 전달 됩니다. 그런 다음, `Redirect`를 반환하거나, `reset` 메소드에 의해 반환 될 어떤 다른 종류의 응답을 반환할 수도 있습니다. `reset` 메소드가 자동으로 요청된 `token`의 유효성과 자격 증명의 유효성, 그리고 비밀번호 일치를 확인한다는 것을 알고 계십시오.
 
-또한 `remind` 메소드와 비슷하게 비밀번호를 리셋하는 동안 오류가 발생하면 `reset` 메소드는 `error`, `reason` 변수와 함께 현재 URI로의 `Redirect`를 반환합니다. 
+또한 `remind` 메소드와 비슷하게 비밀번호를 재설정하는 동안 오류가 발생하면 `reset` 메소드는 `error`, `reason` 변수와 함께 현재 URI로의 `Redirect`를 반환합니다. 
 
 <a name="encryption"></a>
 ## 암호화
