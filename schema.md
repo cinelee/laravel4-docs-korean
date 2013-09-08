@@ -36,7 +36,7 @@ Laravel `Schema` 클래스는 테이블 생성 하는데 관대한 방법을 제
 
 	Schema::connection('foo')->create('users', function($table)
 	{
-		$table->increments('id'):
+		$table->increments('id');
 	});
 
 `Schema::drop` 메소드를 사용 하여 테이블을 삭제 할 수 있습니다.:
