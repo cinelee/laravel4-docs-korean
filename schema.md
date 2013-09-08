@@ -60,6 +60,7 @@ Laravel `Schema` 클래스는 테이블 생성 하는데 관대한 방법을 제
 커맨드  | 설명
 ------------- | -------------
 `$table->increments('id');`  |  테이블의 Incrementing ID (primary key).
+`$table->bigIncrements('id');`  |  테이블의 "big integer"와 동일한 Incrementing ID.
 `$table->string('email');`  |  VARCHAR 컬럼과 동일
 `$table->string('name', 100);`  |  길이가 지정된 VARCHAR 컬럼과 동일
 `$table->integer('votes');`  |  테이블의 INTEGER와 동일
