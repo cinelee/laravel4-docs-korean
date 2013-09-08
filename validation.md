@@ -154,6 +154,7 @@ Laravel은 `Validation` 클래스를 통해 데이터를 검증하고 에러 메
 - [Required](#rule-required)
 - [Required If](#rule-required-if)
 - [Required With](#rule-required-with)
+- [Required Without](#rule-required-without)
 - [Same](#rule-same)
 - [Size](#rule-size)
 - [Unique (Database)](#rule-unique)
@@ -311,6 +312,11 @@ Laravel은 `Validation` 클래스를 통해 데이터를 검증하고 에러 메
 #### required_with:_foo_,_bar_,...
 
 검증에 포함된 필드는 주어진 다른 필드에 값이 _있을때 만_ 값이 있어야 합니다.
+
+<a name="rule-required-without"></a>
+#### required_without:_foo_,_bar_,...
+
+검증에 포함된 필드는 주어진 다른 필드에 값이 _없을때 만_ 값이 있어야 합니다.
 
 <a name="rule-same"></a>
 #### same:_field_
