@@ -30,6 +30,10 @@ HTTP 기반 어플리케이션은 비보존형이므로, 세션은 사용자 크
 
 	$value = Session::get('key', function() { return 'default'; });
 
+**세션의 모든 데이터 조회**
+
+	$data = Session::all();
+
 **세션에 아이템이 존재하는지 확인**
 
 	if (Session::has('users'))
