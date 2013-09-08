@@ -345,6 +345,14 @@ Laravel은 `Validation` 클래스를 통해 데이터를 검증하고 에러 메
 
 	'email' => 'unique:users,email_address,10'
 
+**추가적인 Where절 추가**
+
+또한 쿼리의 "where"절에 추가되는 조건을 명시할수도 있습니다.:
+
+	'email' => 'unique:users,email_address,NULL,id,account_id,1
+
+위의 규칙은, 오직 `account_id`가 `1`인 레코드만 유니크 체크에 포함됩니다.
+
 <a name="rule-url"></a>
 #### url
 
