@@ -3,6 +3,7 @@
 - [설정](#configuration)
 - [비밀번호 저장](#storing-passwords)
 - [사용자 인증](#authenticating-users)
+- [사용자 수동 로그인](#manually)
 - [라우트 보호](#protecting-routes)
 - [HTTP 기본 인증](#http-basic-authentication)
 - [비밀번호 리마인더 & 재설정](#password-reminders-and-reset)
@@ -114,6 +115,17 @@ Laravel `Hash` 클래스는 Bcrypt 해쉬 보안을 제공합니다.:
 **사용자를 어플리케이션에서 로그아웃**
 
 	Auth::logout();
+
+<a name="manually"></a>
+## 사용자 수동 로그인
+
+만약 존재하는 사용자 인스턴스를 어플리케이션에 로그인 시켜야 한다면, 사용자 인스턴스와 함께 `login` 메소드를 호출하면 됩니다.:
+
+	$user = User::find(1);
+
+	Auth::login($user);
+
+이것은 `attempt` 메소드를 사용하여 자격증명을 통해 로그인 하는것과 동일합니다.
 
 <a name="protecting-routes"></a>
 ## 라우트 보호
