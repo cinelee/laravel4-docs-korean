@@ -63,6 +63,8 @@ Laravel `Schema` 클래스는 테이블 생성 하는데 관대한 방법을 제
 `$table->string('email');`  |  VARCHAR 컬럼과 동일
 `$table->string('name', 100);`  |  길이가 지정된 VARCHAR 컬럼과 동일
 `$table->integer('votes');`  |  테이블의 INTEGER와 동일
+`$table->bigInteger('votes');`  |  테이블의 BIGINT와 동일
+`$table->smallInteger('votes');`  |  테이블의 SMALLINT와 동일
 `$table->float('amount');`  |  테이블의 FLOAT과 동일
 `$table->decimal('amount', 5, 2);`  |  precision과 scale이 지정된 DECIMAL과 동일
 `$table->boolean('confirmed');`  |  테이블의 BOOLEAN과 동일
