@@ -68,11 +68,11 @@ HTTP 기반 어플리케이션은 비보존형이므로, 세션은 사용자 크
 
 `database` 세션 드라이버를 사용할 경우, 세션 아이템을 포함할 테이블을 만들어야 합니다. 아래는 테이블 `Schema`의 예입니다.:
 
-	Schema::create('sessions', function($t)
+	Schema::create('sessions', function($table)
 	{
-		$t->string('id')->unique();
-		$t->text('payload');
-		$t->integer('last_activity');
+		$table->string('id')->unique();
+		$table->text('payload');
+		$table->integer('last_activity');
 	});
 
 물론 `session:table` 아티즌 커맨드를 사용하여 위의 마이그레이션을 생성할 수도 있습니다!
