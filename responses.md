@@ -43,6 +43,8 @@
 
 	return Redirect::to('user/login')->with('message', 'Login Failed');
 
+> **노트:** `with` 메소드가 세션에 데이터를 플래쉬하므로, `Session::get` 메소드를 사용하여 데이터를 조회 할 수 있습니다.
+
 **명칭이 부여된 라우트로 리디렉트**
 
 	return Redirect::route('login');
