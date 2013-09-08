@@ -27,6 +27,10 @@ Laravel `Schema` 클래스는 테이블 생성 하는데 관대한 방법을 제
 
 `create` 메소드에 전달되는 첫번째 인수는 테이블의 이름이며, 두번째는 새로운 테이블을 정의하는 `Blueprint` 객체를 받는 `Closure` 입니다.
 
+이미 존재하는 데이터베이스 테이블명을 변경하려면, `rename` 메소드를 사용합니다.:
+
+	Schema::rename($from ,$to);
+
 `Schema::connection` 메소드를 사용하여 스키마 작업이 어떤 커넥션을 사용할 지 지정 할 수 있습니다.:
 
 	Schema::connection('foo')->create('users', function($table)
