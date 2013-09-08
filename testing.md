@@ -124,6 +124,10 @@ Laravel은 테스팅을 좀더 쉽게 하기위해 몇가지의 `assert` 메소�
 		$this->assertResponseOk();
 	}
 
+**응답 상태 보장**
+
+	$this->assertResponseStatus(403);
+
 **응답이 리디렉트라고 보장**
 
 	$this->assertRedirectedTo('foo');
