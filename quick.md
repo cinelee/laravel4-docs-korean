@@ -10,7 +10,7 @@
 <a name="installation"></a>
 ## 설치
 
-라라벨 프레임워크를 설치하려면, 터미널ㄹ에서 다음의 커맨드를 실행하면 됩니다.:
+라라벨 프레임워크를 설치하려면, 터미널에서 다음의 커맨드를 실행하면 됩니다.:
 
 	composer create-project laravel/laravel your-project-name --prefer-dist
 
