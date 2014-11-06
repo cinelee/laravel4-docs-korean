@@ -170,7 +170,7 @@ DELETE    | /resource/{id}        | destroy      | resource.destroy
 
 **포괄적인 메소드 정의**
 
-	public function missingMethod($parameters)
+	public function missingMethod($parameters = array())
 	{
 		//
 	}
