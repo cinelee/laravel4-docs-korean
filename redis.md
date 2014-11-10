@@ -27,7 +27,7 @@
 
 기본으로 설정되어 있는 서버로 개발을 하기에 충분 합니다. 그러나, 개발 환경에 따라 이 배열을 수정 할 수 있습니다. 간단히 레디스 서버의 이름을 지정하고 호스트와 포트를 명시하면 됩니다.
 
-The `cluster` option will tell the Laravel Redis client to perform client-side sharding across your Redis nodes, allowing you to pool nodes and create a large amount of available RAM. However, note that client-side sharding does not handle failover; therefore, is primarily suited for cached data that is available from another primary data store.
+클러스터 옵션은 라라벨 Redis에서 클라이언트 사이드 샤딩을 수행하도록 합니다. 이는 여러 레디스 노드 연결을 관리하여 더 많은 메모리를 사용할 수 있도록 합니다. 하지만, 주의 할 점은 클라이언트 사이드 샤딩은 페일오버에 대응하지 않는 다는 것입니다; 그러므로 다른 주 저장소에서 가져올 수 있는 데이터를 캐싱하는 것이 좋습니다. 
 
 만약 레디스 서버에 인증이 필요하다면, 레디스 서버 설정 배열에 `password` 키 / 값 쌍을 추가하여 제공할 수 있습니다.
 

@@ -26,7 +26,7 @@ $array = array('foo' => 'bar');
 list($keys, $values) = array_divide($array);
 ```
 ### array_dot
-`array_dot` 함수는 다차원 배열을 1차원화 시키는데 "점" 을 사용해서 깊이를 표한한다.
+`array_dot` 함수는 다차원 배열을 1차원화 시키는데 "점" 을 사용해서 깊이를 표현한다.
 
 ```
 $array = array('foo' => array('bar' => 'baz'));
